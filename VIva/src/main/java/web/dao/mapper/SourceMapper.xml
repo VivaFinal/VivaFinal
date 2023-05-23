@@ -6,11 +6,4 @@
   
   <mapper namespace="web.dao.face.SourceDao">
   
-  	<select id="selectTag" resultType="web.dto.Tag">
-  	
-  		SELECT * FROM TAG
-  		where tag_no = 1
-  	
-  	</select>
-  
   </mapper>

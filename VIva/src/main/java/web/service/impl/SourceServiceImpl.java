@@ -16,12 +16,6 @@ public class SourceServiceImpl implements SourceService{
 	
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 
-	@Override
-	public Tag getTag() {
-		logger.info("클라우드 검증 Service");
-		
-		return sourceDao.selectTag();
-	}
 	
 	
 	

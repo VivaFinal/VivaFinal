@@ -6,12 +6,9 @@
 <meta charset="UTF-8">
 <title>Home | viva</title>
 
-<!-- CSS only -->
-<!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" > -->
-<!-- JavaScript Bundle with Popper -->
-<!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script> -->
-<!-- jQuery 2.2.4 -->
-<!-- <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script> -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" >
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" ></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <script type="text/javascript">
 $(function () {
@@ -25,7 +22,6 @@ $(function () {
         $("ul", this).slideToggle(300);
     });
 });
-
 </script>
 
 <style type="text/css">
@@ -235,22 +231,22 @@ text-fill-color: transparent;
 			<li class="category">
 				<a href="">Sounds</a>	
 				<ul class="small_menu" id="genre">
-					<li><a href="">Hip Hop</a></li>
-					<li><a href="">Live Sound</a></li>
-					<li><a href="">House</a></li>
-					<li><a href="">Pop</a></li>
-					<li><a href="">Bass Music</a></li>
+					<li><a href="/source/genre?genre=hiphop">Hip Hop</a></li>
+					<li><a href="/source/genre?genre=livesound">Live Sound</a></li>
+					<li><a href="/source/genre?genre=house">House</a></li>
+					<li><a href="/source/genre?genre=pop">Pop</a></li>
+					<li><a href="/source/genre?genre=bassmusic">Bass Music</a></li>
 				</ul>
 				
 				<ul class="small_menu" id="instrument">
-					<li><a href="">Drums</a></li>
-					<li><a href="">Vocal</a></li>
-					<li><a href="">Synth</a></li>
-					<li><a href="">Brass</a></li>
-					<li><a href="">Woodwinds</a></li>
-					<li><a href="">Guitar</a></li>
-					<li><a href="">Bass</a></li>
-					<li><a href="">String</a></li>
+					<li><a href="/source/inst?instrument=drum">Drums</a></li>
+					<li><a href="/source/inst?instrument=vocal"">Vocal</a></li>
+					<li><a href="/source/inst?instrument=synth"">Synth</a></li>
+					<li><a href="/source/inst?instrument=brass"">Brass</a></li>
+					<li><a href="/source/inst?instrument=woodwinds"">Woodwinds</a></li>
+					<li><a href="/source/inst?instrument=guitar"">Guitar</a></li>
+					<li><a href="/source/inst?instrument=bass"">Bass</a></li>
+					<li><a href="/source/inst?instrument=string"">String</a></li>
 				</ul>
 			</li>
 
