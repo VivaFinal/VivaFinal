@@ -8,9 +8,9 @@
 	<!-- DB접속 정보 -->	 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
-		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/>
-		<property name="username" value="scott"/>
-		<property name="password" value="tiger"/>
+		<property name="url" value="jdbc:oracle:thin:@viva_high?TNS_ADMIN=D:/Wallet_Viva"/>
+		<property name="username" value="admin"/>
+		<property name="password" value="Viva!@34!@34"/>
 	</bean>
 		
 	<!-- 마이바티스 수행 객체 설정 (SqlSession) -->	
@@ -43,7 +43,7 @@
 	<!-- 마이바티스를 이용하는 인터페이스 설정 (DAO 설정) -->
 	<!--  MapperXML의 namespace 속성에 맞는 인터페이스를 찾는 패키지 -->
 	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
-		<property name="basePackage" value="dept.dao, login.dao, file.dao, tx.dao"/>
+		<property name="basePackage" value="web.dao"/>
 	</bean>	
 	
 		

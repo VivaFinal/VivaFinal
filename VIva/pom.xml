@@ -24,16 +24,40 @@
 	<dependencies>
 	
 		<dependency>
+		    <groupId>com.oracle.database.jdbc</groupId>
+		    <artifactId>ojdbc8</artifactId>
+		    <version>23.2.0.0</version>
+		</dependency>
+	
+	      <!-- oraclepki 21.5.0.0 -->
+	      <dependency>
+	          <groupId>com.oracle.database.security</groupId>
+	          <artifactId>oraclepki</artifactId>
+	          <version>21.5.0.0</version>
+	      </dependency>
+	            
+	      <dependency>
+	          <groupId>com.oracle.database.security</groupId>
+	          <artifactId>osdt_cert</artifactId>
+	          <version>21.5.0.0</version>
+	      </dependency>
+	      
+	      <dependency>
+	          <groupId>com.oracle.database.security</groupId>
+	          <artifactId>osdt_core</artifactId>
+	          <version>21.5.0.0</version>
+	      </dependency>
+	      
+	      <dependency>
+	          <groupId>com.oracle.database.jdbc</groupId>
+	          <artifactId>ucp</artifactId>
+	          <version>23.2.0.0</version>
+	      </dependency>
+	
+		<dependency>
 		    <groupId>com.fasterxml.jackson.core</groupId>
 		    <artifactId>jackson-databind</artifactId>
 		    <version>2.15.0</version>
-		</dependency>
-	
-	<!--  OJDBC 6 12.1.0.1 -->
-		<dependency>	
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>12.1.0.2</version>
 		</dependency>
 	
 	<!--  Mybatis 3.5.11-->
