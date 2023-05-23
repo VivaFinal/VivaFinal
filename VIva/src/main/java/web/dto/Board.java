@@ -12,6 +12,7 @@ public class Board {
 	private int boardHit;
 	private int boardLike;
 	private int userNo;
+	private int userNick;
 	
 	public Board() {}
 
@@ -19,11 +20,11 @@ public class Board {
 	public String toString() {
 		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
 				+ ", boardDate=" + boardDate + ", categoryType=" + categoryType + ", boardHit=" + boardHit
-				+ ", boardLike=" + boardLike + ", userNo=" + userNo + "]";
+				+ ", boardLike=" + boardLike + ", userNo=" + userNo + ", userNick=" + userNick + "]";
 	}
 
 	public Board(int boardNo, String boardTitle, String boardContent, Date boardDate, String categoryType, int boardHit,
-			int boardLike, int userNo) {
+			int boardLike, int userNo, int userNick) {
 		super();
 		this.boardNo = boardNo;
 		this.boardTitle = boardTitle;
@@ -33,6 +34,7 @@ public class Board {
 		this.boardHit = boardHit;
 		this.boardLike = boardLike;
 		this.userNo = userNo;
+		this.userNick = userNick;
 	}
 
 	public int getBoardNo() {
@@ -98,6 +100,14 @@ public class Board {
 	public void setUserNo(int userNo) {
 		this.userNo = userNo;
 	}
-	
+
+	public int getUserNick() {
+		return userNick;
+	}
+
+	public void setUserNick(int userNick) {
+		this.userNick = userNick;
+	}
+
 	
 }
