@@ -2,6 +2,8 @@ package web.dto;
 
 import java.util.Date;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 public class Users {
 
 	private int userNo;
@@ -11,10 +13,13 @@ public class Users {
 	private String userGrade;
 	private String userProfile;
 	private String userName;
+	
+	//DTO로 전달파라미터를 처리할 때 java.util.date타입에 대한 변환 설정
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	private Date userBirth;
 	private String userEmail;
 	private String userMobile;
-	private Date user_joindate;
+	private Date userJoindate;
 	private Date userOutdate;
 	private Date userLog;
 	private String accessToken;
@@ -26,12 +31,12 @@ public class Users {
 		return "Users [userNo=" + userNo + ", userId=" + userId + ", userPw=" + userPw + ", userNick=" + userNick
 				+ ", userGrade=" + userGrade + ", userProfile=" + userProfile + ", userName=" + userName
 				+ ", userBirth=" + userBirth + ", userEmail=" + userEmail + ", userMobile=" + userMobile
-				+ ", user_joindate=" + user_joindate + ", userOutdate=" + userOutdate + ", userLog=" + userLog
+				+ ", userJoindate=" + userJoindate + ", userOutdate=" + userOutdate + ", userLog=" + userLog
 				+ ", accessToken=" + accessToken + "]";
 	}
 
 	public Users(int userNo, String userId, String userPw, String userNick, String userGrade, String userProfile,
-			String userName, Date userBirth, String userEmail, String userMobile, Date user_joindate, Date userOutdate,
+			String userName, Date userBirth, String userEmail, String userMobile, Date userJoindate, Date userOutdate,
 			Date userLog, String accessToken) {
 		super();
 		this.userNo = userNo;
@@ -44,7 +49,7 @@ public class Users {
 		this.userBirth = userBirth;
 		this.userEmail = userEmail;
 		this.userMobile = userMobile;
-		this.user_joindate = user_joindate;
+		this.userJoindate = userJoindate;
 		this.userOutdate = userOutdate;
 		this.userLog = userLog;
 		this.accessToken = accessToken;
@@ -130,12 +135,12 @@ public class Users {
 		this.userMobile = userMobile;
 	}
 
-	public Date getUser_joindate() {
-		return user_joindate;
+	public Date getUserJoindate() {
+		return userJoindate;
 	}
 
-	public void setUser_joindate(Date user_joindate) {
-		this.user_joindate = user_joindate;
+	public void setUserJoindate(Date userJoindate) {
+		this.userJoindate = userJoindate;
 	}
 
 	public Date getUserOutdate() {
@@ -161,6 +166,8 @@ public class Users {
 	public void setAccessToken(String accessToken) {
 		this.accessToken = accessToken;
 	}
+
+	
 	
 	
 	
