@@ -22,8 +22,10 @@
 	</select>
 	
 	<insert id="insert" parameterType="web.dto.Users">
-		INSERT INTO users( user_id, user_pw, user_nick )
-		VALUES ( #{userId}, #{userPw}, #{userNick} )
+		INSERT INTO users( user_no, user_id, user_pw ,user_name, user_birth,
+		user_nick, user_email, user_mobile ,user_joindate, user_grade)
+		VALUES (users_seq.nextval, #{userId}, #{userPw}, #{userName},#{userBirth}
+		,#{userNick}, #{userEmail},#{userMobile} ,sysdate, 0)
 	</insert>
 
 </mapper>
