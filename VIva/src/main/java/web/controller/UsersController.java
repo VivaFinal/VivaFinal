@@ -54,7 +54,7 @@ public class UsersController {
 	public String logout(HttpSession session) {
 		session.invalidate();
 		
-		return "redirect:/";
+		return "redirect:./main";
 	}
 	
 	@GetMapping("/join")
@@ -67,7 +67,7 @@ public class UsersController {
 		
 		if(joinResult) {
 			logger.info("회원가입 성공");
-			return "redirect:/";			
+			return "redirect:./login";			
 		} else {
 			logger.info("회원가입 실패");
 			return "redirect:./join";
@@ -76,6 +76,24 @@ public class UsersController {
 	
 	@RequestMapping("/main")
 	public void main() {}
+	
+	
+	@RequestMapping("/idfind")
+	public void idfind(Users users) {
+		
+//		return "redirect:./idfind";
+	}
+	
+	@RequestMapping("/pwfind")
+	public void pwfind(Users users) {
+		
+//		return "redirect:./idfind";
+	}
+	@RequestMapping("/updateInfo")
+	public void updateInfo(Users users) {
+		
+//		return "redirect:./idfind";
+	}
 	
 }
 
