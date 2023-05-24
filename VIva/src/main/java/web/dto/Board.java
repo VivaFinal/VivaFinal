@@ -12,19 +12,13 @@ public class Board {
 	private int boardHit;
 	private int boardLike;
 	private int userNo;
-	private int userNick;
+	private String userId;
+	private String userNick;
 	
 	public Board() {}
 
-	@Override
-	public String toString() {
-		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
-				+ ", boardDate=" + boardDate + ", categoryType=" + categoryType + ", boardHit=" + boardHit
-				+ ", boardLike=" + boardLike + ", userNo=" + userNo + ", userNick=" + userNick + "]";
-	}
-
 	public Board(int boardNo, String boardTitle, String boardContent, Date boardDate, String categoryType, int boardHit,
-			int boardLike, int userNo, int userNick) {
+			int boardLike, int userNo, String userId, String userNick) {
 		super();
 		this.boardNo = boardNo;
 		this.boardTitle = boardTitle;
@@ -34,7 +28,16 @@ public class Board {
 		this.boardHit = boardHit;
 		this.boardLike = boardLike;
 		this.userNo = userNo;
+		this.userId = userId;
 		this.userNick = userNick;
+	}
+
+	@Override
+	public String toString() {
+		return "Board [boardNo=" + boardNo + ", boardTitle=" + boardTitle + ", boardContent=" + boardContent
+				+ ", boardDate=" + boardDate + ", categoryType=" + categoryType + ", boardHit=" + boardHit
+				+ ", boardLike=" + boardLike + ", userNo=" + userNo + ", userId=" + userId + ", userNick=" + userNick
+				+ "]";
 	}
 
 	public int getBoardNo() {
@@ -101,13 +104,22 @@ public class Board {
 		this.userNo = userNo;
 	}
 
-	public int getUserNick() {
+	public String getUserId() {
+		return userId;
+	}
+
+	public void setUserId(String userId) {
+		this.userId = userId;
+	}
+
+	public String getUserNick() {
 		return userNick;
 	}
 
-	public void setUserNick(int userNick) {
+	public void setUserNick(String userNick) {
 		this.userNick = userNick;
 	}
 
+	
 	
 }
