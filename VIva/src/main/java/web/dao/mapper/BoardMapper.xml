@@ -7,4 +7,44 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   
   <mapper namespace="web.dao.face.BoardDao">
   
+  	<select id="selectCntAll" resultType="int">
+  		SELECT count(*) FROM board
+  	</select>
+  	
+  	<select id="selectList" resultType="web.dto.Board" parameterType="web.util.Paging">
+		SELECT * FROM (
+			SELECT rownum rnum, B.* FROM (
+				SELECT
+					board_no, board_title, board_content
+					board_date, category_type, board_hit
+				FROM board
+				ORDER BY board_no DESC
+			) B
+		) BOARD
+		WHERE rnum BETWEEN #{startNo } AND #{endNo }
+  	</select>
+  	
+  	<update id="hit" parameterType="web.dto.Board">
+  		INSERT board
+  		SET hit = hit + 1
+  		WHERE board_no = #{boardNo}
+  	</update>
+  	
+  	<select id="select" resultType="web.dto.Board" parameterType="web.dto.Board">
+  		SELECT board_no, board_title, board_content, user_id, user_nick, board_hit, board_date
+  		FROM board
+  		WHERE board_no = #{boardNo}
+  	</select>
+  	
+  	
+  	
+  	<insert id="insertBoard" parameterType="web.dto.Board">
+  		<selectKey order="BEFORE" resultType="int" keyProperty="boardNo">
+  			SELECT board_seq.nextval FROM dual
+  		</selectKey>
+  		
+  		INSERT INTO board ( board_no, board_title, board_content, user_id, user_nick )
+  		VALUES ( #{boardNo}, #{boardTitle}, #{boardContent}, #{userId}, #{userNick} )
+  	</insert>
+  
   </mapper>
