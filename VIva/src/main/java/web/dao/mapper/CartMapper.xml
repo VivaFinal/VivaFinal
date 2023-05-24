@@ -6,8 +6,9 @@
   
 <mapper namespace="web.dao.face.CartDao">
 	<select id="selectCartByUserno" resultType="web.dto.Cart" parameterType="web.dto.Cart">
-		select CART_NO, SOURCE_NO, PACK_NO, USER_NO from cart
-		where user_no = #{userNo}
+		select C.*, S.* from cart C, source S
+		where C.source_no = S.source_no
+		and C.user_no = #{userNo};
 	
 	</select>
 
