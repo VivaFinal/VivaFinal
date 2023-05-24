@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="../layout/header.jsp"/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+
+
 <title>FileUpPack</title>
 
 <!-- CSS only -->
@@ -48,9 +52,6 @@
 	text-align: left;
 	}
 	
-	.container{
-	}
-	
 
 
 </style>
@@ -66,7 +67,12 @@
 <a class="source" href="/file/fileupsource">Source</a> 
 <a class="pack" href="/file/fileuppack"> Pack</a> 
 
-<form action="/file/uploadpack" method="post" enctype="multipart/form-data">
+
+<br>
+
+
+
+<form action="/file/fileuppack" method="post" enctype="multipart/form-data">
 
 
 <div id="left" >
@@ -123,5 +129,7 @@
 	<button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
 </div>
 </form>
-</div> <!-- container -->
-<c:import url="../layout/footer.jsp"/>
+</div>
+
+</body>
+</html>

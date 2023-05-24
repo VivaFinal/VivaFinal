@@ -9,30 +9,26 @@ public class SourceFileInfo {
 	private String fileStoredname;
 	private int fileSize;
 	private Date sourceDate;
-	private int userNo;
 	private int sourceNo;
-	private int packNo;
 	
 	public SourceFileInfo() {}
 
-	@Override
-	public String toString() {
-		return "SourceFileInfo [uploadNo=" + uploadNo + ", fileOriginname=" + fileOriginname + ", fileStoredname="
-				+ fileStoredname + ", fileSize=" + fileSize + ", sourceDate=" + sourceDate + ", userNo=" + userNo
-				+ ", sourceNo=" + sourceNo + ", packNo=" + packNo + "]";
-	}
-
 	public SourceFileInfo(int uploadNo, String fileOriginname, String fileStoredname, int fileSize, Date sourceDate,
-			int userNo, int sourceNo, int packNo) {
+			int sourceNo) {
 		super();
 		this.uploadNo = uploadNo;
 		this.fileOriginname = fileOriginname;
 		this.fileStoredname = fileStoredname;
 		this.fileSize = fileSize;
 		this.sourceDate = sourceDate;
-		this.userNo = userNo;
 		this.sourceNo = sourceNo;
-		this.packNo = packNo;
+	}
+
+	@Override
+	public String toString() {
+		return "SourceFileInfo [uploadNo=" + uploadNo + ", fileOriginname=" + fileOriginname + ", fileStoredname="
+				+ fileStoredname + ", fileSize=" + fileSize + ", sourceDate=" + sourceDate + ", sourceNo=" + sourceNo
+				+ "]";
 	}
 
 	public int getUploadNo() {
@@ -75,14 +71,6 @@ public class SourceFileInfo {
 		this.sourceDate = sourceDate;
 	}
 
-	public int getUserNo() {
-		return userNo;
-	}
-
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
-	}
-
 	public int getSourceNo() {
 		return sourceNo;
 	}
@@ -91,13 +79,6 @@ public class SourceFileInfo {
 		this.sourceNo = sourceNo;
 	}
 
-	public int getPackNo() {
-		return packNo;
-	}
-
-	public void setPackNo(int packNo) {
-		this.packNo = packNo;
-	}
 	
 	
 }                         

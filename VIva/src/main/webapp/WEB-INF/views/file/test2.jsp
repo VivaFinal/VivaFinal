@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="../layout/header.jsp"/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+
+
 <title>FileUpPack</title>
 
 <!-- CSS only -->
@@ -38,8 +42,7 @@
 	#content{
 	display: inline-block;
 	resize: none;
-	width: 500px;
-	margin-right: 500px;
+	width: 600px;
 	}
 	
 	label{
@@ -48,9 +51,11 @@
 	text-align: left;
 	}
 	
-	.container{
-	}
-	
+/* 	.left{ */
+/* 	display: inline-block; */
+/* 	width:50%; */
+/* 	float: left; */
+/* 	} */
 
 
 </style>
@@ -66,7 +71,12 @@
 <a class="source" href="/file/fileupsource">Source</a> 
 <a class="pack" href="/file/fileuppack"> Pack</a> 
 
-<form action="/file/uploadpack" method="post" enctype="multipart/form-data">
+
+<br>
+
+
+
+<form action="/file/fileuppack" method="post" enctype="multipart/form-data">
 
 
 <div id="left" >
@@ -80,18 +90,18 @@
 			 		aria-expanded="false">Key
 			 	</button>
 			 	<ul class="dropdown-menu">
-				    <li><a class="dropdown-item" href="#">C</a></li>
-				    <li><a class="dropdown-item" href="#">F</a></li>
-				    <li><a class="dropdown-item" href="#">Bb</a></li>
-				    <li><a class="dropdown-item" href="#">Eb</a></li>
-				    <li><a class="dropdown-item" href="#">Ab</a></li>
-				    <li><a class="dropdown-item" href="#">Db</a></li>
-				    <li><a class="dropdown-item" href="#">Gb</a></li>
-				    <li><a class="dropdown-item" href="#">B</a></li>
-				    <li><a class="dropdown-item" href="#">E</a></li>
-				    <li><a class="dropdown-item" href="#">A</a></li>
-				    <li><a class="dropdown-item" href="#">D</a></li>
-				    <li><a class="dropdown-item" href="#">G</a></li>
+				    <li><a class="dropdown-item" href="/file/test2?key=C">C</a></li>
+				    <li><a class="dropdown-item" href="#F">F</a></li>
+				    <li><a class="dropdown-item" href="#Bb">Bb</a></li>
+				    <li><a class="dropdown-item" href="#Eb">Eb</a></li>
+				    <li><a class="dropdown-item" href="#Ab">Ab</a></li>
+				    <li><a class="dropdown-item" href="#Db">Db</a></li>
+				    <li><a class="dropdown-item" href="#Gb">Gb</a></li>
+				    <li><a class="dropdown-item" href="#B">B</a></li>
+				    <li><a class="dropdown-item" href="#E">E</a></li>
+				    <li><a class="dropdown-item" href="#A">A</a></li>
+				    <li><a class="dropdown-item" href="#D">D</a></li>
+				    <li><a class="dropdown-item" href="#G">G</a></li>
 			  	</ul>
 	</div>
 	
@@ -100,13 +110,12 @@
 
 	<div>
 	<label>설명</label>
-<!-- 	<input type="text" id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!"  > -->
 	<textarea id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7"></textarea>
 	</div>
-	
-
-	
 </div> <!-- left -->
+
+
+
 
 
 
@@ -123,5 +132,7 @@
 	<button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
 </div>
 </form>
-</div> <!-- container -->
-<c:import url="../layout/footer.jsp"/>
+</div>
+
+</body>
+</html>

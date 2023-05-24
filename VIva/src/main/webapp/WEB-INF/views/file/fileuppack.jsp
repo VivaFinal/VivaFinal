@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:import url="../layout/header.jsp"/>
+
+
 <title>FileUpPack</title>
 
 <!-- CSS only -->
@@ -32,14 +34,16 @@
 	
 	#title{
 	display: inline-block;
-	width: 394px;
+	width: 480px;
+	}
+	#key{
+	display: inline-block;
+	width:60px;
 	}
 	
 	#content{
 	display: inline-block;
 	resize: none;
-	width: 500px;
-	margin-right: 500px;
 	}
 	
 	label{
@@ -48,20 +52,33 @@
 	text-align: left;
 	}
 	
-	#left{
+	#container{
 	display: grid;
 	grid-template-columns: 50% 50%;
 	grid-template-rows: 40px 188px;
+	margin-left: 0px;
 	}
+	
+	#containerid{
+	margin-left: 0px;
+	}
+	
+	.tag{
+/* 	grid-row:span 2; 그리드 합치기*/
+	border: 1px solid #d3d3d3;
+	border-radius: 10px;
+	}
+	
+	
 
 </style>
 
 </head>
 
 <body>
-
+<div class=body>
 <!-- container : div안에있는것들 다 가운데 -->
-<div class="container">
+<div id="containerid" class="container" >
 <h2> 자신만의 Source로 세상을 움직여주세요!</h2>
 <hr>
 <a class="source" href="/file/fileupsource">Source</a> 
@@ -72,59 +89,35 @@
 
 
 
-<form action="./write" method="post" enctype="multipart/form-data">
+<form action="/file/fileuppack" method="post" enctype="multipart/form-data">
 
 
-<div id="left" >
-	<div class="title">
+<div id="container" >
+	<div class="item">
 		<label>제목</label>
 		<input type="text" id="title" name="title" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!"> 
 			Key
-			<button 
-			 		class="btn btn-outline-secondary dropdown-toggle" 
-			 		type="button" data-bs-toggle="dropdown" 
-			 		aria-expanded="false">Key
-			 	</button>
-			 	<ul class="dropdown-menu">
-				    <li><a class="dropdown-item" href="#">C</a></li>
-				    <li><a class="dropdown-item" href="#">F</a></li>
-				    <li><a class="dropdown-item" href="#">Bb</a></li>
-				    <li><a class="dropdown-item" href="#">Eb</a></li>
-				    <li><a class="dropdown-item" href="#">Ab</a></li>
-				    <li><a class="dropdown-item" href="#">Db</a></li>
-				    <li><a class="dropdown-item" href="#">Gb</a></li>
-				    <li><a class="dropdown-item" href="#">B</a></li>
-				    <li><a class="dropdown-item" href="#">E</a></li>
-				    <li><a class="dropdown-item" href="#">A</a></li>
-				    <li><a class="dropdown-item" href="#">D</a></li>
-				    <li><a class="dropdown-item" href="#">G</a></li>
-			  	</ul>
+			<input type="text" id="key" name="key" class="form-control" placeholder="Key">
 	</div>
 	
-	<!-- col-lg-4는 textarea의 크기  -->
-	
 	<div>
-	안녕
+	<span style="font-size: 1.5em;">태그</span>
 	
 	</div>
-	<div>
+	
+	<div class="item">
 	<label>설명</label>
-<!-- 	<input type="text" id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!"  > -->
-	<textarea id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7"></textarea>
+	<textarea id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7" style="width: 570px;"></textarea>
 	</div>
+
 	
-	<div>
-	dkssud2
+	<div class=tag>
+	
+	
 	</div>
-	
-	
-	
 </div> <!-- left -->
 
-<div align="right">
-	<label>태그</label>
-			  	<div class="border border-success p-2 mb-2" style="width: 300px;">This is default success border</div>
-</div>
+
 
 <!-- mb 마진바텀 -->
 <div class="mb-5">
@@ -139,6 +132,7 @@
 	<button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
 </div>
 </form>
+</div>
 </div>
 
 </body>

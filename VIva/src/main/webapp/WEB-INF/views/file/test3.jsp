@@ -1,9 +1,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<c:import url="../layout/header.jsp"/>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+
+
 <title>FileUpPack</title>
 
 <!-- CSS only -->
@@ -39,7 +43,6 @@
 	display: inline-block;
 	resize: none;
 	width: 500px;
-	margin-right: 500px;
 	}
 	
 	label{
@@ -48,7 +51,10 @@
 	text-align: left;
 	}
 	
-	.container{
+	.right{
+	width: 500px;
+	height: 400px;
+	border: 1px solid red;
 	}
 	
 
@@ -66,10 +72,14 @@
 <a class="source" href="/file/fileupsource">Source</a> 
 <a class="pack" href="/file/fileuppack"> Pack</a> 
 
-<form action="/file/uploadpack" method="post" enctype="multipart/form-data">
+
+<br>
 
 
-<div id="left" >
+
+<form action="/file/fileuppack" method="post" enctype="multipart/form-data">
+
+<div style="display: inline-block; width: 600px;" >
 	<div class="title">
 		<label>제목</label>
 		<input type="text" id="title" name="title" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!"> 
@@ -94,19 +104,19 @@
 				    <li><a class="dropdown-item" href="#">G</a></li>
 			  	</ul>
 	</div>
-	
-	<!-- col-lg-4는 textarea의 크기  -->
-	
-
-	<div>
 	<label>설명</label>
-<!-- 	<input type="text" id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!"  > -->
 	<textarea id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7"></textarea>
-	</div>
-	
+</div>
 
-	
-</div> <!-- left -->
+<div class="right" style="width: 200px; height: 30px; float: right;"  >
+
+
+
+
+</div>
+
+
+
 
 
 
@@ -123,5 +133,7 @@
 	<button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
 </div>
 </form>
-</div> <!-- container -->
-<c:import url="../layout/footer.jsp"/>
+</div>
+
+</body>
+</html>
