@@ -11,17 +11,17 @@
 <script type="text/javascript" src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
 
 <script type="text/javascript">
-$(function () {
-    $(".nav").hide();
-    $("#content").click(function () {
-        $(".nav").fadeToggle(300);
-    });
-    // 왼쪽메뉴 드롭다운
-    $(".nav ul.small_menu").hide();
-    $(".nav li.category").click(function () {
-        $("ul", this).slideToggle(300);
-    });
-});
+// $(function () {
+//     $(".nav").hide();
+//     $("#content").click(function () {
+//         $(".nav").fadeToggle(300);
+//     });
+//     // 왼쪽메뉴 드롭다운
+//     $(".nav ul.small_menu").hide();
+//     $(".nav li.category").click(function () {
+//         $("ul", this).slideToggle(300);
+//     });
+// });
 </script>
 
 <style type="text/css">
@@ -49,14 +49,13 @@ $(function () {
 /*  로고 그리드만 고정 크기로. */
 #sidebar {
 	display: grid;	
-	background : pink;
 	grid-template-rows:  150px 1fr;
 	grid-row: auto / span 2;
 	grid-gap:0px;
 /* 	background-image: url('../../../resources/img/Rectangle10.svg'); */
 /* 	background-image: url('../../../resources/img/side_10.png'); */
 	background-image: url('../../../resources/img/wow.svg');
-	
+	z-index: 1031;
 }
 #header {
 	background : #FFFFFF;
@@ -90,7 +89,7 @@ ul.nav > li >a {
 /* ====================================================  */
 /*  메인 메뉴의 항목 텍스트에 마우스가 올라갔을 때 */
 ul.nav > li > a:hover {
-	color: tomato;
+	color: white;
 }
 
 /* 서브메뉴 */
@@ -117,13 +116,13 @@ ul.nav > li > ul {
 	
 }
 /* Sounds 메뉴 클릭시 2 열로 small menu 보이게 하기 */
-.category : nth-child(2) {
-	display:flex;
-	align-content:flex-start; 
-	flex-direction:column; 
-	flex-wrap:wrap; 
-	overflow:auto;
-}
+/* .category : nth-child(2) { */
+/* 	display:flex; */
+/* 	align-content:flex-start;  */
+/* 	flex-direction:column;  */
+/* 	flex-wrap:wrap;  */
+/* 	overflow:auto; */
+/* } */
 
 /*  서브 메뉴의 항목 */
 ul.nav > li > ul > li {
@@ -165,7 +164,7 @@ ul.nav > li > ul > li > a {
 	display: block;
 	
 	/*  글자 색상 */
-	color: #333;
+	color: white;
 	
 	/* 글자 꾸밈선(underline) 제거 */
 	text-decoration: none;
@@ -175,12 +174,12 @@ ul.nav > li > ul > li > a {
 ul.nav > li > ul > li > a:hover {
 	
 	/*  글자색 변환 */
-	color: #c00;
+	color: white;
 	font-weight: bold;
 	
 	
 }
-.icon {
+.item {
 	margin-top:5px;
 	display : inline-block;
 	float : right;
@@ -191,7 +190,7 @@ ul.nav > li > ul > li > a:hover {
     height: 36px;
 }
 /* My Sounds */
-#sound {
+.icon {
 /* position: absolute; */
 
 font-family: 'Bahnschrift';
@@ -261,10 +260,13 @@ text-fill-color: transparent;
 	  
 		</ul>
 	  </div>
+	
 	  <div class = "item" id="header">
-	  	<a class="icon" href=""><img src="../../../resources/icon/shopping-cart.png" alt="cart"></a>
+<!-- 	  	<a class="icon" href=""><img src="../../../resources/icon/shopping-cart.png" alt="cart"></a> -->
+	  	<a class="icon" id="sound" href=""><span>Cart</span></a>
 	  	<a class="icon" id="sound" href=""><span>My Sounds</span></a>
-	  	<a class="icon" id="sound" href=""><span>credits</span></a>
+	  	<a class="icon" id="sound" href=""><span>Credits</span></a>
+	  	<a class="icon" id="sound" href=""><span>user</span></a>
 	  </div>
 	  
 	  <div class = "item" id="content"><!--  footer.jsp 에서 닫아줌 -->
