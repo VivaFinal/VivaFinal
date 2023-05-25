@@ -65,7 +65,9 @@
 					<img alt="구매" src="../../../resources/icon/buy icon.png" width="20">
 				</td>
 				<td><!--  6. 항목 삭제 -->
-					<img alt="삭제" src="../../../resources/icon/X.png" width="20">
+					<a href="./delete">
+						<img alt="삭제" src="../../../resources/icon/X.png" width="20">
+					</a>
 				</td>
 			</tr><!--  첫번째 열 End -->
 			</tbody>

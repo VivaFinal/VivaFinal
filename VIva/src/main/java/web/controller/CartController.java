@@ -44,7 +44,7 @@ public class CartController {
 		model.addAttribute("list", cartList);
 	}
 	
-	@GetMapping("/del")
+	@GetMapping("/delete")
 	public void delete() {
 		logger.info("/cart/list - delete()");
 		
