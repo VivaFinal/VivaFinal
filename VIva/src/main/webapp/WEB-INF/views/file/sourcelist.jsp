@@ -21,6 +21,11 @@
 		<th>Tag_no</th>
 		<th>Pack_no</th>
 		<th>User_no</th>
+		<th>SourceFileInfo의 File_Originname</th>
+		<th>SourceFileInfo의 File_Storedname</th>
+		<th>SourceImgInfo의 Img_Originname</th>
+		<th>SourceImgInfo의 Img_Storedname</th>
+		
 	</tr>
 <c:forEach var="list" items="${list }">
 	<tr>

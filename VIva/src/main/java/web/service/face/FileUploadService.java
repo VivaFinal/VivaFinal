@@ -2,9 +2,10 @@ package web.service.face;
 
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import web.dto.Source;
-import web.dto.SourceFileInfo;
-import web.dto.SourceImgInfo;
+
 
 public interface FileUploadService {
 	
@@ -15,22 +16,12 @@ public interface FileUploadService {
 	public List<Source> getSourceList();
 	
 	/**
-	 * 음원소스(Source)테이블 
-	 * @param source-source_no,source_name, bpm ,key 입력
+	 * Source 업로드 부분
+	 * @param source-source(source_name,BPM,Key,tag_no,pack_no,user_no) insert
+	 * @param imgfile - 소스 이미지 파일 부분 (sourceImgInfo 테이블)
+	 * @param file - 소스 음원 파일 부분 (sourceFileInfo 테이블)
 	 */
-	public void SourceUploadSource(Source source);
-
-	/**
-	 * 음원소스 업로드 파일정보 (SourceFileInfo) 테이블
-	 * @param sourceFileInfo - 음원 origin,stored,source_date 입력
-	 */
-	public void SourceUploadFile(SourceFileInfo sourceFileInfo);
-
-	/**
-	 * 음원소스 이미지 파일정보 ( SourceImgInfo ) 테이블
-	 * @param sourceImgInfo - 이미지 origin,stored
-	 */
-	public void SourceUploadImg(SourceImgInfo sourceImgInfo);
+	public void SourceUpload(Source source,MultipartFile imgfile,MultipartFile file);
 
 
 

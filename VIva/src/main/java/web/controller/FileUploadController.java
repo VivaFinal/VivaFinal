@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Source;
 import web.dto.SourceFileInfo;
@@ -64,17 +65,16 @@ public class FileUploadController {
 	}
 	
 	@PostMapping("/file/fileupsource")
-	public void FileUpSourcePost(
+	public String FileUpSourcePost(
 			Source source,
-			SourceFileInfo sourceFileInfo,
-			SourceImgInfo sourceImgInfo
+			MultipartFile imgfile,
+			MultipartFile file
 			) {
 		logger.info("/file/fileupsource [Post]");
 		
-		fileUploadService.SourceUploadSource(source);
-		fileUploadService.SourceUploadFile(sourceFileInfo);
-		fileUploadService.SourceUploadImg(sourceImgInfo);
+		fileUploadService.SourceUpload(source,imgfile,file);
 		
+		return "redirect:/file/sourcelist";
 		
 	}
 	

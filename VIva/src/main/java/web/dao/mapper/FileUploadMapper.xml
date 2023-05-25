@@ -20,10 +20,24 @@
 	(source_no, source_name, bpm, key, source_price, tag_no, pack_no, user_no)
 	values
 	(#{sourceNo} , #{sourceName},#{bpm},#{key},30,1,1,1)
-	
-	
-	
 	</insert>
+   
+   	<insert id="SourceInsertImg" parameterType="web.dto.SourceImgInfo">
+   	insert into sourceimginfo
+   	(source_img_originname , source_img_storedname , source_no)
+   	values
+   	(#{sourceImgOriginname}, #{sourceImgStoredname}, #{sourceNo})
+   	</insert>
+   	
+   	<insert id="SourceInsertFile" parameterType="web.dto.SourceFileInfo">
+   	<selectKey keyProperty="uploadNo" order="BEFORE" resultType="int">
+	select sourcefileinfo_seq.nextval from dual
+	</selectKey>
+   	insert into sourcefileinfo
+   	(upload_no, file_originname, file_storedname,file_size ,source_no)
+   	values
+   	(#{uploadNo}, #{fileOriginname}, #{fileStoredname} , #{fileSize} ,#{sourceNo} )
+   	</insert>
    
    
   	
