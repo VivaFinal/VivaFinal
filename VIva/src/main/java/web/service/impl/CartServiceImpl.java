@@ -1,6 +1,7 @@
 package web.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,7 +19,7 @@ public class CartServiceImpl implements CartService {
 	@Autowired CartDao cartDao;
 	
 	@Override
-	public List<Cart> getCartList(Cart userNo) {
+	public List<Map<String, Object>> getCartList(Cart userNo) {
 		logger.info("getList()");
 		
 		

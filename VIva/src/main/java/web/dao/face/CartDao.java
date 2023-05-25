@@ -1,6 +1,7 @@
 package web.dao.face;
 
 import java.util.List;
+import java.util.Map;
 
 import web.dto.Cart;
 
@@ -12,7 +13,7 @@ public interface CartDao {
 	 * @param userno
 	 * @return cart 항목 전체 
 	 */
-	public List<Cart> selectCartByUserno(Cart userNo);
+	public List<Map<String, Object>> selectCartByUserno(Cart userNo);
 	
 
 }

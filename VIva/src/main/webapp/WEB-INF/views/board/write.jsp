@@ -4,21 +4,6 @@
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
-<!-- 스마트 에디터 2 로드 -->
-<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js"></script>
-
-<style type="text/css">
-
-.container {
-	font-family: "typeFont"; 
-    src: url('../../resources/font/BalooBhaina2-VariableFont_wght.ttf') 
-	text-align: center; 
-}
-
-
-</style>
-
-
 <script type="text/javascript">
 function submitContents(elClickedObj) {
 	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", [])
@@ -27,6 +12,7 @@ function submitContents(elClickedObj) {
 		elClickedObj.form.submit();
 	} catch(e) {}
 }
+
 
 $(document).ready(function() {
 	$("#cancel").click(function() {
@@ -42,6 +28,18 @@ $(document).ready(function() {
 })
 </script>
 
+
+<style type="text/css">
+
+.container {
+	font-family: "typeFont"; 
+    src: url('../../resources/font/BalooBhaina2-VariableFont_wght.ttf') 
+	text-align: center; 
+}
+
+</style>
+
+
 <div class="container">
 <h1>글 작성</h1>
 <hr>
@@ -50,8 +48,8 @@ $(document).ready(function() {
 <form action="./write" method="post" enctype="multipart/form-data">
 
 <div class="form-group">
-	<label class="form-label" for="write">작성자</label>
-	<input type="text" id="write" value="${nick }" class="form-control" readonly="readonly">
+	<label class="form-label" for="write">작성자 닉네임</label>
+	<input type="text" id="write" name="nick" value="${userNick }" class="form-control">
 </div>
 
 <div class="form-group">
@@ -66,7 +64,7 @@ $(document).ready(function() {
 
 <div class="form-group">
 	<label class="form-label" for="file">첨부파일</label>
-	<input type="text" id="file" name="file" class="form-control">
+	<input type="file" id="file" name="file" class="form-control">
 </div>
 
 <div class="text-center">
@@ -77,17 +75,6 @@ $(document).ready(function() {
 </form>
 
 </div>
-
-
-<script type="text/javascript">
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-	oAppRef: oEditors
-	, elPlaceHolder: "content"
-	, sSkinURI: "/resources/se2/SmartEditor2Skin.html"
-	, fCreator: "createSEditor2"
-})
-</script>
 
 </div><!-- .container end -->
 

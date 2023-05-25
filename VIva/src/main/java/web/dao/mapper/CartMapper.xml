@@ -3,13 +3,24 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
-  
+
+
 <mapper namespace="web.dao.face.CartDao">
-	<select id="selectCartByUserno" resultType="web.dto.Cart" parameterType="web.dto.Cart">
-		select C.*, S.* from cart C, source S
-		where C.source_no = S.source_no
-		and C.user_no = #{userNo};
+
+<!-- 	<resultMap type="HashMap" id="cartResultMap"> -->
+<!-- 		<id column="SOURCE_IMG_STOREDNAME" property="sourceImgStoredname" /> -->
+<!-- 		<id column="source_name" property="sourceName"/> -->
+<!-- 		<id column="source_price" property="sourcePrice" /> -->
+<!-- 	</resultMap> -->
 	
+	<select id="selectCartByUserno" resultType="HashMap" parameterType="web.dto.Cart">
+		select 
+			SI.SOURCE_IMG_STOREDNAME, 
+			S.source_name, source_price  
+		 from cart C
+			left join source S on C.source_no = S.source_no
+			left join sourceimginfo SI on C.source_no = SI.source_no
+		 where C.user_no = #{userNo}
 	</select>
 
 

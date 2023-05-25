@@ -40,6 +40,38 @@
     margin-top: 15px;
 
 }
+.FunctionTitle {
+/* 	position: absolute; */
+	width: 115px;
+	height: 50px;
+/* 	left: calc(50% - 115px/2 + 833.5px); */
+/* 	top: 286px; */    
+	margin-left: 50px;
+	
+	font-family: "typeFont";
+	font-style: normal;
+	font-weight: 600;
+	font-size: 50px;
+	line-height: 15px;
+	/* identical to box height, or 30% */
+	display: flex;
+	align-items: center;
+	text-align: center;
+	letter-spacing: 0.13em;
+	
+	background: linear-gradient(251.88deg, #BE3455 30.85%, #532AA2 78.35%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+	
+}
+
+.FunctionTitleLine {
+	margin-left: 50px;
+	mar
+}
+
 .wrapper {
 	display: grid;
 	grid-template-columns: 250px 1670px;
@@ -189,27 +221,28 @@ ul.nav > li > ul > li > a:hover {
     width: 36px;
     height: 36px;
 }
-/* My Sounds */
+
+
 .icon {
-/* position: absolute; */
-
-font-family: 'Bahnschrift';
-font-style: normal;
-font-weight: 700;
-font-size: 25px;
-line-height: 15px;
-/* identical to box height, or 60% */
-/* display: flex; */
-align-items: center;
-text-align: center;
-letter-spacing: -0.04em;
-
-background: linear-gradient(251.88deg, #BE3455 30.85%, #532AA2 78.35%);
--webkit-background-clip: text;
--webkit-text-fill-color: transparent;
-background-clip: text;
-text-fill-color: transparent;
-}
+	/* position: absolute; */
+	
+	font-family: 'Bahnschrift';
+	font-style: normal;
+	font-weight: 700;
+	font-size: 25px;
+	line-height: 15px;
+	/* identical to box height, or 60% */
+	/* display: flex; */
+	align-items: center;
+	text-align: center;
+	letter-spacing: -0.04em;
+	
+	background: linear-gradient(251.88deg, #BE3455 30.85%, #532AA2 78.35%);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-fill-color: transparent;
+	}
 </style>
 </head>
 <body>

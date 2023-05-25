@@ -12,10 +12,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Board;
 import web.dto.Tag;
+import web.dto.Users;
 import web.service.face.BoardService;
 import web.util.Paging;
 
@@ -23,12 +25,14 @@ import web.util.Paging;
 @RequestMapping("/board")
 public class BoardController {
 	
+	//20230525 보보를 기준으로 소스 복사!
+	
 	@Autowired BoardService boardService;
 	
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
 	@RequestMapping("/list")
-	public void Page( Paging paging, Model model ) {
+	public void list( Paging paging, Model model ) {
 		logger.info("/board/list [GET]");
 		
 		//페이징 계산
@@ -58,6 +62,7 @@ public class BoardController {
 		//모델값 전달  - 게시글
 		model.addAttribute("viewBoard", viewBoard);
 		
+		
 		return "board/view";
 	
 	}
@@ -67,11 +72,31 @@ public class BoardController {
 	public void write() {}
 	
 	@PostMapping("/write")
-	public String writeProc( Board board, MultipartFile file, HttpSession session ) {
-		logger.info("/board/write [POST]");
+	public String writeProc( 
+			
+			Board board, MultipartFile file, HttpSession session, Model model,
+			@RequestParam("nick") String nick,
+			@RequestParam("title") String title,
+			@RequestParam("content") String content
+			
+			){
 		
-		board.setUserId( (String) session.getAttribute("id") );
-		board.setUserNick( (String) session.getAttribute("nick") );
+		logger.info("/board/write [POST]");	
+		
+		  //로그인 String id = null; if( session.getAttribute("id")!= null ) {
+//		  logger.info("로그인 실패"); return "redirect:./main"; } else {
+//		  logger.info("로그인 성공"); id = (String)session.getAttribute("id");
+//		  
+//		  } model.addAttribute("userId", id);
+		
+//		board.setUserId( (String) session.getAttribute("id") );
+//		board.setUserNick( (String) session.getAttribute("nick") );	
+//		board.setBoardTitle("write");// 여기에 tilte담아야함
+		
+		model.addAttribute("nick", nick);
+		model.addAttribute("title", title);
+		model.addAttribute("content", content);
+		
 		
 		boardService.write( board, file );
 		

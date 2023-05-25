@@ -1,6 +1,7 @@
 package web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,11 +22,11 @@ public class CartController {
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
 	@Autowired private CartService cartService;
 	
-	@GetMapping("/list")
+	@GetMapping("/test")
 	public String list1() {
-		logger.info("cart/list - list-1()");
+		logger.info("cart/list - test()");
 		
-		return "/cart/main";
+		return "/cart/test";
 		
 	}
 	
@@ -34,7 +35,11 @@ public class CartController {
 		logger.info("cart/list - list()");
 		logger.info("userno: {} ", userNo);
 		
-		List<Cart> cartList = cartService.getCartList(userNo);
+		List<Map<String, Object>> cartList = cartService.getCartList(userNo);
+		
+		
+		logger.info("{}", cartList);
+		logger.info("{}", cartList.get(0));
 		
 		model.addAttribute("list", cartList);
 	}

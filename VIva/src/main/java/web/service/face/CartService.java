@@ -1,6 +1,7 @@
 package web.service.face;
 
 import java.util.List;
+import java.util.Map;
 
 import web.dto.Cart;
 
@@ -12,7 +13,7 @@ public interface CartService {
 	 * @param userno
 	 * @return 장바구니 전체 내역 
 	 */
-	public List<Cart> getCartList(Cart userNo);
+	public List<Map<String, Object>> getCartList(Cart userNo);
 
 	
 

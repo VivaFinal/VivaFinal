@@ -1,5 +1,6 @@
 package web.controller;
 
+
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -23,6 +24,28 @@ public class UsersController {
 	
 	@GetMapping("/login")
 	public void login() {}
+	
+//	@GetMapping("/main")
+//	public String login(@RequestParam("code")String code, HttpSession session) {
+//		logger.info("/users/kakao");
+//		
+//		logger.info("code: {}", code);
+//		String access_Token = kakaoService.getAccessToken(code);
+//		logger.info("controller access_token : {}" + access_Token);
+//		
+//		HashMap<String, Object> userInfo = kakaoService.getUserInfo(access_Token);
+//	    System.out.println("login Controller : " + userInfo);
+//	    //    클라이언트의 이메일이 존재할 때 세션에 해당 이메일과 토큰 등록
+//	    if (userInfo.get("email") != null) {
+//	        session.setAttribute("userId", userInfo.get("email"));
+//	        session.setAttribute("access_Token", access_Token);
+//	        session.setAttribute("kakaoId", userInfo.get("id"));
+//	        
+//	    }
+//	    
+//		return "redirect:./main";
+//		
+//	}
 
 	@PostMapping("/login")
 	public String loginProcess(Users users, HttpSession session) {
@@ -50,12 +73,15 @@ public class UsersController {
 		
 	}
 	
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		session.invalidate();
-		
-		return "redirect:./main";
-	}
+//	@RequestMapping("/logout")
+//	public String logout(HttpSession session) {
+//		
+//		kakaoService.kakaoLogout((String)session.getAttribute("access_Token"));
+//		session.removeAttribute("access_Token");
+//		session.removeAttribute("userId");
+//		return "redirect:./main";
+//	}
+	
 	
 	@GetMapping("/join")
 	public void join() {}
@@ -74,25 +100,19 @@ public class UsersController {
 		}
 	}
 	
-	@RequestMapping("/main")
-	public void main() {}
-	
 	
 	@RequestMapping("/idfind")
 	public void idfind(Users users) {
 		
-//		return "redirect:./idfind";
 	}
 	
 	@RequestMapping("/pwfind")
 	public void pwfind(Users users) {
 		
-//		return "redirect:./idfind";
 	}
 	@RequestMapping("/updateInfo")
 	public void updateInfo(Users users) {
 		
-//		return "redirect:./idfind";
 	}
 	
 }

@@ -1,7 +1,7 @@
 package web.controller;
 
-import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,11 +30,21 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 		
 		model.addAttribute("genre", genre.getGenre());
 		
-		// 같은 장르를 가진 태그를 모두 불러온다
-		List<Tag> tag = sourceService.getTag(genre.getGenre());
+		// 태그 조회
+		List<Tag> instrument = sourceService.getTag(genre.getGenre());
+		List<Tag> scape = sourceService.getTagScape(genre.getGenre());
+		List<Tag> detail = sourceService.getTagDetail(genre.getGenre());
+		List<Tag> fx = sourceService.getTagFx(genre.getGenre());
 		
-		logger.info("태그 확인 : {}",tag);
-		model.addAttribute("tag", tag);
+		model.addAttribute("inst", instrument);
+		model.addAttribute("scape", scape);
+		model.addAttribute("detail", detail);
+		model.addAttribute("fx", fx);
+		
+		List<Map<String, Object>> list = sourceService.getSourceByGenre(genre.getGenre());
+		
+		logger.info("장르별 음원소스 조회 : {}", list);
+		model.addAttribute("list", list);
 		
 	}
 	

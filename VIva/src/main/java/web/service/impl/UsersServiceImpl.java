@@ -30,7 +30,7 @@ public class UsersServiceImpl implements UsersService {
 	public boolean join(Users users) {
 		
 		//중복된 ID인지 확인
-		if( usersDao.selectCntById(users) > 0 ) {
+		if ( usersDao.selectCntById(users) > 0 ) {
 			return false;
 		}
 		

@@ -5,8 +5,14 @@
 <c:import url="../layout/header.jsp"/>    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-<h1>장바구니 페이지</h1>
-${list }
+
+<div class="FunctionTitle">
+	Cart
+</div>
+<div class="FunctionTitleLine">
+	<img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
+</div>
+
 	<div id="titleArea">
 		<div id="selectArea">	
 			<button type="button" class="btn btn-secondary btn-sm">전체 선택</button>
@@ -46,20 +52,20 @@ ${list }
 
 				<td><!--  2. pack 및 소스 앨범아트 -->
 					<div class="product_img">
-						<img src="../resources/img/모남희.jpg" style="width:70px;">
+						<img alt="이미지 없음" src="./buy${i.SOURCE_IMG_STOREDNAME }" width="50">
 					</div>
 				</td>
 				<td><!--  3. 음원 title -->
-					<span>source title</span>
+					<span>${i.SOURCE_NAME}</span>
 				</td>
 				<td><!--  4. 금액 -->
-					<span>credit 액수</span>
+					<span>${i.SOURCE_PRICE}</span>
 				</td>
-				<td><!--  5. 배송비 -->
-					<span>buy icon</span>
+				<td><!--  5. 바로 구매 -->
+					<img alt="구매" src="../../../resources/icon/buy icon.png" width="20">
 				</td>
-				<td><!--  항목 삭제 -->
-					<span>삭제 icon</span>
+				<td><!--  6. 항목 삭제 -->
+					<img alt="삭제" src="../../../resources/icon/X.png" width="20">
 				</td>
 			</tr><!--  첫번째 열 End -->
 			</tbody>

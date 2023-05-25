@@ -53,10 +53,11 @@ public class BoardServiceImpl implements BoardService {
 		if("".equals( board.getBoardTitle() ) ) {
 			board.setBoardTitle("제목 없음");
 		}
+	
 		boardDao.insertBoard( board );
 		
 		//----------------------------------------------
-		
+
 		//빈 파일인 경우
 		if( file.getSize() <= 0 ) {
 			return;

@@ -27,4 +27,7 @@ public interface UsersService {
 	 * @return 회원가입 결과
 	 */
 	public boolean join(Users users);
+	
+	
+	
 }

@@ -7,10 +7,41 @@
   <mapper namespace="web.dao.face.SourceDao">
   
   	<select id="selectTagByGenre" parameterType="String" resultType="web.dto.Tag">
-  		
-  		SELECT * FROM TAG
+  		SELECT DISTINCT INSTRUMENT FROM TAG
   		WHERE GENRE = #{genre}	
-  	
   	</select>
+  	
+  	<select id="selectTagByGenreforScape" parameterType="String" resultType="web.dto.Tag">
+  		SELECT DISTINCT SCAPE FROM TAG
+  		WHERE GENRE = #{genre}	
+  	</select>
+  	
+  	<select id="selectTagByGenreforDetail" parameterType="String" resultType="web.dto.Tag">
+  		SELECT DISTINCT DETAIL FROM TAG
+  		WHERE GENRE = #{genre}	
+  	</select>
+  	
+  	<select id="selectTagByGenreforFx" parameterType="String" resultType="web.dto.Tag">
+  		SELECT DISTINCT Fx FROM TAG
+  		WHERE GENRE = #{genre}	
+  	</select>
+  
+  	<select id="selectSourceByGenre" parameterType="String" resultType="hashmap">
+		SELECT s.source_no, s.source_name, s.bpm, s.key, t.tag_no, t.genre, 
+		    p.pack_no, pi.pack_img_storedname, pi.pack_img_originname,
+		    sf.file_originname, sf.file_storedname
+		FROM source S
+		INNER JOIN tag t on s.tag_no = t.tag_no
+		INNER JOIN pack p on s.pack_no = p.pack_no 
+		INNER JOIN packimginfo pi on p.pack_no = pi.pack_no
+		INNER JOIN sourcefileinfo sf on s.source_no = sf.source_no
+		WHERE t.genre = #{genre}
+		order by source_no
+  	</select>
+  
+  
+  
+  
+  
   
   </mapper>

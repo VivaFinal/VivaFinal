@@ -1,22 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%> 
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
 
 <style type="text/css">
 
-.head, .body {
-	 font-family: "typeFont"; 
-    src: url('../../resources/font/BalooBhaina2-VariableFont_wght.ttf') 
+.head {
+	text-align: center; 
+}
+.body {
 	text-align: center; 
 }
 
+
 </style>
 
-</head>
-<body>
 
 <div class="head">
 <h1>게시글 목록</h1>
@@ -29,8 +30,12 @@
 <thead>
 <tr>
 	<th>게시글 번호</th>
-	<th>카테고리</th>
+	<select name="category">
+		<option value="자유">자유</option>
+		<option value="공지">공지</option>
+	</select>
 	<th>게시글 제목</th>
+	<th>닉네임</th>
 	<th>조회수</th>
 	<th>게시글 작성일</th>
 </tr>
@@ -41,14 +46,12 @@
 <tr>
 	<td>${boardList.boardNo }</td>
 	<td>${boardList.categoryType }</td>
-	<td>${boardList.boardTitle }</td>
+	<td><a href="./view?boardNo=${boardList.boardNo }">${boardList.boardTitle }</a></td>
+	<td>${boardList.userNick }
 	<td>${boardList.boardHit }</td>
-	<td>${boardList.boardDate }</td>
+	<td><fmt:formatDate value="${boardList.boardDate }" pattern="yyyy-MM-dd"/></td>
 </tr>
 </c:forEach>
 </tbody>
 </table>
 </div>
-
-</body>
-</html>
