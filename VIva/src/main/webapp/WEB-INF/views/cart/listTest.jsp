@@ -5,49 +5,98 @@
 
 <c:import url="../layout/header.jsp"/>   
 
-<!--  ajax 방식 1  : 안됨 ㅠ -->
+
+<!--  ajax 방식 2 (채원) -->
 <script type="text/javascript">
-var xmlHttp = null;
-
 $(function() {
-
-
 	
-	$("#like").click(function() {
-		console.log("#like click() called ")
+	$("#recommend").click(function() {  // 항목 삭제 버튼 이벤트 리스너
+			
+			console.log("click Delete")
+			
+			$.ajax({
+				type:"get" // Method 타입 [ get Or Post ]
+				, url: "/cart/delete" // 요청 URL 혹은 서블릿
+				, data : {  // 요청 데이터 JS Object 형식 Key : value
+				 	userid : "${ i.USER_ID }",
+			 		cartNo : ${ i.CART_NO }
+				}
+// 				, dataType: "html" // Return Type 
+				, dataType: "json" // Return Type 
+				, success: function(res) {
+					
+					console.log("AJAX 성공")
+					
+					$("#recommend").attr("value","삭제")
+					
+					$("#recnum").html("추천수 : " + cnt)
+					
+				}
+				,error: function() {
+					console.log("ajax 실패")
+					
+					$("#error").html( $warn )
+				}
+			})
+	})
+	
+	
+	$("#btnCmt").click(function(e) {
 		
-		//XHR객체 생성 -> 이미 존재하므로 new만 해도 된
-		xmlHttp = new XMLHttpRequest();
-		console.log(xmlHttp)
+		$.ajax({
+			type:"get"
+			, url:"/comment/insert"
+			, data : {
+				userid : "${member.userid}",
+				boardno : ${ detail.boardno },
+				comment : $("#comment").val()
+			}
+			, dataType: "html"
+			, success: function(res) {
+				console.log(res)
+				$("#loadcomment").append(res)
+				
+			}
+			, error: function() {
+				console.log("ajax fail")
+			}
+			
+		})
+	})
+	
+	
+	$("#delete").click(function() {
 		
-		//AJAX 요청 전 설정
-		//요청 URL
-		var url = "./recommend?boardno=" + $("#boardno").html()
+		console.log("click Delete")
 		
-		//요청 Method
-		var method = "GET";
-		console.log("왜 안될까" + $("#boardno").html());
-
-		xmlHttp.onreadystatechange = callback;
+		$.ajax({
+			
+			type:"get"
+			, url: "/comment/delete"
+			, datatype: "json"
+			, data : {
+				commentno: $("#delete").parent().prev().text()
+			}
+			,success: function(res) {
+				console.log("ajax성공")
+				
+				if ( res == true ) {
+					$("#delete").parent().parent().css("display","none")
+				} else {
+					$("#delete").append("삭제 ㄴㄴ")
+				}
+			}
+			,error: function() {
+				console.log("ajax실패")
+			}
+			
+		})
 		
-		xmlHttp.open(method, url)
-		xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-		
-		xmlHttp.send();
 		
 	})
-})
-function callback() {
-	console.log("callback 호출")
 	
-	if(xmlHttp.readyState == 4){
-		if(xmlHttp.status == 200) {
-			console.log("AJAX 반환 성공")
-		} else {
-			console.log("AJAX 반환 안됐음")
-		}
-	}
-}
+})
+
 </script>
 
 <div class="FunctionTitle">
@@ -111,7 +160,7 @@ function callback() {
 				</td>
 				<td><!--  6. 항목 삭제 -->
 <!-- 					<a href="./delete"> -->
-						<img id="delete" alt="삭제" src="../../../resources/icon/X.png" width="20">
+<!-- 						<img id="delete" alt="삭제" src="../../../resources/icon/X.png" width="20"> -->
 <!-- 					</a> -->
 
 					<!--  ajax 채원방식 2 -->

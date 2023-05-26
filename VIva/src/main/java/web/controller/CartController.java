@@ -30,16 +30,22 @@ public class CartController {
 		
 	}
 	
-	@PostMapping("/list")
+//	@PostMapping("/list")
+//	public void list(Cart userNo, Model model) {
+//		logger.info("cart/list - list()");
+//		logger.info("userno: {} ", userNo);
+//		
+//		List<Map<String, Object>> cartList = cartService.getCartList(userNo);
+//		
+//		model.addAttribute("list", cartList);
+//	}
+	
+	@PostMapping("/listTest")
 	public void list(Cart userNo, Model model) {
 		logger.info("cart/list - list()");
 		logger.info("userno: {} ", userNo);
 		
 		List<Map<String, Object>> cartList = cartService.getCartList(userNo);
-		
-		
-		logger.info("{}", cartList);
-		logger.info("{}", cartList.get(0));
 		
 		model.addAttribute("list", cartList);
 	}
