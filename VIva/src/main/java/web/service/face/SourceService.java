@@ -3,6 +3,7 @@ package web.service.face;
 import java.util.List;
 import java.util.Map;
 
+import web.dto.SourceLike;
 import web.dto.Tag;
 
 public interface SourceService {
@@ -47,6 +48,28 @@ public interface SourceService {
 	 * @return - 장르별 음원소스의 집합
 	 */
 	public List<Map<String, Object>> getSourceByGenre(String genre);
+
+	/**
+	 * Like를 추가, 클라이언트가 좋아요를 눌렀을 때
+	 * @param userNo - userno 사용자 정보
+	 * @param sourceNo - sourceno 음원소스 정보
+	 */
+	public void sourceLike(SourceLike like);
+
+	/**
+	 * 좋아요를 누른 이력이 있는지 확인한다
+	 * @param like - 좋아요를 누른 객체 정보
+	 * @return - 이력이 있으면 true, 없으면 false
+	 */
+	public boolean chkLike(SourceLike like);
+
+	/**
+	 * 좋아요를 삭제한다
+	 * 
+	 * @param like - 좋아요를 누른 객체 정보
+	 */
+	public void sourceDestLike(SourceLike like);
+
 	
 
 

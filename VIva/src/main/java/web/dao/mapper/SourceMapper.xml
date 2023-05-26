@@ -39,9 +39,21 @@
 		order by source_no
   	</select>
   
+  	<insert id="insertSourceLike" parameterType="web.dto.SourceLike">
+  		INSERT INTO SOURCE_LIKE(USER_NO, SOURCE_NO)
+  		VALUES(#{userNo},#{sourceNo})
+  	</insert>
   
+  	<select id="selectByLike" parameterType="web.dto.SourceLike" resultType="int">
+  			
+  		SELECT count(*) chk FROM SOURCE_LIKE
+  		WHERE user_no = #{userNo} and source_no = #{sourceNo}
+  	
+  	</select>
   
-  
-  
+  	<delete id="deleteByLike" parameterType="web.dto.SourceLike">
+  		DELETE SOURCE_LIKE
+  		WHERE SOURCE_NO = #{sourceNo} and USER_NO = #{userNo}
+  	</delete>
   
   </mapper>

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.SourceDao;
+import web.dto.SourceLike;
 import web.dto.Tag;
 import web.service.face.SourceService;
 
@@ -44,6 +45,29 @@ public class SourceServiceImpl implements SourceService{
 	@Override
 	public List<Map<String, Object>> getSourceByGenre(String genre) {
 		return sourceDao.selectSourceByGenre(genre);
+	}
+
+	@Override
+	public void sourceLike(SourceLike like) {
+		
+		sourceDao.insertSourceLike(like);
+		
+	}
+
+	@Override
+	public boolean chkLike(SourceLike like) {
+		
+		int chk = sourceDao.selectByLike(like);
+		
+		if( chk > 0 ) {
+			return true;
+		}
+		return false;
+	}
+
+	@Override
+	public void sourceDestLike(SourceLike like) {
+		sourceDao.deleteByLike(like);
 	}
 
 	

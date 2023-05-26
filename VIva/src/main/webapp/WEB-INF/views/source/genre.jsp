@@ -19,6 +19,8 @@ $(function() {
 		})
 	})
 	
+	// like Ajax
+	
 	
 })
 </script>
@@ -373,7 +375,7 @@ div[data-itemtype='line']{
 			</div>
 			<div class="icons" data-itemtype="line">
 				<div><img src="../resources/icon/plus-circle.svg" style="width: 45%"></div>
-				<div><img src="../resources/icon/heart.svg" style="width: 45%"></div>
+				<div class="like" data-like="${list.SOURCE_NO}"><img src="../resources/icon/heart.svg" style="width: 45%"></div>
 				<div><img src="../resources/icon/shopping-cart.png" style="width: 45%"></div>
 				<div><img src="../resources/icon/three-dots.svg" style="width: 45%"></div>
 			</div>
@@ -396,7 +398,7 @@ div[data-itemtype='line']{
 				 barHeight: 1.5, 
 				 pixelRatio: 30, 
 				 normalize: true, 
-				 barMinHeight: 50, 
+				 barMinHeight: 50
 				});
 				 
 			
@@ -435,35 +437,51 @@ div[data-itemtype='line']{
 			     }
 				
 			})
-			
-			var time = document.getElementsByClassName("timespace");
-			
-			var timeCalculator = function(value){
-	        	second = Math.floor(value % 60);
-	        	minute = Math.floor((value / 60) % 60);
-	        	
-	        	if (second <10 ){
-	        		second = "0" + second;
-	        	} 
-	        	
-	        	if ( second <= 0) {
-	        		second = "0"+"1"
-	        	}
-	        	
-	        	return minute + ":" + second;
-	        };
-	
-	        
-	    	for(var i=0; i<${list.size()}; i++) {
-	    		
-	    		console.log("time", time[i])
-	    		console.log("wave", wave[i])
-	    		console.log("waveD", wave[i].getDuration())
-	    		
-				console.log(wave[i].getDuration())
-				time[i].textContent = timeCalculator(wave[i].getDuration()); 
-			}
 	    	
+			
+			
+			$(".like").click(function() {
+				
+				// 인덱스 변수
+				var idx = $(".like").index(this)
+				console.log("idx",idx)
+				
+				// SourceNo 변수
+				var sourceno = likes[idx].getAttribute('data-like')
+				console.log("소스번호",sourceno)
+				
+				$.ajax({
+					type: "get"
+					, url: "./genre/like"
+					, data: {
+						"userNo":1,
+						"sourceNo":sourceno
+					}
+					, dataType: "json"
+					, success: function( res ) {
+						
+						console.log("Ajax 성공")
+						console.log("idx 체크")
+						console.log(res.result)
+						
+						if(res.result == true) {
+							console.log(sourceno)
+							$(".like").eq(idx).html('<img src="../resources/icon/heart-fill.svg" style="width:45%">')
+							
+						} else if (res.result == false) {
+							
+							$(".like").eq(idx).html('<img src="../resources/icon/heart.svg" style="width:45%">')
+							
+						}
+					}
+					, error: function() {
+						console.log("Ajax 실패")
+					}
+				})
+				
+			})
+			
+				var likes = document.querySelectorAll("div[data-like]");
 		</script> 
 	</div>
 

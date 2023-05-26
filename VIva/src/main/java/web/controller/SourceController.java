@@ -1,6 +1,7 @@
 package web.controller;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import web.dto.Source;
+import web.dto.SourceLike;
 import web.dto.Tag;
 import web.service.face.SourceService;
 
@@ -49,6 +50,43 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 		model.addAttribute("list", list);
 		
 	}
+	
+	@GetMapping("/genre/like")
+	public void genreLike(SourceLike like, Writer out) {
+		logger.info("AJAX 좋아요 테스트 중");
+		logger.info("좋아요 정보 : {}",like);
+		
+		boolean chk = sourceService.chkLike(like);
+		
+		logger.info("chk 확인 : {}",chk);
+		
+		if (chk == false) {
+			sourceService.sourceLike(like);
+			try {
+				out.write("{\"result\":true}");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else if (chk == true) {
+			sourceService.sourceDestLike(like); 
+			try {
+				out.write("{\"result\":false}");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@GetMapping("/inst")
 	public void inst(Tag instrument, Model model) {
