@@ -68,8 +68,6 @@
 	border: 1px solid #d3d3d3;
 	border-radius: 10px;
 	}
-	
-	
 
 </style>
 
@@ -79,7 +77,7 @@
 <div class=body>
 <!-- container : div안에있는것들 다 가운데 -->
 <div id="containerid" class="container" >
-<h2> 자신만의 Source로 세상을 움직여주세요!</h2>
+<h2> 자신만의 Pack으로 세상을 움직여주세요!</h2>
 <hr>
 <a class="source" href="/file/fileupsource">Source</a> 
 <a class="pack" href="/file/fileuppack"> Pack</a> 
@@ -95,7 +93,7 @@
 <div id="container" >
 	<div class="item">
 		<label>제목</label>
-		<input type="text" id="title" name="title" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!"> 
+		<input type="text" id="title" name="title" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!">
 			Key
 			<input type="text" id="key" name="key" class="form-control" placeholder="Key">
 	</div>

@@ -14,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Source;
 import web.dto.SourceFileInfo;
-import web.dto.SourceImgInfo;
+import web.dto.Tag;
 import web.service.face.FileUploadService;
 
 @Controller
@@ -47,6 +47,10 @@ public class FileUploadController {
 	public void test5() {
 		
 	}
+	@RequestMapping("/file/test6")
+	public void test6() {
+		
+	}
 	
 	@RequestMapping("/file/sourcelist")
 	public void sourceview(Model model) {
@@ -66,13 +70,14 @@ public class FileUploadController {
 	
 	@PostMapping("/file/fileupsource")
 	public String FileUpSourcePost(
+			Tag tag,
 			Source source,
 			MultipartFile imgfile,
 			MultipartFile file
 			) {
 		logger.info("/file/fileupsource [Post]");
 		
-		fileUploadService.SourceUpload(source,imgfile,file);
+		fileUploadService.SourceUpload(tag,source,imgfile,file);
 		
 		return "redirect:/file/sourcelist";
 		

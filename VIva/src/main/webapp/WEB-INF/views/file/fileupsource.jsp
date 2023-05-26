@@ -14,39 +14,30 @@
 
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	$("form").submit(function(){
-		alert("form submitted")
-		
-		//이벤트 처리 중단 ->submit은 동작함
-// 		return 
-		
-		//이벤트 처리 중단 ->submit도 중단한다
-// 		return false
-
-		//-----------------------------------
-		//유효성 검증 결과에 따라 submit 중단
-		if(!validate() ){
-			
-			console.log("submit 중단")
-// 			alret(1)
-			return false
-		}
-		
-		//submit을 진행한다
-		console.log("submit 진행")
-		alret(2)
-// 		$(this).submit()
-	})
 	
 	//유효성 검증 에러 메시지 초기화
 	
+// 	key focus시 출력
 	$("#key").focus(function(){
 		$("#key_msg").html("key는 C, F, Bb, Eb, Ab, Db, Gb, B, E, A, D, G로 입력해주세요!")
 	})
+	$("#key").blur(function(){
+			$("#key_msg").html("")
+	})
+
+// 	bpm focus시 출력
 	$("#bpm").focus(function(){
-		$("#bpm_msg").html("BPM은 숫자 1~300까지 입력해주세요 !")
+		$("#bpm_msg").html("BPM은 숫자 1~300까지 입력해주세요!")
+	})
+// 	bpm focus안할시 msg출력
+	$("#bpm").blur(function(){
+			$("#bpm_msg").html("")
 	})
 	
 // 	focus시 아무메세지도 출력 x 
@@ -61,46 +52,28 @@ $(function(){
 	})
 })
 
-//input데이터의 유효성검증
-function validate(){
+// function validate(){
 	
-	//id유효성 검증
-	//아이디를 입력했는지 검증
-	if($("#uid").val()==''){
-// 		alert('아이디를 입력하세요')
-		$("#uid_msg").html("필수 입력 항목입니다")
-		
-		return false
-	}
-	
-	
-	//password유효성 검증
-	//패스워드를 입력하지 않았을때
-	if($("#upw").val()==''){
-		
-		$("#upw_msg").html("필수 입력 항목입니다")
-		
-		return false
-	}
-	
-	//패스워드 입력값 검증 
+// 	//패스워드 입력값 검증 
 
-	var pwReg=/^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?[0-9])(?=.*?[!@#$%^&*\-_+=])[a-zA-Z-0-9!@#$%^&*\-_+=].{8,32}$/
+// 	var keyReg=/C,F,Bb,Eb,Ab,Db,Gb,B,E,A,D,G/
+// 	var bpmReg=/^[0-9]+$/
 	
-	if(!pwReg.test($("#upw").val())){
-		$("#upw_msg").html("영문자 대/소문자 특수문자,숫자 포함 8~32자")
-		return false;
-	}
-	//비밀번호 입력확인
-	if($("#upw").val() !=$("#upw_check").val()){
-		$("#upw_check_msg").html("비밀번호가 일치하지 않습니다")
-		return false;
-	}
+// 	if(!keyReg.test($("#key").val())){
+// 		$("#key_msg").html("key는 C, F, Bb, Eb, Ab, Db, Gb, B, E, A, D, G로 입력해주세요!")
+// 		return false;
+// 	}
 	
-	//유효성 검증성공(submit 수행)
-	return true
 	
-}
+// 	//BPM유효성검사
+// 	if(!bpmReg.test($("#bpm").val())){
+// 		$("#bpm_msg").html("ddddddddddddddddd")
+// 	}
+	
+// 	//유효성 검증성공(submit 수행)
+// 	return true
+	
+// }
 
 
 
@@ -126,28 +99,20 @@ function validate(){
 	
 	#sourceName{
 	display: inline-block;
-	width: 480px;
+	width: 505px;
 	}
 	#key{
 	display: inline-block;
-	width: 480px;
-	margin-bottom: 10px;
+	width: 505px;
 	}
 	#bpm{
 	display: inline-block;
-	width: 480px;
-	margin-bottom: 10px;
+	width: 505px;
 	}
 	#price{
 	display: inline-block;
-	width: 480px;
-	margin-bottom: 10px;
+	width: 505px;
 	}
-	
-/* 	#KBP{ */
-/* 	display: inline-block; */
-/* 	width:60px; */
-/* 	} */
 	
 	#content{
 	display: inline-block;
@@ -163,7 +128,6 @@ function validate(){
 	#container{
 	display: grid;
 	grid-template-columns: 50% 50%;
-	grid-template-rows: 250px 188px;
 	margin-left: 0px;
 /*  	grid-row:span 1;   */
 	}
@@ -172,26 +136,28 @@ function validate(){
 	margin-left: 0px;
 	}
 	
-	.preview{
-/* 	grid-row:span 2; 그리드 합치기*/
-	border: 1px solid #d3d3d3;
-	border-radius: 10px;
-	}
+/*  	.preview{  */
+/*  /* 	grid-row:span 2; 그리드 합치기 */ */
+/*  	border: 1px solid #d3d3d3;  */
+/*  	border-radius: 10px;  */
+/*  	}  */
 	
-	.tag{
-	display: inline-block;
-	border: 1px solid #d3d3d3;
-	border-radius: 10px;
-	width: 480px;
-	height: 230px;
-	}
+/* 	.tag{ */
+/* 	display: inline-block; */
+/* 	border: 1px solid #d3d3d3; */
+/* 	border-radius: 10px; */
+/* 	width: 505px; */
+/* 	height: 230px; */
+/* 	} */
 	
-	#imgfile{
-	width: 240px;
+
+	
+	.imgfile{
+	margin-left: 55px;
 	}
 	
 	#file{
-	width: 240px;
+	width: 237px;
 	}
 	
 	.msg{
@@ -199,7 +165,49 @@ function validate(){
 	font-size: 0.7em;
 	padding-left: 80px;
 	}
-</style>
+	
+	.inputfile{
+	display: grid;
+	grid-template-columns: 20% 20%;
+	margin-left: 0px;
+	}
+	
+
+	
+/* ------------------------------------------------ */
+	 .tagify{    
+  width: 505px;
+  max-width: 700px;
+  border-radius: 10px;
+}
+
+/* 드롭다운아래에 나오는 애들  */
+.tags-look .tagify__dropdown__item{
+  display: inline-block;
+  padding: .3em .5em;
+  border: 1px solid #CCC;
+  border-radius: 10px;
+  background: #F3F3F3;
+  margin: .2em;
+  font-size: .85em;
+  color: black;
+  transition: 0s;
+}
+
+
+
+.tags-look .tagify__dropdown__item--active{
+  color: #BB2649;
+  border-radius: 10px;
+  
+}
+
+/* 드롭다운의 whitelist(내가 설정한 애들) */
+.tags-look .tagify__dropdown__item:hover{
+  background: lightyellow;
+  border-color: gold;
+}
+  </style>
 
 
 </head>
@@ -236,19 +244,136 @@ function validate(){
 		<span id="key_msg" class="msg"></span>
 		<br>
 		<label>BPM</label>
-		<input type="text" id="bpm" name="bpm" class="form-control" placeholder="BPM를 입력해주세요!">
+		<input type="text" id="bpm" name="bpm" class="form-control" placeholder="BPM를 입력해주세요!"><br>
+		<span id="bpm_msg" class="msg"></span>
 		<br>
 		<label>Price</label>
-		<input type="text" id="price" name="price" class="form-control" placeholder="Price" value="30Credit" disabled="disabled">
+		<input type="text" id="price" name="price" class="form-control" placeholder="Price" value="30 Credit" disabled="disabled"><br>
 		<br>
-	<label>Tag</label>
-	<div class = tag>
-	여기에 태그 들어온다 
-	</div>
+	
 		
 	</div>
 	
-	<div class=preview>
+	
+	<div class="tag">
+	<label>장르</label>
+	 <input name='genre' id="genre" class='some_class_name' placeholder='장르를 선택해주세요!'>
+  <script>
+  var input = document.querySelector('input[name="genre"]');
+
+  var whitelist = ["Trap", "R&B", "Soul", "boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
+
+//initialize Tagify on the above input node reference
+  var tagify = new Tagify(input, {
+	 	enforceWhitelist: true, 	// 화이트리스트에서 허용된 태그만 사용가능
+        whitelist:whitelist, 
+        maxTags: 1,
+        dropdown: {
+          maxItems: 20, 			//드롭다운 메뉴에서 몇개정보 항목을 보여줄지  
+          classname: "tags-look", 	//드롭다운 메뉴 엘리먼트 클래스이름 -> css선택자 
+          enabled: 0,        		//단어 몇글자 입력했을때 추천 드롭다운 메뉴가 나타날지
+          closeOnSelect: true,	//드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지 
+          hide:true
+        }
+      })
+      
+//   element.addEventListener(function(){
+// 	    tagify.dropdown.hide.call(tagify);
+// 	});
+//   element.addEventListener(function(){
+// 	    tagify.dropdown.hide(tagify)
+// 	});
+	
+
+  </script>
+  <label>악기</label>
+  	 <input name='instrument' class='some_class_name' placeholder='악기를 선택해주세요!'>
+  <script>
+  var input = document.querySelector('input[name="instrument"]');
+
+  var whitelist = ["Drum", "Vocal", "Synth", "Brass", "Woodwinds", "Guitar", "Bass", "String", "ABSET", "Piano"];
+
+  var tagify = new Tagify(input, {
+        whitelist:whitelist,
+        maxTags: 10,
+        dropdown: {
+          maxItems: 20,          
+          classname: "tags-look", 
+          enabled: 0,            
+          closeOnSelect: true   
+        }
+      })
+  
+//   악기를 선택했을때 이제 더이상 보이지 않게하기
+   	if($('input[name="instrument"]').val()!=null){
+   		$('input[name="instrument"]').set
+	  
+	  
+  }
+  </script>
+  
+    <label class="detail" style="width: 500px;">악기세부분류</label>
+  	 <input name='detail' class='some_class_name' placeholder='세부악기를 선택해주세요!'>
+  <script>
+//   if($('input[name="instrument"]').val()=="Drum"){
+	  
+  var input = document.querySelector('input[name="detail"]');
+  
+  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","rimshot"];
+
+  var tagify = new Tagify(input, {
+        whitelist:whitelist,
+        maxTags: 10,
+        dropdown: {
+          maxItems: 20,          
+          classname: "tags-look", 
+          enabled: 0,            
+          closeOnSelect: true   
+        }
+      })
+//   }
+
+  </script>
+  
+
+  
+    <label>분위기</label>
+  	 <input name='scape' class='some_class_name' placeholder='분위기를 선택해주세요!'>
+  <script>
+  var input = document.querySelector('input[name="scape"]');
+
+  var whitelist = ["Wet", "Dry", "Powerful", "Soul", "Beautiful"];
+
+  var tagify = new Tagify(input, {
+        whitelist:whitelist,
+        maxTags: 10,
+        dropdown: {
+          maxItems: 20,          
+          classname: "tags-look", 
+          enabled: 0,            
+          closeOnSelect: true   
+        }
+      })
+  </script>
+  
+      <label>Fx</label>
+  	 <input name='fx' class='some_class_name' placeholder='Fx를 선택해주세요!'>
+  <script>
+  var input = document.querySelector('input[name="fx"]');
+
+  var whitelist = ["Ambience", "Transportation", "Science Fiction", "Animal"];
+
+  var tagify = new Tagify(input, {
+        whitelist:whitelist,
+        maxTags: 10,
+        dropdown: {
+          maxItems: 20,          
+          classname: "tags-look", 
+          enabled: 0,            
+          closeOnSelect: true   
+        }
+      })
+  </script>
 	
 	
 	</div>
@@ -258,12 +383,16 @@ function validate(){
 
 
 <!-- mb 마진바텀 -->
-<div class="mb-5">
+<div class="inputfile">
+<div >
 이미지파일
-<input type="file" id="imgfile" name="imgfile" class="form-control">
-
+<input type="file" id="imgfile" name="imgfile" class="form-control" style="width: 237px;">
+</div>
+<div>
 음원파일 
 <input type="file" id="file" name="file" class="form-control">
+</div>
+
 </div>
 
 
