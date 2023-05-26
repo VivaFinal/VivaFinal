@@ -5,50 +5,33 @@
 
 <c:import url="../layout/header.jsp"/>   
 
-<!--  ajax 방식 1  : 안됨 ㅠ -->
 <script type="text/javascript">
-var xmlHttp = null;
-
 $(function() {
-
-
 	
-	$("#like").click(function() {
-		console.log("#like click() called ")
-		
-		//XHR객체 생성 -> 이미 존재하므로 new만 해도 된
-		xmlHttp = new XMLHttpRequest();
-		console.log(xmlHttp)
-		
-		//AJAX 요청 전 설정
-		//요청 URL
-		var url = "./recommend?boardno=" + $("#boardno").html()
-		
-		//요청 Method
-		var method = "GET";
-		console.log("왜 안될까" + $("#boardno").html());
-
-		xmlHttp.onreadystatechange = callback;
-		
-		xmlHttp.open(method, url)
-		xmlHttp.setRequestHeader("Content-Type", "application/x-www-form-urlencoded")
-		
-		xmlHttp.send();
-		
+	$("#delete").click(function() {
+		console.log("#delete clicked");
+		$.ajax({
+			type : "get"
+			, url : "./delete"
+			, data : {
+// 				cartNo : ${ i.CART_NO }
+			}
+			, dataType : "json"
+			, success : function(res) {
+				console.log("AJAX 성공")
+				
+				console.log("res", res)
+				
+				console.log("result", res.result)
+			}, error: function() {
+				console.log("AJAX 실패")
+			}
+		})
 	})
 })
-function callback() {
-	console.log("callback 호출")
-	
-	if(xmlHttp.readyState == 4){
-		if(xmlHttp.status == 200) {
-			console.log("AJAX 반환 성공")
-		} else {
-			console.log("AJAX 반환 안됐음")
-		}
-	}
-}
+
 </script>
+
 
 <div class="FunctionTitle">
 	Cart
@@ -113,13 +96,6 @@ function callback() {
 <!-- 					<a href="./delete"> -->
 						<img id="delete" alt="삭제" src="../../../resources/icon/X.png" width="20">
 <!-- 					</a> -->
-
-					<!--  ajax 채원방식 2 -->
-					<span id="recWrap"> 
-						<label id="recWrap"> 
-						<input type="button" id="recommend" name="recommend" value="추천하기"></label>
-					</span>
-
 				</td>
 			</tr><!--  첫번째 열 End -->
 			</tbody>

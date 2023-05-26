@@ -18,7 +18,6 @@ $(function() {
 				type:"get" // Method 타입 [ get Or Post ]
 				, url: "/cart/delete" // 요청 URL 혹은 서블릿
 				, data : {  // 요청 데이터 JS Object 형식 Key : value
-				 	userid : "${ i.USER_ID }",
 			 		cartNo : ${ i.CART_NO }
 				}
 // 				, dataType: "html" // Return Type 

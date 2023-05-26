@@ -15,6 +15,7 @@
 	
 	<select id="selectCartByUserno" resultType="HashMap" parameterType="web.dto.Cart">
 		select 
+			C.cart_no,
 			SI.SOURCE_IMG_STOREDNAME, 
 			S.source_name, source_price  
 		 from cart C
