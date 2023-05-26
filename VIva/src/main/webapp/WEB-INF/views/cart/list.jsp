@@ -2,9 +2,17 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <c:import url="../layout/header.jsp"/>    
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+<script type="text/javascript">
+	$(function(){
+		var chkObj = document.getElementByName("")
+		
+		
+		
+	})
+
+</script>
 
 <div class="FunctionTitle">
 	Cart
@@ -13,14 +21,15 @@
 	<img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
 </div>
 
+<form>
 	<div id="titleArea">
 		<div id="selectArea">	
 			<button type="button" class="btn btn-secondary btn-sm">전체 선택</button>
 		</div>
 		<div id="selectArea">	
-			<button type="button" class="btn btn-secondary btn-sm">선택 삭제</button>
+			<button type="button" class="btn btn-secondary btn-sm" onclick="deleteValue();">선택 삭제</button>
 		</div>
-		</div>
+	</div>
 	<div id="order">
 		<table class="table">
 		  <thead class="table-light">
@@ -46,7 +55,7 @@
 			
 				<td><!--  1. 체크박스 -->
 					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+					  <input class="form-check-input" type="checkbox" value="${i.CART_NO }" id="flexCheckDefault">
 					</div>
 			 	</td>
 
@@ -74,4 +83,5 @@
 			</c:forEach>
 		</table><!--  orderTable End-->
 	</div>
+</form>
 <c:import url ="../layout/footer.jsp"/>
