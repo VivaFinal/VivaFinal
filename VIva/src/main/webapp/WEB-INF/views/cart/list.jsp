@@ -2,36 +2,110 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
 <c:import url="../layout/header.jsp"/>   
 
-<script type="text/javascript">
-$(function() {
-	
-	$("#delete").click(function() {
-		console.log("#delete clicked");
-		$.ajax({
-			type : "get"
-			, url : "./delete"
-			, data : {
-// 				cartNo : ${ i.CART_NO }
-			}
-			, dataType : "json"
-			, success : function(res) {
-				console.log("AJAX 성공")
-				
-				console.log("res", res)
-				
-				console.log("result", res.result)
-			}, error: function() {
-				console.log("AJAX 실패")
-			}
-		})
-	})
-})
+<style type="text/css">
+#explain{ 
+  position: absolute; 
+  opacity: 0;
+  width: 100px;
+  padding: 8px; 
+   -webkit-border-radius: 8px; 
+   -moz-border-radius: 8px; 
+   border-radius: 8px; 
+  background: #333333b0;
+  color: #fff;
+  font-size: 14px; 
+      margin-top: 33px;
+} 
+.source_price {
+  width: 200px;
+  margin: 100px auto;
+  background: #333333b0;
+  text-align: center;
+}
+.source_price div {
+  position: relative;
+  display: inline-block;
+}
+.source_price:hover #explain{ 
+  opacity: 1; 
+  
+  
+}
 
-</script>
+#explain:after {
+    position: absolute;
+  bottom: 100%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  margin-left: -10px;
+  border: solid transparent;
+  border-color: rgba(51, 51, 51, 0);
+  border-bottom-color: #333;
+  border-width: 10px;
+  pointer-events: none;
+  content: ' ';
+  border-bottom-color: #333333b0;
+}
 
+/* Popup container - can be anything you want */
+.popup {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+/* The actual popup */
+.popup .popuptext {
+  visibility: hidden;
+  width: 200px;
+  background-color: #555;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 8px 0;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -80px;
+}
+
+/* Popup arrow */
+.popup .popuptext::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  margin-left: -5px;
+  border-width: 5px;
+  border-style: solid;
+  border-color: #555 transparent transparent transparent;
+}
+
+/* Toggle this class - hide and show the popup */
+.popup .show {
+  visibility: visible;
+  -webkit-animation: fadeIn 1s;
+  animation: fadeIn 1s;
+}
+/* Add animation (fade in the popup) */
+@-webkit-keyframes fadeIn {
+  from {opacity: 0;} 
+  to {opacity: 1;}
+}
+
+@keyframes fadeIn {
+  from {opacity: 0;}
+  to {opacity:1 ;}
+}
+</style>
 
 <div class="FunctionTitle">
 	Cart
@@ -39,16 +113,16 @@ $(function() {
 <div class="FunctionTitleLine">
 	<img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
 </div>
-
+${list }
 <form>
-	<div id="titleArea">
-		<div id="selectArea">	
-			<button type="button" class="btn btn-secondary btn-sm">전체 선택</button>
-		</div>
-		<div id="selectArea">	
-			<button type="button" class="btn btn-secondary btn-sm" onclick="deleteValue();">선택 삭제</button>
-		</div>
+
+	<div id="allCheck">	
+		<input type="checkbox" name="allCheck" id="allCheck"><label for="allCheck">모두 선택</label>
 	</div>
+	<div id="delBtn">	
+		<button type="button" class="selectDelete_btn">선택 삭제</button>
+	</div>
+
 	<div id="order">
 		<table class="table">
 		  <thead class="table-light">
@@ -56,51 +130,95 @@ $(function() {
 		    
 		      <th scope="col">
 		      	<div class="form-check">
-				  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+				  <input class="form-check-input" type="checkbox" data-cartNum="${i.CART_NO}" id="flexCheckDefault">
 				  <label class="form-check-label" for="flexCheckDefault"></label>
 				</div>
 		      </th>
 		      <th scope="col">pack</th>
 		      <th scope="col">Filename</th>
-		      <th scope="col">credit</th>
+		      <th scope="col">Time</th>
+		      <th scope="col">Key</th>
+		      <th scope="col">Bpm</th>
 		      <th scope="col">buy</th>
-		      <th scope="col">  </th>
+		      <th scope="col">delete</th>
 		    </tr>
 		  </thead>
 		  
 		  <c:forEach var="i" items="${list}">
 		  <tbody>
-			<tr class="col_con"><!--  첫번째 열 시작-->
-			
-				<td><!--  1. 체크박스 -->
-					<div class="form-check">
-					  <input class="form-check-input" type="checkbox" value="${i.CART_NO }" id="flexCheckDefault">
-					</div>
-			 	</td>
-
-				<td><!--  2. pack 및 소스 앨범아트 -->
-					<div class="product_img">
-						<img alt="이미지 없음" src="./buy${i.SOURCE_IMG_STOREDNAME }" width="50">
-					</div>
-				</td>
-				<td><!--  3. 음원 title -->
-					<span>${i.SOURCE_NAME}</span>
-				</td>
-				<td><!--  4. 금액 -->
-					<span>${i.SOURCE_PRICE}</span>
-				</td>
-				<td><!--  5. 바로 구매 -->
-					<img alt="구매" src="../../../resources/icon/buy icon.png" width="20">
-				</td>
-				<td><!--  6. 항목 삭제 -->
-<!-- 					<a href="./delete"> -->
-						<img id="delete" alt="삭제" src="../../../resources/icon/X.png" width="20">
-<!-- 					</a> -->
-				</td>
-			</tr><!--  첫번째 열 End -->
+				<tr class="cart-item"><!--  첫번째 열 시작-->
+					<td><!--  1. 체크박스 -->
+						<div class="checkBox">
+						  <input class="form-check-input" type="checkbox" name="chBox" data-cartNum="${i.CART_NO}">
+						</div>
+				 	</td>
+	
+					<td><!--  2. pack 및 소스 앨범아트 -->
+						<div class="product_img">
+							<img alt="이미지 없음" src="./buy${i.SOURCE_IMG_STOREDNAME }" width="50">
+						</div>
+					</td>
+					
+					<td><!--  3. 음원 title -->
+						<span id="source_title">${i.SOURCE_NAME}</span>
+					</td>
+					
+					<td><!--  4. Time -->
+						<span class="timespace"></span>
+					</td>
+					
+					<td><!--  5. Key -->
+						<span>${i.KEY}</span>
+					</td>
+					
+					<td><!--  6. Bpm -->
+						<span>${i.BPM}</span>
+					</td>
+					
+					<td class="source_price"><!--  7. 바로 구매 -->
+						<div>
+						<p id = 'explain'>${i.SOURCE_PRICE } credit</p> 
+						<img data-source-no='${i.SOURCE_NO}' class="buy-button" alt="구매" src="../resources/icon/plus-circle.svg" width="20">
+						</div>
+					</td>
+					
+					<td class="popup"><!--  8. 항목 삭제 -->
+						<img data-cart-no='${i.CART_NO}' class="delete-button" alt="삭제" src="../resources/icon/X.png" width="20">
+						<span class="popuptext" id="myPopup${i.CART_NO}">항목이 삭제되었습니다.</span>
+					</td>
+					</tr><!--  첫번째 열 End -->
 			</tbody>
 			</c:forEach>
 		</table><!--  orderTable End-->
+						<script>
+						$(document).on('click', '.delete-button', function() {
+							var cartNo = $(this).data('cart-no');
+							var $cartItem = $(this).closest('.cart-item'); // .cart-item을 찾아서 저장
+							console.log(cartNo);
+							console.log($cartItem);
+							 var popup = document.getElementById('myPopup${cartNo}');
+// 									  popup.classList.toggle("show");
+							 console.log(popup);
+							 
+				            $.ajax({
+				                url: "/cart/delete",
+				                type: "GET",
+				                data: { cartNo: cartNo },
+				                success: function(response) {
+				                    console.log("성공");
+				                    console.log(cartNo);
+				                
+				                    popup.classList.toggle("show");
+				                    
+				                    $cartItem.remove(); // $cartItem 변수를 사용하여 항목 제거
+				                },
+				                error: function() {
+									console.log("AJAX 실패")
+							}
+				            });
+				        });
+						
+				    </script>
 	</div>
 </form>
 <c:import url ="../layout/footer.jsp"/>
