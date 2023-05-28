@@ -6,22 +6,22 @@
   
   <mapper namespace="web.dao.face.SourceDao">
   
-  	<select id="selectTagByGenre" parameterType="String" resultType="web.dto.Tag">
+  	<select id="selectTagByGenre" parameterType="web.dto.Tag" resultType="web.dto.Tag">
   		SELECT DISTINCT INSTRUMENT FROM TAG
   		WHERE GENRE = #{genre}	
   	</select>
   	
-  	<select id="selectTagByGenreforScape" parameterType="String" resultType="web.dto.Tag">
+  	<select id="selectTagByGenreforScape" parameterType="web.dto.Tag" resultType="web.dto.Tag">
   		SELECT DISTINCT SCAPE FROM TAG
-  		WHERE GENRE = #{genre}	
+  		WHERE GENRE = #{genre}
   	</select>
   	
-  	<select id="selectTagByGenreforDetail" parameterType="String" resultType="web.dto.Tag">
+  	<select id="selectTagByGenreforDetail" parameterType="web.dto.Tag" resultType="web.dto.Tag">
   		SELECT DISTINCT DETAIL FROM TAG
-  		WHERE GENRE = #{genre}	
+  		WHERE GENRE = #{genre}
   	</select>
   	
-  	<select id="selectTagByGenreforFx" parameterType="String" resultType="web.dto.Tag">
+  	<select id="selectTagByGenreforFx" parameterType="web.dto.Tag" resultType="web.dto.Tag">
   		SELECT DISTINCT Fx FROM TAG
   		WHERE GENRE = #{genre}	
   	</select>
@@ -36,7 +36,25 @@
 		INNER JOIN packimginfo pi on p.pack_no = pi.pack_no
 		INNER JOIN sourcefileinfo sf on s.source_no = sf.source_no
 		WHERE t.genre = #{genre}
+		
+		<if test="instrument != null and !instrument.equals('')">
+			AND t.instrument = #{instrument}
+		</if>
+		
+		<if test="scape != null and !scape.equals('')">
+			AND t.scape = #{scape}
+		</if>
+		
+		<if test="detail != null and !detail.equals('')">
+			AND t.detail = #{detail}
+		</if>
+		
+		<if test="fx != null and !fx.equals('')">
+			AND t.fx = #{fx}
+		</if>
+		
 		order by source_no
+		
   	</select>
   
   	<insert id="insertSourceLike" parameterType="web.dto.SourceLike">

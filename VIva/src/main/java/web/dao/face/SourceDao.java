@@ -13,36 +13,36 @@ public interface SourceDao {
 	 * @param genre - 클라이언트가 선택한 장르
 	 * @return - 태그 조회 결과
 	 */
-	public List<Tag> selectTagByGenre(String genre);
+	public List<Tag> selectTagByGenre(Tag genre);
 
 	/**
 	 * 해당 장르가 가지고 있는 Scape태그를 전체 조회한다
 	 * @param genre - 클라이언트가 선택한 장르
 	 * @return - 태그 조회 결과
 	 */
-	public List<Tag> selectTagByGenreforScape(String genre);
+	public List<Tag> selectTagByGenreforScape(Tag genre);
 
 	/**
 	 * 해당 장르가 가지고 있는  Detail태그를 전체 조회한다
 	 * @param genre - 클라이언트가 선택한 장르
 	 * @return - 태그 조회 결과
 	 */
-	public List<Tag> selectTagByGenreforDetail(String genre);
+	public List<Tag> selectTagByGenreforDetail(Tag genre);
 
 	/**
 	 * 해당 장르가 가지고 있는 Fx태그를 전체 조회한다
 	 * @param genre - 클라이언트가 선택한 장르
 	 * @return - 태그 조회 결과
 	 */
-	public List<Tag> selectTagByGenreforFx(String genre);
+	public List<Tag> selectTagByGenreforFx(Tag genre);
 
 	/**
 	 * 클라이언트가 선택한 장르를 토대로 음원소스 정보를 조회한다
 	 * 
-	 * @param genre - 클라이언트가 선택한 장르
+	 * @param genre - 클라이언트가 선택한 태그(장르 + @ )
 	 * @return - 선택한 장르의 음원소스 집합
 	 */
-	public List<Map<String, Object>> selectSourceByGenre(String genre);
+	public List<Map<String, Object>> selectSourceByGenre(Tag genre);
 
 	/**
 	 * DB에 Like를 삽입한다

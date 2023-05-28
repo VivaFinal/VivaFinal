@@ -19,8 +19,6 @@ $(function() {
 		})
 	})
 	
-	// like Ajax
-	
 	
 })
 </script>
@@ -152,6 +150,12 @@ $(function() {
 }
 div[data-itemtype='line']{
 	border-bottom: 1px solid #ccc;
+}
+.cart{
+	cursor: pointer;
+}
+.like{
+	cursor: pointer;
 }
 </style>
 <div id="Wrap">
@@ -352,7 +356,7 @@ div[data-itemtype='line']{
 
 </div><!-- WrapTop End -->
 <div id="WrapMiddle">
-	<div style="margin-top: 10px; margin-bottom: 10px;"><span class="cate">Result</span></div>
+	<div style="margin-top: 10px; margin-bottom: 10px;"><span class="cate">Result : ${list.size()}</span></div>
 	<div id="SourceWrap">
 		<div class="th"><span>Pack</span></div>
 		<div class="th"><span>Play</span></div>
@@ -364,6 +368,7 @@ div[data-itemtype='line']{
 		<div class="th"><span>icon</span></div>
 		
 		<c:forEach var="list" items="${list}">
+		
 			<div class="trimg" data-itemtype="line"><img src="../upload/${list.PACK_IMG_STOREDNAME}" style="width:40px; height: 40px;"></div>
 			<div class="tr" data-itemtype="line"><img src="../resources/icon/play-circle.svg" style="width: 30%"></div>
 			<div class="sourcename" data-itemtype="line"><span>${list.FILE_ORIGINNAME}</span></div>
@@ -373,12 +378,14 @@ div[data-itemtype='line']{
 			<div class="trwave" data-itemtype="line">
 				<div id="wave${list.SOURCE_NO}" data-no="${list.SOURCE_NO}" data-name="${list.FILE_STOREDNAME}"></div>
 			</div>
+			
 			<div class="icons" data-itemtype="line">
 				<div><img src="../resources/icon/plus-circle.svg" style="width: 45%"></div>
 				<div class="like" data-like="${list.SOURCE_NO}"><img src="../resources/icon/heart.svg" style="width: 45%"></div>
-				<div><img src="../resources/icon/shopping-cart.png" style="width: 45%"></div>
-				<div><img src="../resources/icon/three-dots.svg" style="width: 45%"></div>
+				<div class="cart" data-cart="${list.SOURCE_NO }"><img src="../resources/icon/shopping-cart.png" style="width: 45%"></div>
+				<div><a href="./pack?packno=${list.PACK_NO }"><img src="../resources/icon/three-dots.svg" style="width: 45%"></a></div>
 			</div>
+			
 		</c:forEach>
 		<script type="text/javascript" defer>
 	
@@ -413,6 +420,7 @@ div[data-itemtype='line']{
 				//console.log($(".trwave").index(this))
 				// 음원소스 위치 알아내기
 				var waveno = $(".trwave").index(this)
+				
 				// 이미지 위치 알아내기
 				var imgno = $(".tr").index(this)
 				
@@ -438,7 +446,7 @@ div[data-itemtype='line']{
 				
 			})
 	    	
-			
+			var likes = document.querySelectorAll("div[data-like]");
 			
 			$(".like").click(function() {
 				
@@ -454,34 +462,80 @@ div[data-itemtype='line']{
 					type: "get"
 					, url: "./genre/like"
 					, data: {
-						"userNo":1,
-						"sourceNo":sourceno
+						"userNo" : 1,
+						"sourceNo" : sourceno
 					}
 					, dataType: "json"
 					, success: function( res ) {
 						
-						console.log("Ajax 성공")
-						console.log("idx 체크")
-						console.log(res.result)
-						
 						if(res.result == true) {
-							console.log(sourceno)
+							
 							$(".like").eq(idx).html('<img src="../resources/icon/heart-fill.svg" style="width:45%">')
 							
-						} else if (res.result == false) {
+						} 	else if (res.result == false) {
 							
-							$(".like").eq(idx).html('<img src="../resources/icon/heart.svg" style="width:45%">')
+								$(".like").eq(idx).html('<img src="../resources/icon/heart.svg" style="width:45%">')
 							
+							}
 						}
-					}
-					, error: function() {
-						console.log("Ajax 실패")
-					}
-				})
+			     })
+			  })
 				
-			})
-			
-				var likes = document.querySelectorAll("div[data-like]");
+			  var carts = document.querySelectorAll("div[data-cart]");
+			  
+			  $(".cart").click(function() {
+				  
+				  // 인덱스 변수 확인
+				  var cidx = $(".cart").index(this)
+				  
+				  // SourceNo 확인
+				  var csourceNo = carts[cidx].getAttribute('data-cart')
+				  
+				  $.ajax({
+					type :"get"
+					, url :"/cart/add"
+					, data : {
+						"userNo" : 1,
+						"sourceNo" : csourceNo
+					}
+				  	, dataType :"json"
+				  	, success : function(res) {
+				  		console.log("장바구니 ajax 성공")
+				  		$("#footer").html('<div id="pop">장바구니에 담겼습니다!</div>')
+		  				$("#pop").css({
+				  			"background":"#BE3455",
+				  			"width":"250px",
+				  			"height":"60px",
+				  			"fontSize":"1.2em",
+				  			"top":"30px",
+				  			"left":"950px",
+				  			"borderRadius":"5px",
+				  			"border":"2px solid #ccc",
+				  			"paddingTop":"10px"
+				  		})
+				  		$("#pop").fadeOut(2500)
+				  	  }
+				  	, error : function(res) {
+				  		console.log("장바구니 ajax 실패")
+				  		$("#footer").html('<div id="pop">장바구니에 담겼습니다!</div>')
+		  				$("#pop").css({
+				  			"background":"#BE3455",
+				  			"width":"250px",
+				  			"height":"60px",
+				  			"fontSize":"1.2em",
+				  			"top":"30px",
+				  			"left":"950px",
+				  			"borderRadius":"5px",
+				  			"border":"2px solid #ccc",
+				  			"paddingTop":"10px"
+				  		})
+				  		$("#pop").fadeOut(2500)
+				  	}
+				  }) // ajax End
+			  }) // click end
+			  
+			  
+			  
 		</script> 
 	</div>
 

@@ -33,20 +33,25 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 		
 		model.addAttribute("genre", genre.getGenre());
 		
+		logger.info("Tag 정보 ++++++ : {}",genre);
+		
 		// 태그 조회
-		List<Tag> instrument = sourceService.getTag(genre.getGenre());
-		List<Tag> scape = sourceService.getTagScape(genre.getGenre());
-		List<Tag> detail = sourceService.getTagDetail(genre.getGenre());
-		List<Tag> fx = sourceService.getTagFx(genre.getGenre());
+		List<Tag> instrument = sourceService.getTag(genre);
+		List<Tag> scape = sourceService.getTagScape(genre);
+		List<Tag> detail = sourceService.getTagDetail(genre);
+		List<Tag> fx = sourceService.getTagFx(genre);
 		
 		model.addAttribute("inst", instrument);
 		model.addAttribute("scape", scape);
 		model.addAttribute("detail", detail);
 		model.addAttribute("fx", fx);
 		
-		List<Map<String, Object>> list = sourceService.getSourceByGenre(genre.getGenre());
+		logger.info("Tag : {}" , genre);
 		
-		logger.info("장르별 음원소스 조회 : {}", list);
+		// 음원소스 조회
+		List<Map<String, Object>> list = sourceService.getSourceByGenre(genre);
+		
+//		logger.info("장르별 음원소스 조회 : {}", list);
 		model.addAttribute("list", list);
 		
 	}
@@ -79,6 +84,10 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 		
 	}
 	
+	@RequestMapping("/test")
+	public void test() {
+		logger.info("/test 이것은 테스트 페이지");
+	}
 	
 	
 	

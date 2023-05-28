@@ -16,7 +16,8 @@
 	<select id="selectCartByUserno" resultType="HashMap" parameterType="web.dto.Cart">
 		select 
 			SI.SOURCE_IMG_STOREDNAME, 
-			S.source_name, source_price  
+			S.source_name, source_price,
+			c.cart_no  
 		 from cart C
 			left join source S on C.source_no = S.source_no
 			left join sourceimginfo SI on C.source_no = SI.source_no

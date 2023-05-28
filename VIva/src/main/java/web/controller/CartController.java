@@ -1,5 +1,7 @@
 package web.controller;
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.List;
 import java.util.Map;
 
@@ -31,7 +33,7 @@ public class CartController {
 	}
 	
 	@PostMapping("/list")
-	public void list(Cart userNo, Model model) {
+	public void list(Cart userNo, Model model, Writer out) {
 		logger.info("cart/list - list()");
 		logger.info("userno: {} ", userNo);
 		
@@ -42,6 +44,13 @@ public class CartController {
 		logger.info("{}", cartList.get(0));
 		
 		model.addAttribute("list", cartList);
+		
+		try {
+			out.write("{\"result\":true}");
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
 	}
 	
 	@GetMapping("/del")
