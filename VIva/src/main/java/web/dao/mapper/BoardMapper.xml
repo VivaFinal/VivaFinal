@@ -9,16 +9,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	<select id="selectList" resultType="web.dto.Board" parameterType="web.util.Paging">
 		SELECT * FROM (
 			SELECT rownum rnum, B.* FROM (
-				SELECT
-					BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, 
-					CATEGORY_TYPE, BOARD_HIT, BOARD_LIKE, USER_NO, USER_ID, USER_NICK
-				FROM board
+				SELECT * FROM board
+				LEFT OUTER JOIN users
+				ON board.user_no = users.user_no
 				ORDER BY board_no DESC
 			) B
 		) BOARD
 		WHERE rnum BETWEEN #{startNo } AND #{endNo }
   	</select>
-  
+
   	<select id="selectCntAll" resultType="int">
   		SELECT count(*) FROM board
   	</select>
@@ -32,7 +31,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	<select id="select" resultType="web.dto.Board" parameterType="web.dto.Board">
   		SELECT 
   			BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, 
-  			CATEGORY_TYPE, BOARD_HIT, BOARD_LIKE, USER_NO, USER_ID, USER_NICK
+  			CATEGORY_TYPE, BOARD_HIT, BOARD_LIKE, USER_NO
   		FROM board
   		WHERE board_no = #{boardNo}
   	</select>
@@ -42,8 +41,8 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   			SELECT board_seq.nextval FROM dual
   		</selectKey>
   		
-  		INSERT INTO board ( board_no, board_title, board_content, user_id, user_nick )
-  		VALUES ( #{boardNo}, #{boardTitle}, #{boardContent}, #{userId}, #{userNick} )
+  		INSERT INTO board ( board_no, board_title, board_content, category_type, board_hit, user_no )
+  		VALUES ( #{boardNo}, #{boardTitle}, #{boardContent}, #{categoryType}, #{boardHit}, 1 )
   	</insert>
   
   </mapper>

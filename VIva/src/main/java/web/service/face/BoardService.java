@@ -11,6 +11,14 @@ import web.util.Paging;
 public interface BoardService {
 
 	/**
+	 * 페이징이 적용된 게시글 목록 조회
+	 * 
+	 * @param page - 페이징 정보 객체
+	 * @return 페이징이 적용된 게시글 목록
+	 */
+	public List<Board> list(Paging page);
+
+	/**
 	 * 게시글 목록을 위한 페이징 객체 생성
 	 * 
 	 * 파라미터 객체의 curPage(현재 페이지)
@@ -22,14 +30,6 @@ public interface BoardService {
 	 * @return 계산이 완료된 Paging객체
 	 */
 	public Paging getPaging(Paging paging);
-
-	/**
-	 * 페이징이 적용된 게시글 목록 조회
-	 * 
-	 * @param page - 페이징 정보 객체
-	 * @return 페이징이 적용된 게시글 목록
-	 */
-	public List<Board> list(Paging page);
 
 	/**
 	 * 게시글 상세보기

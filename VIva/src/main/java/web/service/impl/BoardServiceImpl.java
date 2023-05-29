@@ -17,6 +17,13 @@ public class BoardServiceImpl implements BoardService {
 
 	@Autowired BoardDao boardDao;
 
+	
+	@Override
+	public List<Board> list(Paging page) {
+		
+		return boardDao.selectList( page );
+	}
+
 	@Override
 	public Paging getPaging(Paging paging) {
 		
@@ -41,11 +48,6 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
-	@Override
-	public List<Board> list(Paging page) {
-		
-		return boardDao.selectList( page );
-	}
 	
 	@Override
 	public void write(Board board, MultipartFile file) {

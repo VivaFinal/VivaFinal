@@ -15,8 +15,7 @@
 	<td class="small">글번호</td><td>${viewBoard.boardNo }</td>
 </tr>
 <tr>
-	<td class="small">아이디</td><td>${viewBoard.userId }</td>
-	<td class="small">닉네임</td><td>${viewBoard.userNick }
+	<td class="small">회원번호</td><td>${viewBoard.userNo }</td>
 </tr>
 <tr>
 	<td class="small">조회수</td><td>${viewBoard.boardHit }</td>
@@ -32,6 +31,12 @@
 	<td>${viewBoard.boardContent }</td>
 </tr>
 </table>
+
+<!-- 댓글 시작 -->
+
+<!-- 댓글 끝 -->
+
+
 
 <a href="./list"><button>목록으로</button></a>
 
