@@ -19,10 +19,18 @@ public class CartServiceImpl implements CartService {
 	@Autowired CartDao cartDao;
 	
 	@Override
-	public List<Map<String, Object>> getCartList(Cart userNo) {
+	public List<Map<String,Object>> getCartList(Cart userNo) {
 		logger.info("getList()");
-		
-		
+		  
+		  
 		return cartDao.selectCartByUserno(userNo);
+	}
+	
+	@Override
+	public boolean deleteCartItem(int cartNo) {
+		logger.info("deleteCartItem()");
+		
+		
+		return cartDao.deleteCartByCartNo(cartNo);
 	}
 }
