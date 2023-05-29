@@ -27,9 +27,9 @@
 	
 	<insert id="SourceInsertSource" parameterType="web.dto.Source">
 	insert into source
-	(source_no, source_name, bpm, key, source_price, tag_no, pack_no, user_no)
+	(source_no, source_name, bpm, key, source_price, tag_no, pack_no, user_no,source_time)
 	values
-	(source_seq.nextval , #{sourceName}, #{bpm} , #{key}, 30, #{tagNo} , 1 , 1)
+	(source_seq.nextval , #{sourceName}, #{bpm} , #{key}, 30, #{tagNo} , 1 , 1,#{sourceTime})
 	</insert>
    
    	<insert id="SourceInsertImg" parameterType="web.dto.SourceImgInfo">

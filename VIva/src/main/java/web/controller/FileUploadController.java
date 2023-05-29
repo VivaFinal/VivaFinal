@@ -2,6 +2,10 @@ package web.controller;
 
 import java.util.List;
 
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -70,16 +74,128 @@ public class FileUploadController {
 	
 	@PostMapping("/file/fileupsource")
 	public String FileUpSourcePost(
-			Tag tag,
+//			Tag tag,
 			Source source,
 			MultipartFile imgfile,
-			MultipartFile file
+			MultipartFile file,
+			Model model,
+//			String jsonStr,
+			String genre,
+			String instrument,
+			String detail,
+			String scape,
+			String fx
 			) {
 		logger.info("/file/fileupsource [Post]");
 		
+		logger.info("genre {}", genre);
+		
+		
+		//첫번째 방법
+		JSONParser jsonParser = new JSONParser();
+		JSONArray jsonObject = null;
+		
+		Tag tag = null;
+		try {
+			jsonObject = (JSONArray) jsonParser.parse(genre);
+			genre = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			
+			jsonObject = (JSONArray) jsonParser.parse(instrument);
+			instrument = ((JSONObject) jsonObject.get(0)).get("value").toString();
+
+			jsonObject = (JSONArray) jsonParser.parse(detail);
+			detail = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			
+			jsonObject = (JSONArray) jsonParser.parse(scape);
+			scape = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			
+			jsonObject = (JSONArray) jsonParser.parse(fx);
+			fx = ((JSONObject) jsonObject.get(0)).get("value").toString();
+
+			
+			//tag에다가 위에 있는 값 집어넣기 
+			tag = new Tag(0, instrument, genre, scape, detail, fx);
+			
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+//		logger.info("genre {}", genre);
+//		logger.info("instrument {}", instrument);
+//		logger.info("detail {}", detail);
+//		logger.info("scape {}", scape);
+//		logger.info("fx {}", fx);
+
+		logger.info("tag {}", tag);
 		fileUploadService.SourceUpload(tag,source,imgfile,file);
 		
+//		try {
+////			jsonObject = (JSONObject) jsonParser.parse(jsonStr);
+//
+//			jsonArray = (JSONArray) jsonParser.parse(genre);
+//			genre = ((JSONObject)jsonArray.get(0)).get("value").toString();
+//			
+//			jsonObject = (JSONObject) jsonParser.parse(instrument);
+//			jsonObject.get("value");
+//			
+//			jsonObject = (JSONObject) jsonParser.parse(detail);
+//			jsonObject.get("value");
+//			
+//			jsonObject = (JSONObject) jsonParser.parse(scape);
+//			jsonObject.get("value");
+//			
+//			jsonObject = (JSONObject) jsonParser.parse(fx);
+//			jsonObject.get("value");
+//			
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+		
+		
+//		Tag tag2 = new Tag(
+//				0, jsonObject.get("genre").toString(),
+//				jsonObject.get("instrument").toString(),
+//				jsonObject.get("scape").toString(),
+//				jsonObject.get("detail").toString(),
+//				jsonObject.get("fx").toString()
+//				);
+		
+//		logger.info("tag2의값 : {}",tag2);
+		//----------------------------------------------------
+//		//두번째방법
+//		
+//		//json형태으로 만든다
+//		JSONObject jsonObj = new JSONObject();
+//		jsonObj.put("genre", genre);
+//		jsonObj.put("instrument", instrument);
+//		jsonObj.put("scape", scape);
+//		jsonObj.put("detail", detail);
+//		jsonObj.put("fx", fx);
+//		
+//		//json형식을 문자열로 변환(전송하기위해서)
+//		String jsonStr = jsonObj.toString();
+//
+//
+//		//문자열로 받은 json을 json형태로 변환
+//		JSONParser parser = new JSONParser();
+//		JSONObject jsonObj = new JSONObject();
+//		try {
+//			jsonObj = (JSONObject) parser.parse(jsonStr);
+//			String genre = (String) jsonObj.get("genre");
+//			String instrument = (String) jsonObj.get("instrument");
+//			String scape = (String) jsonObj.get("scape");
+//			String detail = (String) jsonObj.get("detail");
+//			String fx = (String) jsonObj.get("fx");
+//			
+//		} catch (ParseException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		
+//		
+		
 		return "redirect:/file/sourcelist";
+//		return "test";
 		
 	}
 	

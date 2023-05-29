@@ -20,76 +20,69 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 <script type="text/javascript">
 $(function(){
-	
-	//유효성 검증 에러 메시지 초기화
-	
-// 	key focus시 출력
-	$("#key").focus(function(){
-		$("#key_msg").html("key는 비우거나 C, F, Bb, Eb, Ab, Db, Gb, B, E, A, D, G로 입력해주세요!")
-	})
-	$("#key").blur(function(){
+	$("form").submit(function(){
 		
-		var keyReg = /^(C|F|Bb|Eb|Ab|Db|Gb|B|E|A|D|G)$/
+		//이벤트 처리 중단 ->submit은 동작함
+// 		return 
 		
-		if(keyReg.test($("#key").val())){
-			$("#key_msg").html("zz")
-			return true
-		} else if($("#key").val() == null ||$("#key").val() ==""){
-			return true
-		} else{
+		//이벤트 처리 중단 ->submit도 중단한다
+// 		return false
+
+		//-----------------------------------
+		//유효성 검증 결과에 따라 submit 중단
+		if(!validate() ){
+			
+			console.log("submit 중단")
 			return false
 		}
 		
+		//submit을 진행한다
+		console.log("submit 진행")
+		alret(2)
 	})
-
-// 	bpm focus시 출력
+	
+	//유효성 검증 에러 메시지 초기화
+	
 	$("#bpm").focus(function(){
-		$("#bpm_msg").html("")
-	})
-// 	bpm focus안할시 msg출력
-	$("#bpm").blur(function() {
-	  var bpmReg = /^(?:[1-9]|[1-9][0-9]|[12][0-9]{2}|300)$/g;
-	  
-	  if (!bpmReg.test($("#bpm").val())) {
-	    $("#bpm_msg").html("ddddddddddd");
-	    return false;
-	  }
-	  
-	  if ($("#bpm").val() == "") {
-	    $("#bpm_msg").html("ddddddddddd");
-	    return false;
-	  }
-	});
-	
-	$("#bpm").on('input', function() {
-	  if ($("#bpm").val() == "") {
-	    $("#bpm_msg").remove();
-	  }
-	});
-		
-// 	focus시 아무메세지도 출력 x 
-	$("#sourceName").focus(function(){
-		$("#sourceName_msg").html("")
-	})
-// 	아무것도 입력안할시 msg출력
-	$("#sourceName").blur(function(){
-		if($("#sourceName").val()==""){
-			$("#sourceName_msg").html("SourceName은 필수 입력 항목입니다. Source Name을 입력해주세요!")
-		}
+		$("#bpm_msg").html("focus메세지")
 	})
 	
-	// 	focus시 아무메세지도 출력 x 
-	$("#sourceTime").focus(function(){
-		$("#sourceTime_msg").html("Time은 0:00 형식으로 입력해주세요!")
-	})
-// 	아무것도 입력안할시 msg출력
-	$("#sourceTime").blur(function(){
-		if($("#sourceTime").val()==""){
-			$("#sourceTime_msg").html("SourceTime은 필수 입력 항목입니다. Source Time을 0:00 형식으로 입력해주세요!")
+	$("#bpm").blur(function(){
+		if($("#bpm").val()==""){
+			$("#bpmd_msg").html("blur메세지 ")
+			
 		}
 	})
 })
+
+//input데이터의 유효성검증
+function validate(){
+	
+	//id유효성 검증
+	//아이디를 입력했는지 검증
+	if($("#bpm").val()==''){
+// 		alert('아이디를 입력하세요')
+		$("#bpm_msg").html("필수 입력 항목입니다")
+		
+		return false
+	}
+	
+	//패스워드 입력값 검증 
+
+	var bpmReg=/^(?:[1-9]|[1-9][0-9]|[12][0-9]{2}|300)$/g
+	
+	if(!bpmReg.test($("#bpm").val())){
+		$("#bpm_msg").html("숫자 1부터 300까지가능합니다")
+		return false;
+	}
+	
+	//유효성 검증성공(submit 수행)
+	return true
+	
+}
+
 </script>
+
 
 <style type="text/css">
 	.source{
@@ -184,8 +177,8 @@ $(function(){
 	
 	.inputfile{
 	display: grid;
-	grid-template-columns: 22% 22%;
-	margin-left: 50px;
+	grid-template-columns: 20% 20%;
+	margin-left: 0px;
 	}
 	
 
@@ -287,7 +280,7 @@ $(function(){
 
   
 //   var input = document.querySelector('input[name="genre"]');
-  var input = document.querySelector('input[name="genre"]');
+  var inputElm = document.querySelector('input[name="genre"]');
 
   var whitelist = ["Trap", "R&B", "Soul", "boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
 
@@ -315,7 +308,7 @@ $(function(){
 // // 	  originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
 // 	})
  
-  tagify = new Tagify (input, {
+  tagify = new Tagify (inputElm, {
       whitelist:whitelist,
       maxTags: 1,
       dropdown: {
@@ -326,6 +319,12 @@ $(function(){
       }
     })
 
+	inputElm.addEventListener('change', onChange)
+	
+	function onChange(e){
+	// outputs a String
+	console.log(e.target.value)
+	}
 
   
   </script>
