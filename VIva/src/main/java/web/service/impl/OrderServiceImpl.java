@@ -6,15 +6,33 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.OrderDao;
+import web.dto.MySource;
+import web.dto.SourceFileInfo;
 import web.dto.Users;
 import web.service.face.OrderService;
 
 @Service
 public class OrderServiceImpl implements OrderService {
-
+	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired OrderDao orderDao;
+
+	@Override
+	public SourceFileInfo getFile(int sourceNo) {
+		return orderDao.selectSourceFileBysourceNo(sourceNo);
+	}
+	
+	@Override
+	public boolean checkSource(MySource source) {
+		
+		logger.info("sourceNo : {}", source);
+		
+		int chk = orderDao.selectSourceChkByUsernoSourceNo(source);
+		
+		logger.info("chk 숫자 확인 : {}", chk);
+    
+  }
 	
 	@Override
 	public boolean chkCreditAcc(Users userNo, int sourceNo) {
@@ -33,10 +51,21 @@ public class OrderServiceImpl implements OrderService {
 		
 		return false;
 	}
+
+	@Override
+	public boolean checkCredit(int userNo) {
+		
+		logger.info("userNo 확인 {}",userNo);
+		
+		int[] credit = orderDao.selectCreditByUserNo(userNo);
+		
+		logger.info("credit : {}", credit);
+		
+		return false;
+	}
+
 	@Override
 	public boolean orderCartItem(int sourceNo) {
-		
-		
 		return false;
 	}
 }

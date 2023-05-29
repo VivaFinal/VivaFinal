@@ -1,13 +1,13 @@
 package web.dto;
 
-public class Source_like {
+public class SourceLike {
 	
 	private int	sourceNo;
 	private int	userNo;
 	
-	public Source_like() {	}
+	public SourceLike() {	}
 
-	public Source_like(int sourceNo, int userNo) {
+	public SourceLike(int sourceNo, int userNo) {
 		super();
 		this.sourceNo = sourceNo;
 		this.userNo = userNo;

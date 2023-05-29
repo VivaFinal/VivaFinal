@@ -215,7 +215,7 @@ ul.nav > li > ul > li > a:hover {
 .item {
 	margin-top:5px;
 	display : inline-block;
-	float : right;
+	/* float : right; */
 /*     cursor: pointer; */
 }
 .icon img{

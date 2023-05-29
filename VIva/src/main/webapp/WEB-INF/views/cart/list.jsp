@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
 <c:import url="../layout/header.jsp"/>   
 
 <style type="text/css">
@@ -110,10 +111,10 @@
 </style>
 
 <div class="FunctionTitle">
-	Cart
+   Cart
 </div>
 <div class="FunctionTitleLine">
-	<img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
+   <img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
 </div>
 ${list }
 <form>

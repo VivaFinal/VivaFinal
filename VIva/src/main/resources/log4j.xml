@@ -18,7 +18,7 @@
 	<logger name="web">
 		<level value="info" />
 	</logger>
-
+		
 	<logger name="web.dao">
 		<level value="trace" />
 	</logger>

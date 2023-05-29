@@ -2,21 +2,34 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-
 <c:import url="../layout/header.jsp"/>
-<script src="https://unpkg.com/@yaireo/tagify"></script>
-<script src="https://unpkg.com/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
-<link href="https://unpkg.com/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+<script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/wavesurfer.js"></script>
 <script type="text/javascript">
 $(function() {
-
+	$(".tagcover").hover(function() {
+		$(this).css({
+			'background':'#Be3455',
+			'color':'white'
+		})
+	})
+	$(".tagcover").mouseout(function() {
+		$(this).css({
+			'background':'white',
+			'color':'black'
+		})
+	})
+	
 	
 })
 </script>
 <style type="text/css">
-h4{
+.cate{
 	margin-top: 8px;
 	color: black;
+	font-size: 1.4em;
+}
+.cateWrap{
+	text-align: center;
 }
 #btn{
 	font-size: 2.5em;
@@ -27,30 +40,127 @@ h4{
 	padding: 16px;
 }
 #line{
-	width: 1200px;
+	width: 1300px;
 	border-top: 1px solid #ccc;
 	padding-top: 16px;
 }
 #drop{
-	width: 1200px;
+	width: 1300px;
 }
 .width{
-	width:1200px;
+	width:1300px;
 	padding-bottom: 17px;
 }
 #tab{
-	width: 1200px;
+	width: 1300px;
 	height: 50px;
 	display: grid;
 	grid-template-columns: 80px 100px;
 }
 #tagWrap{
-	width: 1200px;
-	height: 100px;
+	width: 1300px;
+	height: 64px;
 	border-bottom: 1px solid #ccc;
+	display: grid;
+	grid-template-columns: 85px 85px 85px 85px 85px 85px 85px 85px 85px 85px 85px 85px 85px 85px 85px ;
+	grid-template-rows: 28px 28px;
+}
+.tagcover{
+	height: 25px;
+	text-align: center;
+	box-sizing: border-box;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	padding: 2px;
+	margin-bottom: 5px;
+	margin-right: 5px;
+	
+}
+.tagA{
+	color: black;
+	text-decoration: none;
+}
+#SourceWrap{
+	display: grid;
+	grid-template-columns: 80px 80px 400px 80px 80px 80px 300px 200px;
+}
+.th{
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	padding-top: 3px;
+	text-align: center;
+}
+.tr{
+	height: 60px;
+	text-align: center;
+	padding-top: 18px;
+	padding-bottom: 18px;
+}
+.trwave{
+	height: 60px;
+	text-align: center;
+	padding-top: 15px;
+	padding-bottom: 15px;
+}
+.trimg{
+	padding-top: 10px;
+	margin: 0 auto;
+	width: 80px;
+	padding-left:20px;
+	height:60px;
+}
+.th2{
+	border-bottom: 1px solid #ccc;
+	border-top: 1px solid #ccc;
+	padding-top: 3px;
+	text-align: center;
+}
+
+.filename{
+	height: 60px;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding-top: 18.5px;
+	padding-bottom: 18.5px;
+	vertical-align: middle;
+	text-align: center;
+}
+.time{
+	height: 60px;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding-top: 18.5px;
+	padding-bottom: 18.5px;
+	vertical-align: middle;
+	text-align: center;
+}
+.sourcename{
+	height: 60px;
+	overflow: hidden;
+	box-sizing: border-box;
+	padding-top: 18.5px;
+	padding-bottom: 18.5px;
+	vertical-align: middle;
+}
+.icons{
+	text-align: center;
+	padding-top: 18px;
+	padding-bottom: 18px;
+	display: grid;
+	grid-template-columns: 50px 50px 50px 50px; 
+}
+div[data-itemtype='line']{
+	border-bottom: 1px solid #ccc;
+}
+.cart{
+	cursor: pointer;
+}
+.like{
+	cursor: pointer;
 }
 </style>
 <div id="Wrap">
+<div id="WrapTop">
 <div id="drop" class="dropdown">
 	<button id="btn" class="btn btn-lg dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false"> 
 		${genre}
@@ -192,42 +302,246 @@ h4{
 	</c:if>
 	
 	<div id="tab">
-		<div>
+		<div class="cateWrap">
 			<c:if test="${empty source }">
-				<a href="/source/genre?genre=${genre}"><h4>Source</h4></a>
+				<a href="/source/genre?genre=${genre}"><span class="cate">Source</span></a>
 			</c:if>
 			<c:if test="${ not empty source }">
-				<a style="text-decoration:none; text-decoration-color:#ccc;" href="/source/genre?genre=${genre}"><h4>Source</h4></a>
+				<a style="text-decoration:none; text-decoration-color:#ccc;" href="/source/genre?genre=${genre}"><span class="cate">Source</span></a>
 			</c:if>
 		</div>
-		<div>
-			<a style="text-decoration:none; " href="/pack/genre?genre=${genre}"><h4>Pack</h4></a>
+		<div class="cateWrap">
+			<a style="text-decoration:none; " href="/pack/genre?genre=${genre}"><span class="cate">Pack</span></a>
 		</div>	
 	</div>
 	
 	<div id="tagWrap">
-		<input name="tags" class="custom" readonly value="
-		<c:forEach var="tag" items="${tag }" varStatus="status">
-			<c:if test="${status.current eq status.last}">
-				${tag.instrument} 
+		<c:forEach var="tag" items="${inst }" >
+			<c:if test="${empty tag.instrument }">
+				${tag.instrument }
+			</c:if>
+			<c:if test="${not empty tag.instrument }">
+				<a class="tagA" href="/source/genre?genre=${genre}&instrument=${tag.instrument}"><div class="tagcover">${tag.instrument}</div></a>
 			</c:if>
 		</c:forEach>
-		">
-	
-		<script type="text/javascript">
-			var input = document.querySelector('input[name=tags]')
-			new Tagify(input)
+		
+		<c:forEach var="tag" items="${scape }" >
+			<c:if test="${empty tag.scape }">
+				${tag.scape }
+			</c:if>
+			<c:if test="${not empty tag.scape }">
+				<a class="tagA" href="/source/genre?genre=${genre}&scape=${tag.scape}"><div class="tagcover">${tag.scape}</div></a> 
+			</c:if>
+		</c:forEach>
 			
-			$(".custom").click(function(){
+			
+		<c:forEach var="tag" items="${detail }" >
+			<c:if test="${empty tag.detail }">
+				${tag.detail }
+			</c:if>
+			<c:if test="${not empty tag.detail }">
+				<a class="tagA" href="/source/genre?genre=${genre}&detail=${tag.detail}"><div class="tagcover">${tag.detail}</div></a> 
+			</c:if>
+		</c:forEach>
+			
+			
+		<c:forEach var="tag" items="${fx }" >
+			<c:if test="${empty tag.fx }">
+				${tag.fx }
+			</c:if>
+			<c:if test="${not empty tag.fx }">
+				<a class="tagA" href="/source/genre?genre=${genre}&scape=${tag.fx}"><div class="tagcover">${tag.fx}</div></a> 
+			</c:if>
+		</c:forEach>
+	</div>
+
+</div><!-- WrapTop End -->
+<div id="WrapMiddle">
+	<div style="margin-top: 10px; margin-bottom: 10px;"><span class="cate">Result : ${list.size()}</span></div>
+	<div id="SourceWrap">
+		<div class="th"><span>Pack</span></div>
+		<div class="th"><span>Play</span></div>
+		<div class="th2"><span>Fimename</span></div>
+		<div class="th2"><span>Time</span></div>
+		<div class="th2"><span>Key</span></div>
+		<div class="th2"><span>Bpm</span></div>
+		<div class="th"><span>wave</span></div>
+		<div class="th"><span>icon</span></div>
+		
+		<c:forEach var="list" items="${list}">
+		
+			<div class="trimg" data-itemtype="line"><img src="../upload/${list.PACK_IMG_STOREDNAME}" style="width:40px; height: 40px;"></div>
+			<div class="tr" data-itemtype="line"><img src="../resources/icon/play-circle.svg" style="width: 30%"></div>
+			<div class="sourcename" data-itemtype="line"><span>${list.FILE_ORIGINNAME}</span></div>
+			<div class="time" data-itemtype="line"><span class="timespace"></span></div>
+			<div class="filename" data-itemtype="line"><span>${list.KEY}C</span></div>
+			<div class="filename" data-itemtype="line"><span>${list.BPM}95</span></div>
+			<div class="trwave" data-itemtype="line">
+				<div id="wave${list.SOURCE_NO}" data-no="${list.SOURCE_NO}" data-name="${list.FILE_STOREDNAME}"></div>
+			</div>
+			
+			<div class="icons" data-itemtype="line">
+				<div><a href="./download?sourceNo=${list.SOURCE_NO }"><img src="../resources/icon/plus-circle.svg" style="width: 45%"></a></div>
+				<div class="like" data-like="${list.SOURCE_NO}"><img src="../resources/icon/heart.svg" style="width: 45%"></div>
+				<div class="cart" data-cart="${list.SOURCE_NO }"><img src="../resources/icon/shopping-cart.png" style="width: 45%"></div>
+				<div><a href="./pack?packno=${list.PACK_NO }"><img src="../resources/icon/three-dots.svg" style="width: 45%"></a></div>
+			</div>
+			
+		</c:forEach>
+		<script type="text/javascript" defer>
+	
+			var conA = document.querySelectorAll("div[data-no]");
+			var conB = document.querySelectorAll("div[data-name]");
+		
+			var wave = [];
+		
+			for( var i = 0; i<${list.size()}; i++) { 
+		
+				 wave[i] = WaveSurfer.create({ 
+				 container: '#wave'+conA[i].getAttribute("data-no"),
+				 waveColor: 'gray', 
+				 progressColor: '#BB2649', 
+				 barWidth: 2, 
+				 reposive: true, 
+				 barHeight: 1.5, 
+				 pixelRatio: 30, 
+				 normalize: true, 
+				 barMinHeight: 50
+				});
+				 
+			
+			  wave[i].setHeight(30); 
+			  wave[i].setCursorColor('white'); 
+			  wave[i].load('../upload/'+conB[i].getAttribute("data-name"))
+			}
+		
+			
+			$(".trwave").click(function() {
 				
-				console.log(this)
+				//console.log($(".trwave").index(this))
+				// 음원소스 위치 알아내기
+				var waveno = $(".trwave").index(this)
+				
+				// 이미지 위치 알아내기
+				var imgno = $(".tr").index(this)
+				
+				$(".tr").eq(waveno).html('<img src="../resources/icon/play-circle-fill.svg" style="width:30%">')
+				
+				wave[waveno].play()	
+			
+			})
+			
+			$(".tr").click(function() {
+				
+				console.log($(".tr").index(this))
+				var btnplay = $(".tr").index(this)
+				
+				wave[btnplay].playPause()
+				
+				 if(wave[btnplay].isPlaying() == true){
+					 $(".tr").eq(btnplay).html('<img src="../resources/icon/play-circle-fill.svg" style="width:30%">')
+			     }
+			     else{
+			        	$(".tr").eq(btnplay).html('<img src="../resources/icon/play-circle.svg" style="width:30%">')
+			     }
 				
 			})
-		</script>
+	    	
+			var likes = document.querySelectorAll("div[data-like]");
+			
+			$(".like").click(function() {
+				
+				// 인덱스 변수
+				var idx = $(".like").index(this)
+				console.log("idx",idx)
+				
+				// SourceNo 변수
+				var sourceno = likes[idx].getAttribute('data-like')
+				console.log("소스번호",sourceno)
+				
+				$.ajax({
+					type: "get"
+					, url: "./genre/like"
+					, data: {
+						"userNo" : 1,
+						"sourceNo" : sourceno
+					}
+					, dataType: "json"
+					, success: function( res ) {
+						
+						if(res.result == true) {
+							
+							$(".like").eq(idx).html('<img src="../resources/icon/heart-fill.svg" style="width:45%">')
+							
+						} 	else if (res.result == false) {
+							
+								$(".like").eq(idx).html('<img src="../resources/icon/heart.svg" style="width:45%">')
+							
+							}
+						}
+			     })
+			  })
+				
+			  var carts = document.querySelectorAll("div[data-cart]");
+			  
+			  $(".cart").click(function() {
+				  
+				  // 인덱스 변수 확인
+				  var cidx = $(".cart").index(this)
+				  
+				  // SourceNo 확인
+				  var csourceNo = carts[cidx].getAttribute('data-cart')
+				  
+				  $.ajax({
+					type :"get"
+					, url :"/cart/add"
+					, data : {
+						"userNo" : 1,
+						"sourceNo" : csourceNo
+					}
+				  	, dataType :"json"
+				  	, success : function(res) {
+				  		console.log("장바구니 ajax 성공")
+				  		$("#footer").html('<div id="pop">장바구니에 담겼습니다!</div>')
+		  				$("#pop").css({
+				  			"background":"#BE3455",
+				  			"width":"250px",
+				  			"height":"60px",
+				  			"fontSize":"1.2em",
+				  			"top":"30px",
+				  			"left":"950px",
+				  			"borderRadius":"5px",
+				  			"border":"2px solid #ccc",
+				  			"paddingTop":"10px"
+				  		})
+				  		$("#pop").fadeOut(2500)
+				  	  }
+				  	, error : function(res) {
+				  		console.log("장바구니 ajax 실패")
+				  		$("#footer").html('<div id="pop">장바구니에 담겼습니다!</div>')
+		  				$("#pop").css({
+				  			"background":"#BE3455",
+				  			"width":"250px",
+				  			"height":"60px",
+				  			"fontSize":"1.2em",
+				  			"top":"30px",
+				  			"left":"950px",
+				  			"borderRadius":"5px",
+				  			"border":"2px solid #ccc",
+				  			"paddingTop":"10px"
+				  		})
+				  		$("#pop").fadeOut(2500)
+				  	}
+				  }) // ajax End
+			  }) // click end
+			  
+			  
+			  
+		</script> 
 	</div>
-	
-	
-	
+
+
+</div>	
 	
 	
 	
