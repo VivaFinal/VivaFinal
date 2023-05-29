@@ -27,7 +27,8 @@
   	</select>
   
   	<select id="selectSourceByGenre" parameterType="String" resultType="hashmap">
-		SELECT s.source_no, s.source_name, s.bpm, s.key, t.tag_no, t.genre, 
+		SELECT s.source_no, s.source_name, s.bpm, s.key, s.source_time,
+			t.tag_no, t.genre, 
 		    p.pack_no, pi.pack_img_storedname, pi.pack_img_originname,
 		    sf.file_originname, sf.file_storedname
 		FROM source S
@@ -73,5 +74,17 @@
   		DELETE SOURCE_LIKE
   		WHERE SOURCE_NO = #{sourceNo} and USER_NO = #{userNo}
   	</delete>
+  	
+  	<select id="selectBySourceNoforFile" parameterType="web.dto.SourceFileInfo" resultType="web.dto.SourceFileInfo">
+  		SELECT * FROM SOURCEFILEINFO
+  		WHERE SOURCE_NO = #{sourceNo}	
+  	</select>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
   
   </mapper>

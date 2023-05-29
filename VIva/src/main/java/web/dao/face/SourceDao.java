@@ -3,6 +3,7 @@ package web.dao.face;
 import java.util.List;
 import java.util.Map;
 
+import web.dto.SourceFileInfo;
 import web.dto.SourceLike;
 import web.dto.Tag;
 
@@ -65,6 +66,13 @@ public interface SourceDao {
 	 * @param like - 삭제할 좋아요 정보
 	 */
 	public void deleteByLike(SourceLike like);
+
+	/**
+	 * 클라이언트가 요청한 다운로드 파일의 정보를 조회한다
+	 * @param down - 다운로드를 요청한 sourceNo를 가진 객체
+	 * @return - 요청한 다운로드 파일 정보
+	 */
+	public SourceFileInfo selectBySourceNoforFile(SourceFileInfo down);
 
 
 

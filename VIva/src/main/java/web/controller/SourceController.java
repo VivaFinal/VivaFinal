@@ -13,6 +13,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import web.dto.Source;
+import web.dto.SourceFileInfo;
 import web.dto.SourceLike;
 import web.dto.Tag;
 import web.service.face.SourceService;
@@ -84,14 +86,19 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 		
 	}
 	
-	@RequestMapping("/test")
-	public void test() {
-		logger.info("/test 이것은 테스트 페이지");
+	@GetMapping("/genre/buy")
+	public String buy(SourceFileInfo down, Model model) {
+		logger.info("/genre/buy 접속 테스트");
+		logger.info("down 요청 : {}", down);
+		
+		SourceFileInfo downFile = sourceService.getFile(down);
+		
+		logger.info("다운로드 요청 파일 정보 : {}",downFile);
+		
+		model.addAttribute("down", downFile);
+		
+		return "down";
 	}
-	
-	
-	
-	
 	
 	
 	

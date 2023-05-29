@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import web.dao.face.SourceDao;
+import web.dto.SourceFileInfo;
 import web.dto.SourceLike;
 import web.dto.Tag;
 import web.service.face.SourceService;
@@ -138,6 +139,12 @@ public class SourceServiceImpl implements SourceService{
 	@Override
 	public void sourceDestLike(SourceLike like) {
 		sourceDao.deleteByLike(like);
+	}
+
+	@Override
+	public SourceFileInfo getFile(SourceFileInfo down) {
+		
+		return sourceDao.selectBySourceNoforFile(down);
 	}
 
 	

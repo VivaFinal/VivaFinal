@@ -27,7 +27,7 @@
 	</beans:bean> 
 	
 	<!-- DownloadView 클래스를 스프링 빈으로 등록한다 -->
-<!-- 	<beans:bean id="down" class="file.view.DownloadView"/> -->
+	<beans:bean id="down" class="web.view.DownloadView"/>
 	
 	<beans:bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/> 
 	

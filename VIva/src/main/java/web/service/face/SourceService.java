@@ -3,6 +3,8 @@ package web.service.face;
 import java.util.List;
 import java.util.Map;
 
+import web.dto.Source;
+import web.dto.SourceFileInfo;
 import web.dto.SourceLike;
 import web.dto.Tag;
 
@@ -69,6 +71,13 @@ public interface SourceService {
 	 * @param like - 좋아요를 누른 객체 정보
 	 */
 	public void sourceDestLike(SourceLike like);
+
+	/**
+	 * 다운로드를 하기 위한 파일의 정보를 조회한다
+	 * @param down - 다운로드 요청 파일의 sourceNo가 담긴 객체
+	 * @return - 해당 sourceNo를 가진 음원소스 정보
+	 */
+	public SourceFileInfo getFile(SourceFileInfo down);
 
 	
 

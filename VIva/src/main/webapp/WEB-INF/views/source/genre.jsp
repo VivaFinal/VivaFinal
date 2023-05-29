@@ -107,6 +107,7 @@ $(function() {
 	margin: 0 auto;
 	width: 80px;
 	padding-left:20px;
+	height:60px;
 }
 .th2{
 	border-bottom: 1px solid #ccc;
@@ -380,7 +381,7 @@ div[data-itemtype='line']{
 			</div>
 			
 			<div class="icons" data-itemtype="line">
-				<div><img src="../resources/icon/plus-circle.svg" style="width: 45%"></div>
+				<div><a href="./download?sourceNo=${list.SOURCE_NO }"><img src="../resources/icon/plus-circle.svg" style="width: 45%"></a></div>
 				<div class="like" data-like="${list.SOURCE_NO}"><img src="../resources/icon/heart.svg" style="width: 45%"></div>
 				<div class="cart" data-cart="${list.SOURCE_NO }"><img src="../resources/icon/shopping-cart.png" style="width: 45%"></div>
 				<div><a href="./pack?packno=${list.PACK_NO }"><img src="../resources/icon/three-dots.svg" style="width: 45%"></a></div>
