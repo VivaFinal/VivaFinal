@@ -24,6 +24,14 @@ public interface BoardDao {
 	 * @return
 	 */
 	public int selectCntAll();
+	
+	/**
+	 * 게시글 번호를 이용하여 게시글을 조회한다
+	 * 
+	 * @param viewBoard - 조회하려는 게시글 번호
+	 * @return 조회된 게시글 정보
+	 */
+	public Board select(Board viewBoard);
 
 	/**
 	 * 게시글 정보를 삽입한다
@@ -38,14 +46,6 @@ public interface BoardDao {
 	 * @param viewBoard - 조회된 게시글 번호
 	 */
 	public void hit(Board viewBoard);
-
-	/**
-	 * 게시글 번호를 이용하여 게시글을 조회한다
-	 * 
-	 * @param viewBoard - 조회하려는 게시글 번호
-	 * @return 조회된 게시글 정보
-	 */
-	public Board select(Board viewBoard);
 
 
 
