@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -24,8 +25,6 @@ import web.util.Paging;
 @Controller
 @RequestMapping("/board")
 public class BoardController {
-	
-	//20230525 보보를 기준으로 소스 복사!
 	
 	@Autowired BoardService boardService;
 	
@@ -64,7 +63,6 @@ public class BoardController {
 		
 		
 		return "board/view";
-	
 	}
 		
 	
@@ -75,9 +73,13 @@ public class BoardController {
 	public String writeProc( 
 			
 			Board board, MultipartFile file, HttpSession session, Model model,
-			@RequestParam("nick") String nick,
-			@RequestParam("title") String title,
-			@RequestParam("content") String content
+			@RequestParam(value="id", required=false) String id,
+			@RequestParam(value="title", required=false) String title,
+			@RequestParam(value="content", required=false) String content,
+			@RequestParam(value="categoryType", required=false) String categoryType
+//			@RequestParam(value="id") String id,
+//			@RequestParam(value="title") String title,
+//			@RequestParam(value="content") String content
 			
 			){
 		
@@ -91,9 +93,12 @@ public class BoardController {
 		
 //		board.setUserId( (String) session.getAttribute("id") );
 //		board.setUserNick( (String) session.getAttribute("nick") );	
+//		board.setUserId("id");
+//		board.setUserNick("nick");
 //		board.setBoardTitle("write");// 여기에 tilte담아야함
+//		board.setBoardContent("content");
 		
-		model.addAttribute("nick", nick);
+		model.addAttribute("id", id);
 		model.addAttribute("title", title);
 		model.addAttribute("content", content);
 		

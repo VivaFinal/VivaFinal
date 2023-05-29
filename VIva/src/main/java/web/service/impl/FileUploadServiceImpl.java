@@ -15,6 +15,7 @@ import web.dao.face.FileUploadDao;
 import web.dto.Source;
 import web.dto.SourceFileInfo;
 import web.dto.SourceImgInfo;
+import web.dto.Tag;
 import web.service.face.FileUploadService;
 
 
@@ -32,12 +33,18 @@ public class FileUploadServiceImpl implements FileUploadService{
 	}
 	
 	@Override
-	public void SourceUpload(Source source,MultipartFile imgfile,MultipartFile file) {
+	public void SourceUpload(Tag tag,Source source,MultipartFile imgfile,MultipartFile file) {
+		
+		//Tag(instrument,genre,scape,detail,fx)
+		fileUploadDao.TagInsert(tag);
+		
+		source.setTagNo(tag.getTag_no());
 		
 		//Source (name,BPM,Key,Tag) 정보 insert 
 		fileUploadDao.SourceInsertSource(source);
 		
 		
+		//---------------------------------------------------------------------------------------
 		//파일 업로드시작 
 		
 		//빈 파일일 경우

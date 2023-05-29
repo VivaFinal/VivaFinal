@@ -34,6 +34,7 @@
 } 
 .logo {
 	display : block;
+	width: 200px;
     height: 200px;
     cursor: pointer;
     margin-left: 10px;	
@@ -215,7 +216,7 @@ ul.nav > li > ul > li > a:hover {
 	margin-top:5px;
 	display : inline-block;
 	float : right;
-    cursor: pointer;
+/*     cursor: pointer; */
 }
 .icon img{
     width: 36px;
@@ -284,9 +285,9 @@ ul.nav > li > ul > li > a:hover {
 
 			<!--  목록3 : 게시판 -->
 			<li class="category">
-				<a href="">Community</a>
+				<a href="/board/list">Community</a>
 				<ul class="small_menu">
-					<li><a href="">Free Board</a></li>
+					<li><a href="/board/list">Free Board</a></li>
 					<li><a href="">Hot</a></li>
 				</ul>
 			</li>

@@ -6,20 +6,30 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 	<mapper namespace="web.dao.face.FileUploadDao">
+	
 	<select id="selectAllSourceList" resultType="web.dto.Source">
 	select * from source order by source_no desc
 	</select>
 	
+	<insert id="TagInsert" parameterType="web.dto.Tag">
+	<selectKey keyProperty="tagNo" order="BEFORE" resultType="int">
+	select tag_seq.nextval from dual
+	</selectKey>
+	
+	insert into tag
+	(tag_no, instrument, genre, scape, detail,fx)
+	values
+	(#{tagNo}, #{instrument}, #{genre}, #{scape}, #{detail}, #{fx}) 
+	
+	</insert>
+	
 	
 	
 	<insert id="SourceInsertSource" parameterType="web.dto.Source">
-	<selectKey keyProperty="sourceNo" order="BEFORE" resultType="int">
-	select source_seq.nextval from dual
-	</selectKey>
 	insert into source
-	(source_no, source_name, bpm, key, source_price, tag_no, pack_no, user_no)
+	(source_no, source_name, bpm, key, source_price, tag_no, pack_no, user_no,source_time)
 	values
-	(#{sourceNo} , #{sourceName},#{bpm},#{key},30,1,1,1)
+	(source_seq.nextval , #{sourceName}, #{bpm} , #{key}, 30, #{tagNo} , 1 , 1,#{sourceTime})
 	</insert>
    
    	<insert id="SourceInsertImg" parameterType="web.dto.SourceImgInfo">
