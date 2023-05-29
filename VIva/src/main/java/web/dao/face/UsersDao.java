@@ -1,5 +1,6 @@
 package web.dao.face;
 
+
 import web.dto.Users;
 
 public interface UsersDao {
@@ -36,4 +37,56 @@ public interface UsersDao {
 	 * @param member - 신규 회원 정보
 	 */
 	public void insert(Users users);
+
+	/**
+	 * 회원 아이디 조회
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public Users getUserNo(Users users);
+
+
+	/**
+	 * DB에 카카오 Id들어가있으면 1, 아니면 0 반환
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public int selectByKakaoId(Users users);
+
+
+	/**
+	 * DB에 카카오 Id없으면 회원가입시키기
+	 * 
+	 * @param users
+	 */
+	public void insertkakao(Users users);
+
+	/**
+	 * DB에 사용자 아이디 존재여부 확인
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public int checkUserId(Users users);
+
+	/**
+	 * DB에 사용자 닉네임 존재여부 확인
+	 * 
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public int checkUserNick(Users users);
+
+	/**
+	 * 회원 번호  조회
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public int selectAllInfo(Users users);
+
+
 }

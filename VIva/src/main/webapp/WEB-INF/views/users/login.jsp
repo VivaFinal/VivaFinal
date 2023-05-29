@@ -9,7 +9,68 @@
 <title>Insert title here</title>
 <script type="text/javascript" src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script type="text/javascript">
+//아이디 저장
+// $(document).ready(function(){
+// 		// 저장된 쿠키값을 가져와서 ID 칸에 넣어준다. 없으면 공백으로 들어감.
+// 	    var key = getCookie("key");
+// 	    $("#userId").val(key); 
+	     
+// 	    // 그 전에 ID를 저장해서 처음 페이지 로딩 시, 입력 칸에 저장된 ID가 표시된 상태라면,
+// 	    if($("#userId").val() != ""){ 
+// 	        $("#checkId").attr("checked", true); // ID 저장하기를 체크 상태로 두기.
+// 	    }
+	     
+// 	    $("#checkId").change(function(){ // 체크박스에 변화가 있다면,
+// 	        if($("#checkId").is(":checked")){ // ID 저장하기 체크했을 때,
+// 	            setCookie("key", $("#userId").val(), 7); // 7일 동안 쿠키 보관
+// 	        }else{ // ID 저장하기 체크 해제 시,
+// 	            deleteCookie("key");
+// 	        }
+// 	    });
+	     
+// 	    // ID 저장하기를 체크한 상태에서 ID를 입력하는 경우, 이럴 때도 쿠키 저장.
+// 	    $("#userId").keyup(function(){ // ID 입력 칸에 ID를 입력할 때,
+// 	        if($("#checkId").is(":checked")){ // ID 저장하기를 체크한 상태라면,
+// 	            setCookie("key", $("#userId").val(), 7); // 7일 동안 쿠키 보관
+// 	        }
+// 	    });
 
+// 	// 쿠키 저장하기 
+// 	// setCookie => saveid함수에서 넘겨준 시간이 현재시간과 비교해서 쿠키를 생성하고 지워주는 역할
+// 	function setCookie(cookieName, value, exdays) {
+// 		var exdate = new Date();
+// 		exdate.setDate(exdate.getDate() + exdays);
+// 		var cookieValue = escape(value)
+// 				+ ((exdays == null) ? "" : "; expires=" + exdate.toGMTString());
+// 		document.cookie = cookieName + "=" + cookieValue;
+// 	}
+
+// 	// 쿠키 삭제
+// 	function deleteCookie(cookieName) {
+// 		var expireDate = new Date();
+// 		expireDate.setDate(expireDate.getDate() - 1);
+// 		document.cookie = cookieName + "= " + "; expires="
+// 				+ expireDate.toGMTString();
+// 	}
+     
+// 	// 쿠키 가져오기
+// 	function getCookie(cookieName) {
+// 		cookieName = cookieName + '=';
+// 		var cookieData = document.cookie;
+// 		var start = cookieData.indexOf(cookieName);
+// 		var cookieValue = '';
+// 		if (start != -1) { // 쿠키가 존재하면
+// 			start += cookieName.length;
+// 			var end = cookieData.indexOf(';', start);
+// 			if (end == -1) // 쿠키 값의 마지막 위치 인덱스 번호 설정 
+// 				end = cookieData.length;
+//                 console.log("end위치  : " + end);
+// 			cookieValue = cookieData.substring(start, end);
+// 		}
+// 		return unescape(cookieValue);
+// 	}
+
+//--------------------------------유효성검사-------------------------------
 $(function(){
 	
 	//유효성 검사 -- 버튼 눌렀을때 push 알람 띄우기
@@ -52,30 +113,9 @@ function validate(){
 	return false;
 }
 
-//아이디 저장
-// function rememberMe() {
-//     var username = document.getElementById("userName").value;
-//     var rememberCheckbox = document.getElementById("remember");
-
-//     if (rememberCheckbox.checked) {
-//         localStorage.setItem("userName", username);
-//     } else {
-//         localStorage.removeItem("userName");
-//     }
-// }
-
-// window.onload = function() {
-//     var rememberedUsername = localStorage.getItem("userName");
-//     if (rememberedUsername) {
-//         document.getElementById("userName").value = rememberedUsername;
-//         document.getElementById("remember").checked = true;
-//     }
-// };
-
 </script>
 
 <style type="text/css">
-
 
 html{
 	display:flex;
@@ -117,12 +157,12 @@ input{
 	color : white;
 	border-radius: 7px;
 	width: 310px;
-	height: 45px;
+	height: 50px;
 }
 
 #kakao{
 	width: 310px;
-	height: 45px;
+	height: 50px;
 }
 
 .noline{
@@ -141,7 +181,7 @@ input{
 	<div class="select">
 	
 		<label for="userId" ></label>
-		<input type="text" class="boxcolor" id="userId" name="userId"  placeholder="아이디">
+		<input type="text" class="boxcolor" id="userId" name="userId" value="${cookie.id.value}" placeholder="아이디">
 		<span id="userid_msg" class="msg" style="color:red"></span>
 	</div>
 		
@@ -153,12 +193,9 @@ input{
 	</div>
 	
 	<div class="select">
-<!-- 		<label for="checkId" ></label> -->
-		 <label for="remember"></label>
-        <input type="checkbox" name="remember" id="remember" onclick="rememberMe()" />
+		 <label for="rememberId"></label>
+        <input type="checkbox" name="rememberId" id="rememberId" ${empty cookie.id.value ? "":"checked" }/>
 		아이디 저장
-<!-- 		<input type="checkbox" value="1">아이디 저장 -->
-<!-- 		<span id="login_error" id="remember" name="remember" class="msg" style="color:red" onclick="rememberMe()"></span> -->
 	</div>
 			
 	<div class="select">
@@ -166,27 +203,10 @@ input{
 	</div>
 	
 	<div class="select">
-        <c:if test="${userId eq null}">
-        <a href="https://kauth.kakao.com/oauth/authorize?client_id=709641586592b61e7e148fb086efd03f&redirect_uri=http://localhost:8888/login/login&response_type=code">
-			<img src="/resources/img/kakao_login_medium_narrow.png">
+        <a href="https://kauth.kakao.com/oauth/authorize?client_id=709641586592b61e7e148fb086efd03f&redirect_uri=http://localhost:8888/users/kakaologin&response_type=code">
+			<img id="kakao" src="/resources/img/kakao_login_medium_wide.png">
         </a>
-    </c:if>
-    
-    <c:if test="${userId ne null}">
-        <h1>로그인 성공입니다</h1>
-        <input type="button" value="로그아웃" onclick="location.href='./logout'">
-    </c:if>
-   
    </div>
-
-
-
-
-		
-<!-- 	js 카카오 로그인 -->
-<!-- 	<div class="select"> -->
-<%-- 		<c:import url="./kakao.jsp"/> --%>
-<!-- 	</div> -->
 		
 	<div class="select">
 		<a href="./idfind" class="noline">아이디 찾기 | </a>
