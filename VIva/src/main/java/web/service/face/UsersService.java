@@ -1,5 +1,6 @@
 package web.service.face;
 
+
 import web.dto.Users;
 
 public interface UsersService {
@@ -27,7 +28,55 @@ public interface UsersService {
 	 * @return 회원가입 결과
 	 */
 	public boolean join(Users users);
-	
+
+	/**
+	 * 유저 아이디 조회
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public Users getNo(Users users);
+
+	/**
+	 * 카카오 ID 있으면 true값
+	 * 
+	 * @param userInfo
+	 */
+	public boolean getkakaoId(Users users);
+
+
+	/**
+	 * 카카오 정보를 받아와서 회원가입
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public void kakaojoin(Users users);
+
+	/**
+	 * 중복 아이디 검사
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public int idCheck(Users users);
+
+
+	/**
+	 * 중복 닉네임 검사
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public int nickCheck(Users users);
+
+	/**
+	 * 회원 정보 조회
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public int selectAll(Users users);
 	
 	
 }

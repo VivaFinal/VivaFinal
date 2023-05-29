@@ -67,6 +67,14 @@ $(function(){
 		}
 	})
 	
+	//생년월일을 입력하지 않고 넘어갈 경우(필수 정보입니다 띄우기)
+// 	$("#userBirth").blur(function(){
+// 		if($("#userBirth").val()==''){
+// 			$("#userbirth_msg").html("필수정보입니다")
+// 		}else{
+// 			$("#userbirth_msg").html("")
+// 		}
+// 	})
 })
 //----------------------------------------------------------------------------------------
 
@@ -174,63 +182,7 @@ function compare_check(){
 	return true
 }
 
-//아이디 중복 검사
-$(function(){
-	
-	$(".id_input").on("click", function(){
-		
-		var userId = $("#userId").val();
-		var data = {userId : userId}
-		
-		$.ajax({
-			type:"get",
-			url: " /users/userIdChk",
-			data : data,
-			success: function(result){
-				//
-				if(result != "fail"){
-					//중복아이디가 없어서 사용가능한 아이디입니다
-					$(".id_input1").css("display","inline-block");
-					//span input2는 안보이게
-					$(".id_input2").css("display","none");
-				}else{
-					//중복아이디이므로 '아이디가 이미 존재합니다' 띄우기
-					$(".id_input1").css("display","none");
-					$(".id_input2").css("display","inline-block");
-				}
-				
-			}
-		})
-	})
-	
-	//닉네임 중복 검사
-	$(".nick_input").on("click", function(){
-	// 		console.log("keyup 테스트");
-	
-		var userNick = $("#userNick").val();
-		var data = {userNick : userNick}
-		
-		$.ajax({
-			type:"get",
-			url: " /users/userNickChk",
-			data : data,
-			success: function(result){
-				//
-				if(result != "fail"){
-					//중복아이디가 없어서 사용가능한 닉네임입니다
-					$(".nick_input1").css("display","inline-block");
-					//span input2는 안보이게
-					$(".nick_input2").css("display","none");
-				}else{
-					//중복닉네임이므로 '닉네임 이미 존재합니다' 띄우기
-					$(".nick_input1").css("display","none");
-					$(".nick_input2").css("display","inline-block");
-				}
-				
-			}
-		})
-	})
-})
+
 </script>
 <style type="text/css">
 
@@ -251,7 +203,6 @@ input{
 .select{
  	width: 420px;
  	margin: 15px;
- 	position: relative;
 }
 
 /* 로그인창으로(뒤로가기)  */
@@ -292,51 +243,12 @@ input{
     font-size: 16px;
     font-family: Consolas, sans-serif;
 }
-
-#chk_btn{
-	padding:0px 0px 0px 0px;
-}
-
-/* 중복아이디 존재하지 않으면 */
-.id_input1{
-	color:green;
-	display:none;
-}
-
-/* 중복아이디 존재한다면 */
-.id_input2{
-	color:red;
-	display:none;
-}
-/* 중복닉네임 존재하지 않으면 */
-.nick_input1{
-	color:green;
-	display:none;
-}
-
-/* 중복닉네임 존재한다면 */
-.nick_input2{
-	color:red;
-	display:none;
-}
-/* 아이디중복확인 버튼 */
-.id_input{
-	position: absolute;
-	top: 30px;
-	right: -120px;
-}
-/* 닉네임중복확인 버튼 */
-.nick_input{
-	position: absolute;
-	top: 27px;
-	right: -145px;
-}
 </style>
 
 </head>
 <body>
 
-<form action="./join" method="post">
+<form action="./kakaojoin" method="post">
 
 	<h3 style="text-align:center; font-size:30px; color:#E57733	;">Viva</h3><br>
 	
@@ -344,9 +256,6 @@ input{
 		<label for="userId" >아이디</label><br>
 		<input type="text"  id="userId" name="userId"  placeholder="6자 이상, 20자 이하의 영문자,숫자만 가능">
 		<span id="userid_msg" class="msg"></span>
-		<button type="button" value="ID중복확인" class="id_input">ID중복확인</button>
-		<span class="id_input1">사용 가능한 아이디입니다.</span>
-		<span class="id_input2">아이디가 이미 존재합니다.</span>
 	</div>
 		
 	<div class="select">
@@ -378,9 +287,6 @@ input{
 		<label for="userNick">닉네임</label>
 		<input type="text"  id="userNick" name="userNick" required="required">
 		<span id="usernick_msg" class="msg"></span>
-		<button type="button" value="닉네임중복확인" class="nick_input">닉네임중복확인</button>
-		<span class="nick_input1">사용 가능한 닉네임입니다.</span>
-		<span class="nick_input2">닉네임이 이미 존재합니다.</span>
 	</div>
 	
 	<div class="select">
