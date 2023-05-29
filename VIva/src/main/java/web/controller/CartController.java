@@ -49,7 +49,7 @@ public class CartController {
 	}
 	
 	//----------------------------------------------------------------------------------------
-	//항목 삭제 요청 받은 이 후 페이지
+	//항목 삭제 요청 받은 이후 페이지
 	@GetMapping("/delete")
 	public void delete(@RequestParam("cartNo") int cartNo, Writer out) {
 	    logger.info("/cart/delete - delete()");
@@ -70,9 +70,5 @@ public class CartController {
 	
 	
 	//----------------------------------------------------------------------------------------
-//	@GetMapping("/buy")
-//	public void buy() {
-//		logger.info("cart/list - buy()");
-//		
-//	}
+	//항목 구매는 OrderController 페이지에서 처리하기
 }

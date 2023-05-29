@@ -16,7 +16,8 @@
   background: #333333b0;
   color: #fff;
   font-size: 14px; 
-      margin-top: 33px;
+  margin-top: 33px;
+  display : float;
 } 
 .source_price {
   width: 200px;
@@ -35,7 +36,7 @@
 }
 
 #explain:after {
-    position: absolute;
+  position: absolute;
   bottom: 100%;
   left: 50%;
   width: 0;
@@ -96,6 +97,7 @@
   animation: fadeIn 1s;
 }
 /* Add animation (fade in the popup) */
+
 @-webkit-keyframes fadeIn {
   from {opacity: 0;} 
   to {opacity: 1;}
@@ -149,13 +151,13 @@ ${list }
 				<tr class="cart-item"><!--  첫번째 열 시작-->
 					<td><!--  1. 체크박스 -->
 						<div class="checkBox">
-						  <input class="form-check-input" type="checkbox" name="chBox" data-cartNum="${i.CART_NO}">
+						  <input class="form-check-input" type="checkbox" name="chBox" data-cart-no='${i.CART_NO}'>
 						</div>
 				 	</td>
 	
 					<td><!--  2. pack 및 소스 앨범아트 -->
 						<div class="product_img">
-							<img alt="이미지 없음" src="./buy${i.SOURCE_IMG_STOREDNAME }" width="50">
+<%-- 							<img alt="이미지 없음" src="./buyafterdownload${i.SOURCE_IMG_STOREDNAME }" width="50"> --%>
 						</div>
 					</td>
 					
@@ -177,48 +179,83 @@ ${list }
 					
 					<td class="source_price"><!--  7. 바로 구매 -->
 						<div>
-						<p id = 'explain'>${i.SOURCE_PRICE } credit</p> 
-						<img data-source-no='${i.SOURCE_NO}' class="buy-button" alt="구매" src="../resources/icon/plus-circle.svg" width="20">
+							<!--  마우스 호버 시, 메시지 뜨는거-->
+							<p id = 'explain'>${i.SOURCE_PRICE } credit</p> 
+							<img data-source-no='${i.SOURCE_NO}' data-cart-no='${i.CART_NO}' class="buy-button" alt="구매" src="../resources/icon/plus-circle.svg" width="20">
 						</div>
 					</td>
 					
 					<td class="popup"><!--  8. 항목 삭제 -->
 						<img data-cart-no='${i.CART_NO}' class="delete-button" alt="삭제" src="../resources/icon/X.png" width="20">
-						<span class="popuptext" id="myPopup${i.CART_NO}">항목이 삭제되었습니다.</span>
+<%-- 						<span class="popuptext" id="myPopup${i.CART_NO}">항목이 삭제되었습니다.</span> --%>
+<!--  항목 삭제를 누르고 ajax 로 성공 데이터를 받았을 때 popuptext 가 뜨게 하고 싶으나 자꾸 실패~ ㅎㅎㅎ ㅠㅠㅠ -->
 					</td>
+					
 					</tr><!--  첫번째 열 End -->
-			</tbody>
+			</tbody><!--  항목들 END-->
 			</c:forEach>
+			
 		</table><!--  orderTable End-->
-						<script>
-						$(document).on('click', '.delete-button', function() {
-							var cartNo = $(this).data('cart-no');
-							var $cartItem = $(this).closest('.cart-item'); // .cart-item을 찾아서 저장
-							console.log(cartNo);
-							console.log($cartItem);
-							 var popup = document.getElementById('myPopup${cartNo}');
-// 									  popup.classList.toggle("show");
-							 console.log(popup);
-							 
-				            $.ajax({
-				                url: "/cart/delete",
-				                type: "GET",
-				                data: { cartNo: cartNo },
-				                success: function(response) {
-				                    console.log("성공");
-				                    console.log(cartNo);
-				                
-				                    popup.classList.toggle("show");
-				                    
-				                    $cartItem.remove(); // $cartItem 변수를 사용하여 항목 제거
-				                },
-				                error: function() {
-									console.log("AJAX 실패")
-							}
-				            });
-				        });
-						
-				    </script>
+		
+		<script>
+		/*  장바구니 항목 구매 시 ajax 구현 */
+		$(document).on('click', '.buy-button', function() {
+			var sourceNo = $(this).data('source-no');
+			var cartNo = $(this).data('cart-no');
+			var $cartItem = $(this).closest('.cart-item'); // .cart-item을 찾아서 저장
+			
+			console.log(cartNo);
+			console.log(sourceNo);
+			console.log($cartItem);
+			
+										 
+			$.ajax({
+				url: "/cart/buy",
+				type: "POST",
+				data: {
+					cartNo : cartNo,
+					sourceNo : sourceNo
+				},
+				dataType : 'json',
+				success: function(response) {
+					console.log("ajax 성공");
+					console.log(sourceNo);
+							                    
+					$cartItem.remove(); // $cartItem 변수를 사용하여 항목 제거
+				},
+				error: function() {
+					console.log("AJAX 실패")
+				}
+			});
+		});
+		
+		
+		/*  장바구니 항목 삭제 시 ajax 구현 */
+		$(document).on('click', '.delete-button', function() {
+			var cartNo = $(this).data('cart-no');
+			var $cartItem = $(this).closest('.cart-item'); // .cart-item을 찾아서 저장
+			console.log(cartNo);
+			console.log($cartItem);
+			
+										 
+			$.ajax({
+				url: "/cart/delete",
+				type: "GET",
+				data: { cartNo: cartNo },
+				success: function(response) {
+					console.log("ajax 성공");
+					console.log(cartNo);
+							                    
+					$cartItem.remove(); // $cartItem 변수를 사용하여 항목 제거
+				},
+				error: function() {
+					console.log("AJAX 실패")
+				}
+			});
+		});
+		/*  하지만 전체 선택 및 부분 선택하여 삭제하는 기능은 미정 ... 수정해야함 !*/						
+		</script>
+
 	</div>
 </form>
 <c:import url ="../layout/footer.jsp"/>
