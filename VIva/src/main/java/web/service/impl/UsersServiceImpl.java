@@ -1,8 +1,13 @@
 package web.service.impl;
 
+import java.util.HashMap;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import web.controller.UsersController;
 import web.dao.face.UsersDao;
 import web.dto.Users;
 import web.service.face.UsersService;
@@ -11,7 +16,8 @@ import web.service.face.UsersService;
 @Service
 public class UsersServiceImpl implements UsersService {
 
-@Autowired UsersDao usersDao;
+	private static final Logger logger = LoggerFactory.getLogger(UsersController.class);
+	@Autowired UsersDao usersDao;
 	
 	@Override
 	public boolean login(Users users) {
@@ -45,4 +51,45 @@ public class UsersServiceImpl implements UsersService {
 		return false;
 	}
 	
+	@Override
+		public Users getNo(Users users) {
+			return usersDao.getUserNo(users);
+		}
+	
+	@Override
+	public boolean getkakaoId(Users users) {
+
+		//중복된 kakaoId인지 확인
+		if(usersDao.selectByKakaoId(users)>0) {
+			logger.info("카카오로 로그인한적이 있다");
+			return true;
+		} else {
+			logger.info("카카오로 로그인한적이 없다");
+			return false;
+		}
+		
+	}
+
+	@Override
+	public void kakaojoin(Users users) {
+
+		usersDao.insertkakao(users);
+	}
+	
+	@Override
+	public int idCheck(Users users) {
+		
+		return usersDao.checkUserId(users);
+	}
+	
+	@Override
+	public int nickCheck(Users users) {
+
+		return usersDao.checkUserNick(users);
+	}
+	
+	@Override
+	public int selectAll(Users users) {
+		return usersDao.selectAllInfo(users);
+	}
 }

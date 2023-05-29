@@ -7,22 +7,22 @@
 
 <mapper namespace="web.dao.face.CartDao">
 
-<!-- 	<resultMap type="HashMap" id="cartResultMap"> -->
-<!-- 		<id column="SOURCE_IMG_STOREDNAME" property="sourceImgStoredname" /> -->
-<!-- 		<id column="source_name" property="sourceName"/> -->
-<!-- 		<id column="source_price" property="sourcePrice" /> -->
-<!-- 	</resultMap> -->
 	
 	<select id="selectCartByUserno" resultType="HashMap" parameterType="web.dto.Cart">
 		select 
-			SI.SOURCE_IMG_STOREDNAME, 
-			S.source_name, source_price,
-			c.cart_no  
+			C.cart_no
+			, SI.SOURCE_IMG_STOREDNAME 
+			, S.source_name, S.source_no, source_price, bpm, key
 		 from cart C
 			left join source S on C.source_no = S.source_no
 			left join sourceimginfo SI on C.source_no = SI.source_no
 		 where C.user_no = #{userNo}
 	</select>
+	
+	<delete id="deleteCartByCartNo"  parameterType="int">
+		DELETE FROM cart
+		WHERE cart_no = #{cartNo}
+	</delete>
 
 
 </mapper>  

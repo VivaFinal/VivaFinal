@@ -2,6 +2,7 @@ package web.dao.face;
 
 import web.dto.MySource;
 import web.dto.SourceFileInfo;
+import web.dto.Users;
 
 public interface OrderDao {
 
@@ -30,5 +31,15 @@ public interface OrderDao {
 	 * @return - 충전, 지출, 수입, 환전의 크레딧 정보 배열
 	 */
 	public int[] selectCreditByUserNo(int userNo);
+  
+  /**
+	 * userNo 을 통해 credit TB 조회 하여 총액 구하기
+	 * 
+	 * @param userNo
+	 * @return 크레딧 총계 구하기
+	 */
+	public int selectCreditAcc(Users userNo);
+
+
 
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import web.dto.Source;
 import web.dto.SourceFileInfo;
 import web.dto.SourceImgInfo;
+import web.dto.Tag;
 
 public interface FileUploadDao {
 
@@ -15,12 +16,20 @@ public interface FileUploadDao {
 	public List<Source> selectAllSourceList();
 
 	/**
+	 * Tag 테이블 정보 삽입 
+	 * tag(tag_no,instrument,genre,scape,detail,fx) insert
+	 * @param tag
+	 */
+	public void TagInsert(Tag tag);
+	
+	/**
 	 * Source 테이블 정보 삽입 
 	 *  source(source_name,BPM,Key,tag_no,pack_no,user_no) insert
 	 * @param source
 	 */
 	public void SourceInsertSource(Source source);
 
+	
 	/**
 	 * SourceImgInfo 테이블 정보 삽입 
 	 * sourceImgInfo (소스 이미지파일 insert)
@@ -34,6 +43,7 @@ public interface FileUploadDao {
 	 * @param sourceFileInfo ( 소스 음원 파일 origin,stored)
 	 */
 	public void SourceInsertFile(SourceFileInfo sourceFileInfo);
+
 
 
 
