@@ -1,69 +1,30 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-<style type="text/css">
-.pl{
-    width: 200px;
-    border: 1px solid #C4C4C4;
-    box-sizing: border-box;
-    border-radius: 10px;
-    padding: 12px 13px;
-    font-family: 'Roboto';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 16px;
-}
-
-.pl:focus{
-    border: 1px solid #9B51E0;
-    box-sizing: border-box;
-    border-radius: 10px;
-    outline: 3px solid #F8E4FF;
-    border-radius: 10px;
-}
-
-
-</style>
+  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+  <title>Click Add Tag Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css" />
+  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
 </head>
+
 <body>
+  <input type="text" name='basic' value="tag1, tag2" />
+  <button id="click">add tags</button>
+  <script>
+    var input = document.querySelector('input[name=basic]');
 
-<div style="margin: 0 auto;">
+    var tagify = new Tagify(input);
 
-<div class="title" style="width: 40%; height: 200px; border: 1px solid blue; float: left; display: inline-block;">
-		<label>제목</label>
-		<input type="text" id="title" name="title" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!"> 
-		 <label for="Key">Key</label>
-		  <select name="key" id="" class="pl">
-		 		<option value="0" selected>Key</option>
-		      <option value="a">a</option>
-		      <option value="b">b</option>
-		      <option value="c">c</option>
-		      <option value="d">d</option>
-		      <option value="e">e</option>
-		      <option value="f">f</option>
-		      <option value="h">h</option>
-		
-		  </select>
 
-	<div>
-	<label>설명</label>
-<!-- 	<input type="text" id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!"  > -->
-	<textarea id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7"></textarea>
-	</div>
-	</div>
-	
-	<!-- col-lg-4는 textarea의 크기  -->
-	
-	
-
-<div style="width: 40%; height: 200px; border: 1px solid blue; float: left; display: inline-block; ">
-
-</div>
-</div>
+    $("#click").on("click", function() {
+      var n = "ADD_IT_" + Math.random();
+      var tags = [];
+      tags.push(n);
+      tagify.addTags(tags);
+    })
+  </script>
 </body>
+
 </html>
