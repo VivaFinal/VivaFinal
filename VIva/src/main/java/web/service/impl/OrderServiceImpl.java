@@ -16,7 +16,7 @@ import web.dto.Users;
 import web.service.face.OrderService;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService { 
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
@@ -36,9 +36,9 @@ public class OrderServiceImpl implements OrderService {
 		int chk = orderDao.selectSourceChkByUsernoSourceNo(source);
 		
 		logger.info("chk 숫자 확인 : {}", chk);
-		//채원님 작성한 메소드가 자꾸 에러가 나서 return 타입 적어놨음.
-		return false;
     
+		return false;
+
   }
 	
 	@Override
@@ -75,12 +75,9 @@ public class OrderServiceImpl implements OrderService {
 		price = orderDao.selectSourceAmount(sourceNo);
 		logger.info("total price : {}", price);
 		
-		
 		//sourceNo 이 없는 경우 null 은 0 이 뜨므로 아래 코드가 검증이 안되는 경우가 생김.
 		//sourceNo 여러개가 넘어왔을때, 각 sourceNo의 유효성을 검증하는 코드를 하나 써놔야함.
 		//근데 아직 배열로 숫자가 넘어오는 방법을 안썼기에 일단은 보류.
-		
-		
 		
 		//크레딧잔액 ><= 비교대상 크고 작기에 대한 결과 구하기
 		if(res>0 && res>price) {

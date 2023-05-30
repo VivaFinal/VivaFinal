@@ -13,10 +13,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Board;
+import web.dto.Files;
 import web.dto.Tag;
 import web.dto.Users;
 import web.service.face.BoardService;
@@ -30,19 +32,20 @@ public class BoardController {
 	
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	@RequestMapping("/list")
-	public void list( Paging paging, Model model ) {
+	@RequestMapping(value="/list", method=RequestMethod.GET)
+	public void list( Paging paging, Model model, String userNick ) {
 		logger.info("/board/list [GET]");
 		
 		//페이징 계산
-		Paging page = boardService.getPaging( paging );
+		Paging page = boardService.getPaging(paging);
 		logger.info("{}", page);
 		
 		//게시글 목록 조회
-		List<Board> boardList = boardService.list( page );
+		List<Board> boardList = boardService.list(page);
 		
 		model.addAttribute("page", page);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("userNick", userNick);
 	}
 	
 	@RequestMapping("/view")
@@ -61,6 +64,9 @@ public class BoardController {
 		//모델값 전달  - 게시글
 		model.addAttribute("viewBoard", viewBoard);
 		
+		//첨부파일 정보 모델값 전달
+		Files boardFile = boardService.getAttachFile(viewBoard);
+		model.addAttribute("boardFile", boardFile);
 		
 		return "board/view";
 	}
@@ -72,10 +78,10 @@ public class BoardController {
 	@PostMapping("/write")
 	public String writeProc( 
 			
-			Board board, MultipartFile file, HttpSession session, Model model,
-			@RequestParam(value="id", required=false) String id,
-			@RequestParam(value="title", required=false) String title,
-			@RequestParam(value="content", required=false) String content,
+			Board board, MultipartFile file,Model model,
+//			@RequestParam(value="userId", required=false) String userId,
+			@RequestParam(value="boardTitle", required=false) String boardTitle,
+			@RequestParam(value="boardContent", required=false) String boardContent,
 			@RequestParam(value="categoryType", required=false) String categoryType
 //			@RequestParam(value="id") String id,
 //			@RequestParam(value="title") String title,
@@ -91,21 +97,52 @@ public class BoardController {
 //		  
 //		  } model.addAttribute("userId", id);
 		
-//		board.setUserId( (String) session.getAttribute("id") );
-//		board.setUserNick( (String) session.getAttribute("nick") );	
+//		board.setUserNo(01);
 //		board.setUserId("id");
-//		board.setUserNick("nick");
-//		board.setBoardTitle("write");// 여기에 tilte담아야함
-//		board.setBoardContent("content");
+		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
+		board.setBoardContent(boardContent);
+		board.setCategoryType(categoryType);
 		
-		model.addAttribute("id", id);
-		model.addAttribute("title", title);
-		model.addAttribute("content", content);
+//		model.addAttribute("userId", userId);
+//		model.addAttribute("boardTitle", boardTitle);
+//		model.addAttribute("boardContent", boardContent);
+//		model.addAttribute("categoryType", categoryType);
+		
 		
 		
 		boardService.write( board, file );
 		
 		return "redirect:./list";	//게시글 목록
+	}
+	
+
+	
+	@GetMapping("/update")
+	public String update( Board board, Model model ) {
+		
+		//잘못된 게시글 번호 처리
+		if( board.getBoardNo() < 1 ) {
+			return "redirect:/board/list";
+		}
+		
+		//수정할 게시글의 상세보기
+		board = boardService.view(board);
+		model.addAttribute("updateBoard", board);
+		
+		//첨부파일 정보 모델값 전달
+		Files boardFile = boardService.getAttachFile(board);
+		model.addAttribute("boardFile", boardFile);
+			
+		return "board/update";
+	}
+	
+	@PostMapping("/update")
+	public String updateProc( Board board, MultipartFile file ) {
+		
+		//게시글+첨부파일 수정
+		boardService.update( board, file );
+		
+		return "redirect:./view?boardNo=" + board.getBoardNo();
 	}
 
 }

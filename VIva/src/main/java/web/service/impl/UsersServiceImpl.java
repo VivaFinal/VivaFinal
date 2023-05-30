@@ -92,4 +92,10 @@ public class UsersServiceImpl implements UsersService {
 	public int selectAll(Users users) {
 		return usersDao.selectAllInfo(users);
 	}
+
+	@Override
+	public Users nameEmailCheck(Users users) {
+		return usersDao.checkUserNameEmail(users);
+	}
+	
 }
