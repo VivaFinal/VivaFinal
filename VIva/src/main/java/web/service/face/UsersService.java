@@ -77,6 +77,14 @@ public interface UsersService {
 	 * @return
 	 */
 	public int selectAll(Users users);
-	
+
+	/**
+	 * 아이디찾기 - 사용자 이름과 이메일 존재여부
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public Users nameEmailCheck(Users users);
+
 	
 }

@@ -39,19 +39,13 @@ public class CartController {
 	//----------------------------------------------------------------------------------------
 	//userNo 알아낸 뒤, 리스트 목록 부르는 페이지
 	@PostMapping("/list")
-	public void list(Cart userNo, Model model, Writer out) {
+	public void list(Cart userNo, Model model) {
 		logger.info("cart/list - list()");
 		logger.info("userno: {} ", userNo);
 		  
 		List<Map<String,Object>> cartList = cartService.getCartList(userNo);
 		
 		model.addAttribute("list", cartList);
-		
-		try {
-			out.write("{\"result\":true}");
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
 		
 	}
 	

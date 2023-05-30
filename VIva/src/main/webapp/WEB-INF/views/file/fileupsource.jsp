@@ -256,10 +256,30 @@ $(function(){
 		<span id="sourceName_msg" class="msg"></span>
 		<br>
 		
-		<label>Key</label>
-		<input type="text" id="key" name="key" class="form-control" placeholder="Key를 입력해주세요!"><br>
-		<span id="key_msg" class="msg"></span>
-		<br>
+<!-- 		<label>Key</label> -->
+<!-- 		<input type="text" id="key" name="key" class="form-control" placeholder="Key를 입력해주세요!"><br> -->
+<!-- 		<span id="key_msg" class="msg"></span> -->
+<!-- 		<br> -->
+		
+		  <label>Key</label>
+  	 <input name='key' class='some_class_name' placeholder='Key를 선택해주세요!'>
+  	<script>	
+		  var input = document.querySelector('input[name="key"]');
+		
+		  var whitelist = ["C", "F", "Bb", "Eb", "Ab", "Db", "Gb", "B", "E", "A","D","G"];
+		
+		  var tagify = new Tagify(input, {
+		        whitelist:whitelist,
+		        maxTags: 1, //최대 허용 태그 갯수 
+		        dropdown: {
+		          maxItems: 20,  			//드롭다운 메뉴에서 몇개정도 항목을 보여줄지         
+		          classname: "tags-look", 	// 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
+		          enabled: 0,           	// 단어 몇글자 입력했을떄 추천 드롭다운 메뉴가 나타날지
+		          closeOnSelect: true  		// 드롭다운 메뉴에서 태그 선택하면 자동으로 꺼지는지 안꺼지는지
+		        }
+		      })
+		  
+  </script>
 		
 		<label>BPM</label>
 		<input type="text" id="bpm" name="bpm" class="form-control" placeholder="BPM를 입력해주세요!"><br>

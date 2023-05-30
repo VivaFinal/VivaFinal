@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import web.dto.Users;
 import web.service.face.KakaoService;
+import web.service.face.MailSendService;
 import web.service.face.UsersService;
 
 @Controller
@@ -31,6 +32,7 @@ public class UsersController {
 	
 	@Autowired UsersService usersService;
 	@Autowired KakaoService kakaoService; 
+	@Autowired MailSendService mailService;
 	
 	@GetMapping("/login")
 	public void login() {
@@ -110,7 +112,7 @@ public class UsersController {
 			Users getUserNo = usersService.getNo(users);
 			//세션에 true값 저장
 			session.setAttribute("login", loginResult);
-		
+			
 			//***************아이디 저장하기********************
 			session.setAttribute("id", users.getUserId());
 			//rememberId는 체크박스 name이다
@@ -164,6 +166,16 @@ public class UsersController {
 
 	@GetMapping("/join")
 	public void join() {}
+	
+	//회원가입시 이메일 인증
+	@GetMapping("/mailCheck")
+	@ResponseBody
+	public String mailCheck(String email) {
+		System.out.println("이메일 인증 요청이 들어옴!");
+		System.out.println("이메일 인증 이메일 : " + email);
+		
+		return mailService.joinEmail(email);
+	}
 	
 	@PostMapping("/join")
 	public String joinProcess(Users users, Model model) {
@@ -223,7 +235,7 @@ public class UsersController {
 		
 		logger.info("userNickChk입니다");
 		
-		int result = usersService.nickCheck(users);
+		int result = usersService.idCheck(users);
 		
 		logger.info("결과값 {} " , result);
 		
@@ -235,15 +247,43 @@ public class UsersController {
 		}
 	}
 	
-	@RequestMapping("/idfind")
-	public void idfind(Users users) {
+	//아이디찾기에서 이름과 이메일 존재여부 ajax
+	@RequestMapping("/checkIdPw")
+	@ResponseBody
+	public String nameEmailfind(Users users, Model model) {
+		
+		logger.info("userNameChk입니다", users);
+		
+		Users result = usersService.nameEmailCheck(users);
+		
+		logger.info("결과값 {} " , result);
+		
+		
+		//result가 DB에 이름과 닉네임 존재하지않으면 fail을 리턴
+		if(result == null || "".equals(result.getUserEmail())) {
+
+			return "fail";
+		}else {
+			model.addAttribute("userId",result.getUserId());
+			
+			return "success";
+		}
+	}
+	
+	//아이디찾기
+	@RequestMapping("/idcheck")
+	public void idcheck(Users users) {
+		logger.info("/users/idcheck");
+	}
+
+	//비밀번호 찾기
+	@RequestMapping("/pwcheck")
+	public void pwfind(Users users) {
+		logger.info("/users/pwcheck");
 		
 	}
 	
-	@RequestMapping("/pwfind")
-	public void pwfind(Users users) {
-		
-	}
+	// 마이페이지
 	@RequestMapping("/mypage")
 	public void userInfo(Users users) {
 		logger.info("/users/mypage[GET]");

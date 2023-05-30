@@ -60,6 +60,11 @@
 		WHERE kakao_id = #{kakaoId}
 	</select>
 	
+	<select id="checkUserNameEmail" resultType="web.dto.Users" parameterType="web.dto.Users">
+		SELECT * FROM users
+		WHERE user_name = #{userName} and user_email = #{userEmail}
+	</select>
+	
 </mapper>
 
 
