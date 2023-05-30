@@ -52,7 +52,7 @@ th, td {
 	<td>${boardList.boardNo }</td>
 	<td>${boardList.categoryType }</td>
 	<td><a href="./view?boardNo=${boardList.boardNo }">${boardList.boardTitle }</a></td>
-	<td>${boardList. }</td>
+	<td>${boardList.userNick}</td> 
 	<td>${boardList.boardHit }</td>
 	<td><fmt:formatDate value="${boardList.boardDate }" pattern="yyyy-MM-dd"/></td>
 </tr>

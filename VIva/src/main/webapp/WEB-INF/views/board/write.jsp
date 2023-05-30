@@ -5,14 +5,14 @@
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
 <script type="text/javascript">
-function submitContents(elClickedObj) {
+/* function submitContents(elClickedObj) {
 	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", [])
 	
 	try {
 		elClickedObj.form.submit();
 	} catch(e) {}
 }
-
+ */
 
 $(document).ready(function() {
 	$("#cancel").click(function() {
@@ -21,7 +21,7 @@ $(document).ready(function() {
 
 	
 	$("#btnWrite").click(function() {
-		submitContents($("#btnWrite"))
+		//submitContents($("#btnWrite"))
 		
 		$("form").submit();
 	})
@@ -54,7 +54,7 @@ $(document).ready(function() {
 
 <div class="form-group">
 	<label class="form-label" for="write">작성자 아이디</label>
-	<input type="text" id="userNo" name="userNo" value="${userId }" class="form-control">
+	<input type="text" id="userId" name="userId" value="${userId }" class="form-control">
 </div>
 
 <div class="form-group">
