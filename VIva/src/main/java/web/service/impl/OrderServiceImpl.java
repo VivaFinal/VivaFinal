@@ -12,12 +12,12 @@ import web.dto.Users;
 import web.service.face.OrderService;
 
 @Service
-public class OrderServiceImpl implements OrderService {
+public class OrderServiceImpl implements OrderService { 
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@Autowired OrderDao orderDao;
-
+	
 	@Override
 	public SourceFileInfo getFile(int sourceNo) {
 		return orderDao.selectSourceFileBysourceNo(sourceNo);
@@ -31,6 +31,8 @@ public class OrderServiceImpl implements OrderService {
 		int chk = orderDao.selectSourceChkByUsernoSourceNo(source);
 		
 		logger.info("chk 숫자 확인 : {}", chk);
+		
+		return false;
     
   }
 	
@@ -47,9 +49,8 @@ public class OrderServiceImpl implements OrderService {
 		
 		
 		//크레딧잔액 ><= 비교대상 크고 작기에 대한 결과 구하기
-		
-		
 		return false;
+		
 	}
 
 	@Override
