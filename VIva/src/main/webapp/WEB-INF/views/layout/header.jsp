@@ -34,12 +34,10 @@
 } 
 .logo {
 	display : block;
-	width: 200px;
-    height: 200px;
-    cursor: pointer;
-    margin-left: 10px;	
-    margin-top: 15px;
-
+	width: 250px;
+	padding: 25px;
+	overflow: hidden;
+	box-sizing: unset;
 }
 .FunctionTitle {
 /* 	position: absolute; */
@@ -92,12 +90,16 @@
 }
 #header {
 	background : #FFFFFF;
+	text-align: right;
+	padding-top: 20px;
 }
 /*  메인 메뉴 - 1 Depth*/
 ul.nav {
 	/*  ul태그의 기본 리스트스타일(disc) 제거 */
 	list-style-type: none;
-
+	
+	width: 250px;
+	display: list-item;
 	/*  ul 태그의 기본 여백 제거 */
 	padding: 0;
 	margin:0;
@@ -160,10 +162,13 @@ ul.nav > li > ul {
 /*  서브 메뉴의 항목 */
 ul.nav > li > ul > li {
 	
+	width: 100px;
+	float: left;
 	
 	/*  내부 여백 - 항목의 크기 변경 */
 /* 	padding: 10px;  */
 	padding-left: 30px;
+	
 	
 	/*  평소에 안보이도록 설정하기 - 방법 1 */
 /* 	display: none; */
@@ -213,7 +218,6 @@ ul.nav > li > ul > li > a:hover {
 	
 }
 .item {
-	margin-top:5px;
 	display : inline-block;
 	/* float : right; */
 /*     cursor: pointer; */
@@ -243,13 +247,16 @@ ul.nav > li > ul > li > a:hover {
 	-webkit-text-fill-color: transparent;
 	background-clip: text;
 	text-fill-color: transparent;
-	}
+}
+.iconName{
+ 	margin-left: 30px;
+}
 </style>
 </head>
 <body>
 
 <div class="wrapper"> <!--  footer.jsp 에서 닫아줌 -->
-	  <div class = "item" id="sidebar">
+	  <div id="sidebar">
 	  	<div>
 	  		<img class="logo" src="../../../resources/icon/Group 4.svg">
 	  	</div>
@@ -263,23 +270,30 @@ ul.nav > li > ul > li > a:hover {
 	  		<!--  목록2 : 음원소스 -->
 			<li class="category">
 				<a href="">Sounds</a>	
-				<ul class="small_menu" id="genre">
-					<li><a href="/source/genre?genre=hiphop">Hip Hop</a></li>
-					<li><a href="/source/genre?genre=livesound">Live Sound</a></li>
-					<li><a href="/source/genre?genre=house">House</a></li>
-					<li><a href="/source/genre?genre=pop">Pop</a></li>
-					<li><a href="/source/genre?genre=bassmusic">Bass Music</a></li>
-				</ul>
-				
-				<ul class="small_menu" id="instrument">
-					<li><a href="/source/inst?instrument=drum">Drums</a></li>
-					<li><a href="/source/inst?instrument=vocal"">Vocal</a></li>
-					<li><a href="/source/inst?instrument=synth"">Synth</a></li>
-					<li><a href="/source/inst?instrument=brass"">Brass</a></li>
-					<li><a href="/source/inst?instrument=woodwinds"">Woodwinds</a></li>
-					<li><a href="/source/inst?instrument=guitar"">Guitar</a></li>
-					<li><a href="/source/inst?instrument=bass"">Bass</a></li>
-					<li><a href="/source/inst?instrument=string"">String</a></li>
+				<ul>
+					<li><a href="/source/genre?genre=Trap">Trap</a></li>
+					<li><a href="/source/inst?instrument=Kick">Kick</a></li>
+					
+					<li><a href="/source/genre?genre=BoomBap">BoomBap</a></li>
+					<li><a href="/source/inst?instrument=Snare">Snare</a></li>
+					
+					<li><a href="/source/genre?genre=Pop">Pop</a></li>
+					<li><a href="/source/inst?instrument=Female">Female</a></li>
+					
+					<li><a href="/source/genre?genre=Soul">Soul</a></li>
+					<li><a href="/source/inst?instrument=Male">Male</a></li>
+					
+					<li><a href="/source/genre?genre=Jazz">Jazz</a></li>
+					<li><a href="/source/inst?instrument=Lead">Lead</a></li>
+					
+					<li><a href="/source/genre?genre=RnB">R&B</a></li>
+					<li><a href="/source/inst?instrument=Pad">Pad</a></li>
+					
+					<li><a href="/source/genre?genre=EDM">EDM</a></li>
+					<li><a href="/source/inst?instrument=Acoustic">Acoustic</a></li>
+					
+					<li><a href="/source/genre?genre=Disco">Disco</a></li>
+					<li><a href="/source/inst?instrument=Flute">Flute</a></li>
 				</ul>
 			</li>
 
@@ -287,8 +301,8 @@ ul.nav > li > ul > li > a:hover {
 			<li class="category">
 				<a href="/board/list">Community</a>
 				<ul class="small_menu">
-					<li><a href="/board/list">Free Board</a></li>
-					<li><a href="">Hot</a></li>
+					<li class="comm"><a href="/board/list">Free Board</a></li>
+					<li class="comm"><a href="">Hot</a></li>
 				</ul>
 			</li>
 	  
@@ -297,10 +311,10 @@ ul.nav > li > ul > li > a:hover {
 	
 	  <div class = "item" id="header">
 <!-- 	  	<a class="icon" href=""><img src="../../../resources/icon/shopping-cart.png" alt="cart"></a> -->
-	  	<a class="icon" id="sound" href=""><span>Cart</span></a>
-	  	<a class="icon" id="sound" href=""><span>My Sounds</span></a>
-	  	<a class="icon" id="sound" href=""><span>Credits</span></a>
-	  	<a class="icon" id="sound" href=""><span>user</span></a>
+	  	<a class="icon" id="sound" href=""><span class="iconName">Cart</span></a>
+	  	<a class="icon" id="sound" href=""><span class="iconName">My Sounds</span></a>
+	  	<a class="icon" id="sound" href=""><span class="iconName">Credits</span></a>
+	  	<a class="icon" id="sound" href=""><span class="iconName">user</span></a>
 	  </div>
 	  
 	  <div class = "item" id="content"><!--  footer.jsp 에서 닫아줌 -->

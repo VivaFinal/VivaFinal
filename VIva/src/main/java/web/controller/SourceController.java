@@ -29,7 +29,7 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired SourceService sourceService;
 	
 	@GetMapping("/genre")
-	public void genre(Tag genre, Model model) {
+	public void genre(Tag genre, Model model, String msg) {
 		logger.info("Genre별 Source 접근 [GET]");
 		logger.info("장르별 카테고리 {}",genre.getGenre());
 		
@@ -53,9 +53,15 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 		// 음원소스 조회
 		List<Map<String, Object>> list = sourceService.getSourceByGenre(genre);
 		
+		// 구매이력이 있는 경우 메시지 반환
+		if( msg != null && msg.equals("already")) {
+			msg = msg.replace("already", "이미 해당 음원을 구매하셨습니다, 마이페이지에서 다운로드 해주세요!");
+			logger.info(msg);
+			model.addAttribute("msg", msg);
+		}
+		
 //		logger.info("장르별 음원소스 조회 : {}", list);
 		model.addAttribute("list", list);
-		
 	}
 	
 	@GetMapping("/genre/like")
