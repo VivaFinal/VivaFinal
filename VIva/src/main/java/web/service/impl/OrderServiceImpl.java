@@ -33,7 +33,6 @@ public class OrderServiceImpl implements OrderService {
 		logger.info("chk 숫자 확인 : {}", chk);
 		
 		return false;
-    
   }
 	
 	@Override

@@ -78,9 +78,8 @@ html{
 			
 		
 	<div class="select" style=font-size:12px;>아이디를 찾으시겠습니까?
-	<a href="./idfidn" class="noline">아이디 찾기 | </a>
+		<a href="./idcheck" class="noline">아이디 찾기 | </a>
 		<a href="./login" class="noline">뒤로가기</a>
-	
 	</div>
 	
 </form>

@@ -181,7 +181,7 @@ $(function(){
 		
 		var userId = $("#userId").val();
 		var data = {userId : userId}
-		
+		//회원가입시 아이디 중복검사
 		$.ajax({
 			type:"get",
 			url: " /users/userIdChk",
@@ -201,6 +201,7 @@ $(function(){
 				
 			}
 		})
+		
 	})
 	
 	//닉네임 중복 검사
@@ -231,6 +232,65 @@ $(function(){
 		})
 	})
 })
+
+$(function(){
+	//유효성 검사 -- 버튼 눌렀을때 push 알람 띄우기
+	$("#mail-Check-Btn").click(function(){
+		//validate가 틀렸을경우 리턴값 false
+		//validate -이메일칸에 아무것도 적지않으면 false 
+		if(!valid()){
+			return true;
+		}
+		return false;
+	})
+	
+	//회원가입시 이메일인증(ajax) 
+	$('#mail-Check-Btn').click(function() {
+		const email = $('#userEmail').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
+		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
+		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+		
+		$.ajax({
+			type : 'get',
+			url : '/users/mailCheck?email='+email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
+			success : function (data) {
+				console.log("data : " +  data);
+				checkInput.attr('disabled',false);
+				code =data;
+				alert('인증번호가 전송되었습니다.')
+			}			
+		}); // end ajax
+	}); // end send email
+	
+	// 인증번호 비교 
+	// blur -> focus가 벗어나는 경우 발생
+	$('.mail-check-input').blur(function () {
+		const inputCode = $(this).val();
+		const $resultMsg = $('#mail-check-warn');
+		
+		if(inputCode === code){
+			$resultMsg.html('인증번호가 일치합니다.');
+			$resultMsg.css('color','green');
+			$('#mail-Check-Btn').attr('disabled',true);
+			$('#userEamil').attr('readonly',true);
+			$('#userEamil2').attr('readonly',true);
+			$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
+	         $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+		}else{
+			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+			$resultMsg.css('color','red');
+		}
+	});
+})
+
+function valid(){
+	//이메일칸에 이메일을 적지않으면 본인인증 클릭 불가
+		if($('#userEmail').val()==''){
+			return false;
+		}
+	return true;
+}
+
 </script>
 <style type="text/css">
 
@@ -239,12 +299,11 @@ html{
 	height :100vh;
 	justify-content: center;
 	align-items: center;
-/* 	background-color:#FFD0AF; */
+ 	background-color:#E27DFB; 
 }
 
 input{ 
 	border:2px solid; 
-/*  	border-bottom: 2px solid; */
 	border-radius: 5px;
  }
 
@@ -325,12 +384,27 @@ input{
 	top: 30px;
 	right: -120px;
 }
+/* 이메일 @.com 뒤에꺼 버튼 */
+.form-controll{
+	position: absolute;
+	top: 30px;
+	right: -147px;
+}
 /* 닉네임중복확인 버튼 */
 .nick_input{
 	position: absolute;
 	top: 27px;
 	right: -145px;
 }
+.btn-btn-primary{
+	position: absolute;
+	top: 71px;
+	right:138px;
+}
+.mail-check-input{
+	margin-top:10px;
+}
+
 </style>
 
 </head>
@@ -338,7 +412,7 @@ input{
 
 <form action="./join" method="post">
 
-	<h3 style="text-align:center; font-size:30px; color:#E57733	;">Viva</h3><br>
+	<h3 style="text-align:center; font-size:30px; color:#EB4646;">Viva</h3><br>
 	
 	<div class="select">
 		<label for="userId" >아이디</label><br>
@@ -385,9 +459,26 @@ input{
 	
 	<div class="select">
 		<label for="userEmail">이메일</label>
-		<input class="useremail" type="email"  id="userEmail" name="userEmail" required="required">
-		<span id="useremail_msg" class="msg"></span>
-	</div>
+		<input class="userEmail" type="text"  id="userEmail" name="userEmail" placeholder="이메일">
+		<select class="form-controll" id="userEmail2" name="userEmail2">
+			<option>@naver.com</option>
+			<option>@daum.net</option>
+			<option>@gmail.com</option>
+			<option>@hanmail.com</option>
+			<option>@yahoo.co.kr</option>
+		</select>
+		<div class="mail-check-box">
+			<input class="mail-check-input" placeholder="인증번호 6자리를 입력해주세요!" disabled="disabled" maxlength="6">
+		</div>
+		
+		<div class="input-group-addon">
+			<button type="button" class="btn-btn-primary" id="mail-Check-Btn">본인인증</button>
+		</div>
+		
+		<div>
+			<span id="mail-check-warn" class="msg"></span>
+		</div>
+	</div>	
 	
 	<div class="select">
 		<label for="userMobile">휴대전화</label>
