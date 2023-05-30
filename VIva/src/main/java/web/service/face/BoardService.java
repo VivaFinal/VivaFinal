@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Board;
+import web.dto.Files;
 import web.dto.Tag;
 import web.util.Paging;
 
@@ -16,7 +17,7 @@ public interface BoardService {
 	 * @param page - 페이징 정보 객체
 	 * @return 페이징이 적용된 게시글 목록
 	 */
-	public List<Board> list(Paging page);
+	public List<Board> list(Paging paging);
 
 	/**
 	 * 게시글 목록을 위한 페이징 객체 생성
@@ -46,6 +47,23 @@ public interface BoardService {
 	 * @param file - 첨부파일 정보 DTO
 	 */
 	public void write(Board board, MultipartFile file);
+
+	/**
+	 * 게시글 번호를 이용하여 업로드된 파일 정보를 조회한다
+	 * 
+	 * @param viewBoard - 조회된 게시글 번호를 가진 객체
+	 * @return 첨부파일의 정보
+	 */
+	public Files getAttachFile(Board viewBoard);
+
+	/**
+	 * 게시글 수정 처리
+	 * 첨부파일 수정 처리
+	 * 
+	 * @param board - 게슥ㄹ 정보 객체
+	 * @param file - 파일업로드 객체
+	 */
+	public void update(Board board, MultipartFile file);
 
 
 

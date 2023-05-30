@@ -1,6 +1,11 @@
 package web.service.impl;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
+import java.util.UUID;
+
+import javax.servlet.ServletContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import web.dao.face.BoardDao;
 import web.dto.Board;
+import web.dto.Files;
 import web.dto.Tag;
 import web.service.face.BoardService;
 import web.util.Paging;
@@ -16,12 +22,13 @@ import web.util.Paging;
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired BoardDao boardDao;
+	@Autowired private ServletContext context;
 
 	
 	@Override
 	public List<Board> list(Paging page) {
 		
-		return boardDao.selectList( page );
+		return boardDao.selectList(page);
 	}
 
 	@Override
@@ -66,9 +73,95 @@ public class BoardServiceImpl implements BoardService {
 		}
 		
 		//파일이 저장될 경로
+		String storedPath = context.getRealPath("upload");
+		File storedFolder = new File(storedPath);
+		if( !storedFolder.exists() ) {
+			storedFolder.mkdir();
+		}
+		
+		//파일이 저장될 이름
+		String originName = file.getOriginalFilename();
+		String storedName = originName + UUID.randomUUID().toString().split("-")[4];
+		
+		//저장될 파일 정보 객체
+		File dest = new File(storedFolder, storedName);
+		
+		try {
+			file.transferTo(dest);
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		//----------------------------------------------
+
+		Files boardFile = new Files();
+		boardFile.setBoardNo( board.getBoardNo() );
+		boardFile.setOriginname(originName);
+		boardFile.setStoredname(storedName);
+		
+		boardDao.insertFile(boardFile);
+	}
+	
+	
+	@Override
+	public Files getAttachFile(Board viewBoard) {
+		return boardDao.selectBoardFileByBoardNo(viewBoard);
+	}
+
+	@Override
+	public void update(Board board, MultipartFile file) {
+		
+		if( "".equals( board.getBoardTitle() ) ) {
+			board.setBoardTitle("(제목없음)");
+		}
+		boardDao.update(board);
+		
+		//-------------------------------------------------------
+		
+				//업로드된 파일 처리
+				
+				//빈 파일일 경우
+				if( file.getSize() <= 0 ) {
+					return;
+				}
+				
+				//파일이 저장될 경로
+				String storedPath = context.getRealPath("upload");
+				File storedFolder = new File(storedPath);
+				if( !storedFolder.exists() ) {
+					storedFolder.mkdir();
+				}
+
+				//파일이 저장될 이름
+				String originName = file.getOriginalFilename();
+				String storedName = originName + UUID.randomUUID().toString().split("-")[4];
+				
+				//저장될 파일 정보 객체
+				File dest = new File(storedFolder, storedName);
+
+				try {
+					file.transferTo(dest);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+
+				//-----------------------------------------------------
+
+				Files boardFile = new Files();
+				boardFile.setBoardNo( board.getBoardNo() );
+				boardFile.setOriginname(originName);
+				boardFile.setStoredname(storedName);
+				
+				boardDao.insertFile(boardFile);
 		
 	}
 
+	
+	
 	
 
 }
