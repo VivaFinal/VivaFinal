@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
+import web.dto.Pack;
+import web.dto.PackImgInfo;
 import web.dto.Source;
 import web.dto.SourceFileInfo;
 import web.dto.Tag;
@@ -79,12 +81,15 @@ public class FileUploadController {
 			MultipartFile imgfile,
 			MultipartFile file,
 			Model model,
-//			String jsonStr,
 			String genre,
 			String instrument,
 			String detail,
 			String scape,
-			String fx
+			String fx,
+			String key,
+			String sourceName,
+			String sourceTime,
+			int bpm
 			) {
 		logger.info("/file/fileupsource [Post]");
 		
@@ -96,6 +101,8 @@ public class FileUploadController {
 		JSONArray jsonObject = null;
 		
 		Tag tag = null;
+		Source source1 = null;
+		
 		try {
 			jsonObject = (JSONArray) jsonParser.parse(genre);
 			genre = ((JSONObject) jsonObject.get(0)).get("value").toString();
@@ -111,10 +118,16 @@ public class FileUploadController {
 			
 			jsonObject = (JSONArray) jsonParser.parse(fx);
 			fx = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			
+			jsonObject = (JSONArray) jsonParser.parse(key);
+			key = ((JSONObject) jsonObject.get(0)).get("value").toString();
 
 			
+			
 			//tag에다가 위에 있는 값 집어넣기 
+			//int형은 뭘 넣든간에 insert가 되는 값으로 들어가는거같음 
 			tag = new Tag(0, instrument, genre, scape, detail, fx);
+			source1 = new Source(0,sourceName,bpm,key,0,0,0,0,sourceTime);
 			
 		} catch (ParseException e) {
 			e.printStackTrace();
@@ -127,7 +140,9 @@ public class FileUploadController {
 //		logger.info("fx {}", fx);
 
 		logger.info("tag {}", tag);
-		fileUploadService.SourceUpload(tag,source,imgfile,file);
+		logger.info("*******key의 값 입니다! : {}",key);
+		logger.info("*******source1의 값 : {}",source1);
+		fileUploadService.SourceUpload(tag,source1,imgfile,file);
 		
 //		try {
 ////			jsonObject = (JSONObject) jsonParser.parse(jsonStr);
@@ -194,8 +209,8 @@ public class FileUploadController {
 //		
 //		
 		
-		return "redirect:/file/sourcelist";
-//		return "test";
+//		return "redirect:/file/sourcelist";
+		return "test";
 		
 	}
 	
@@ -207,12 +222,25 @@ public class FileUploadController {
 	}
 	
 	@PostMapping("/file/fileuppack")
-	public String FileUpPackPost(SourceFileInfo sourceFileInfo) {
+	public String FileUpPackPost(
+			List<MultipartFile> packFileList, 
+//			List<SourceFileInfo> sourceInfoList,
+			MultipartFile packImg,
+			Pack pack,
+			Tag tag
+			) {
 		logger.info("/file/fileuppack [Post]");
+		
+		fileUploadService.uploadPack(packFileList,
+//				sourceInfoList,
+				packImg,pack,tag);
+		
 		
 		return "redirect:/source/view";
 	}
 	
+
+
 	
 
 }
