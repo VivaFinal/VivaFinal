@@ -120,7 +120,7 @@
 <!-- mb 마진바텀 -->
 <div class="mb-5">
 첨부파일
-<input type="file" name="file" class="form-control">
+<input type="file" name="file" class="form-control" multiple="multiple">
 </div>
 
 
