@@ -18,15 +18,14 @@ $(function() {
 			'color':'black'
 		})
 	})
-	
-	
 })
 </script>
 <style type="text/css">
 .cate{
-	margin-top: 8px;
 	color: black;
 	font-size: 1.4em;
+	line-height: normal;
+	height: 40px;
 }
 .cateWrap{
 	text-align: center;
@@ -148,6 +147,7 @@ $(function() {
 	padding-bottom: 18px;
 	display: grid;
 	grid-template-columns: 50px 50px 50px 50px; 
+	height: 60px;
 }
 div[data-itemtype='line']{
 	border-bottom: 1px solid #ccc;
@@ -157,6 +157,19 @@ div[data-itemtype='line']{
 }
 .like{
 	cursor: pointer;
+}
+#infoline{
+	display : grid;
+	grid-template-columns: 100px 1200px
+}
+.already{
+	font-family:"typeFont", "sans-serif;";
+	font-weight: bold;
+	color: red;
+	line-height: normal;
+	text-align: center;
+	box-sizing: border-box;
+	padding-top: 6px;
 }
 </style>
 <div id="Wrap">
@@ -357,7 +370,12 @@ div[data-itemtype='line']{
 
 </div><!-- WrapTop End -->
 <div id="WrapMiddle">
-	<div style="margin-top: 10px; margin-bottom: 10px;"><span class="cate">Result : ${list.size()}</span></div>
+	<div id="infoline"><div class="cate">Result : ${list.size()}</div>
+		<c:if test="${not empty msg}">
+		<div class="already">${msg }</div>
+		</c:if>
+	</div>
+	
 	<div id="SourceWrap">
 		<div class="th"><span>Pack</span></div>
 		<div class="th"><span>Play</span></div>
@@ -370,10 +388,10 @@ div[data-itemtype='line']{
 		
 		<c:forEach var="list" items="${list}">
 		
-			<div class="trimg" data-itemtype="line"><img src="../upload/${list.PACK_IMG_STOREDNAME}" style="width:40px; height: 40px;"></div>
+			<div class="trimg" data-itemtype="line" data-img="${list.PACK_IMG_STOREDNAME}"><img src="../upload/${list.PACK_IMG_STOREDNAME}" style="width:40px; height: 40px;"></div>
 			<div class="tr" data-itemtype="line"><img src="../resources/icon/play-circle.svg" style="width: 30%"></div>
-			<div class="sourcename" data-itemtype="line"><span>${list.FILE_ORIGINNAME}</span></div>
-			<div class="time" data-itemtype="line"><span class="timespace"></span></div>
+			<div class="sourcename" data-itemtype="line" data-sourcename="${list.FILE_ORIGINNAME}"><span>${list.FILE_ORIGINNAME}</span></div>
+			<div class="time" data-itemtype="line"><span class="timespace">${list.SOURCE_TIME}</span></div>
 			<div class="filename" data-itemtype="line"><span>${list.KEY}C</span></div>
 			<div class="filename" data-itemtype="line"><span>${list.BPM}95</span></div>
 			<div class="trwave" data-itemtype="line">
@@ -428,7 +446,27 @@ div[data-itemtype='line']{
 				$(".tr").eq(waveno).html('<img src="../resources/icon/play-circle-fill.svg" style="width:30%">')
 				
 				wave[waveno].play()	
-			
+				
+				var imgSrc = $(".trimg").eq(waveno).attr('data-img')
+				console.log("이미지 경로 추적",imgSrc)
+				
+				var sourcename = $(".sourcename").eq(0).attr('data-sourcename')
+				console.log("음원 Name 추적", sourcename)
+				
+// 				$("#playWrap").html('<div style="padding-left:250px"><img src="../upload/'+ imgSrc +'" style="width:40px; height:40px;"><span>'+ sourcename +'</span></div>')
+				$("#playWrap").css({
+					"background":"#BE2465",
+				})
+				
+				$("#playimg").attr("src","../upload/"+imgSrc)
+				$("#playimg").css("visibility","visible")
+				$("#barbtn").attr("src","../resources/icon/play-circle.svg")
+				$("#sourcename").html(sourcename)
+				$("#barprocess").attr("src","../upload/"+imgSrc)
+				$("#barduration").attr("src","../upload/"+imgSrc)
+				$("#barsourcename").html("src","../upload/"+imgSrc)
+				$("#playmute").attr("src","../resources/icon/volume-up.svg")
+				
 			})
 			
 			$(".tr").click(function() {
@@ -535,23 +573,13 @@ div[data-itemtype='line']{
 				  }) // ajax End
 			  }) // click end
 			  
+			  $(".already").fadeOut(2500)
 			  
 			  
 		</script> 
 	</div>
 
 
-</div>	
-	
-	
-	
-	
-	
-	
-	
+</div> <!-- Wrap Middle End -->
 </div> <!-- Wrap End -->
-
-
-
-
 <c:import url="../layout/footer.jsp"/>

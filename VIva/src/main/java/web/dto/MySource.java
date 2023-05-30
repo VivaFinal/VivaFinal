@@ -5,7 +5,7 @@ public class MySource {
 	private int listNo;
 	private String sourceName;
 	private int bpm;
-	private int key;
+	private String key;
 	private int tagNo;
 	private int userNo;
 	private int packNo;
@@ -13,7 +13,7 @@ public class MySource {
 	
 	public MySource() {	}
 
-	public MySource(int listNo, String sourceName, int bpm, int key, int tagNo, int userNo, int packNo, int sourceNo) {
+	public MySource(int listNo, String sourceName, int bpm, String key, int tagNo, int userNo, int packNo, int sourceNo) {
 		super();
 		this.listNo = listNo;
 		this.sourceName = sourceName;
@@ -57,11 +57,11 @@ public class MySource {
 		this.bpm = bpm;
 	}
 
-	public int getKey() {
+	public String getKey() {
 		return key;
 	}
 
-	public void setKey(int key) {
+	public void setKey(String key) {
 		this.key = key;
 	}
 

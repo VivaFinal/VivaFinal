@@ -7,11 +7,16 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import web.dao.face.OrderDao;
+import web.dto.Credit;
+import web.dto.MySource;
+import web.dto.Source;
+import web.dto.SourceDown;
 import web.dto.Cart;
 import web.dto.Credit;
 import web.dto.MySource;
 import web.dto.Source;
 import web.dto.SourceFileInfo;
+import web.dto.Tag;
 import web.dto.Users;
 import web.service.face.OrderService;
 
@@ -29,13 +34,19 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public boolean checkSource(MySource source) {
+	public boolean checkSource(MySource source, Users user) {
 		
 		logger.info("sourceNo : {}", source);
+		source.setUserNo(user.getUserNo());
 		
 		int chk = orderDao.selectSourceChkByUsernoSourceNo(source);
 		
 		logger.info("chk 숫자 확인 : {}", chk);
+		
+		if (chk > 0) {return true;} 
+		
+		return false;
+	
     
 		return false;
 
@@ -94,12 +105,29 @@ public class OrderServiceImpl implements OrderService {
 		}
 	}
 	
-	@Override
-	@Transactional
+  @Override
+	public boolean checkCredit(Users userNo) {
+		
+		logger.info("userNo 확인 {}",userNo);
+		
+		int credit = orderDao.selectCreditAcc(userNo);
+		
+		logger.info("credit : {}", credit);
+
+		if( credit > 30 ) {
+			return true;
+		}
+		
+		return false;
+	}
+
+	
+  @Transactional
+  @Override
 	public boolean purchaseCartItem(Users userNo, Source sourceNo, Cart cartNo) {
 		logger.info("purchaseCartItem()");
-		
-		//1. 구매자 크레딧 지출하기
+    
+  //1. 구매자 크레딧 지출하기
 		//크레딧DTO 초기화
 		Credit credit = new Credit();
 		//지출내역 만들 회원, 금액 설정
@@ -107,14 +135,87 @@ public class OrderServiceImpl implements OrderService {
 		credit.setAmount(price);
 		logger.info("지출대상 회원 : {}", credit.getUserNo());
 		logger.info("지출할 금액 : {}", credit.getAmount());
-		
-		orderDao.expenditureCredit(credit);
-		
-		
-		return false;
-	}
-	
-	
-	
+  
+    orderDao.expenditureCredit(credit);
+    
+    return false;
+  }
+  
+  
+  
+  
+  
 
+	@Override
+	public void intoMySource(MySource source) {
+		
+		//음원소스번호, 회원번호를 이용한다
+		Source buySource = orderDao.selectSourceBySourceNo(source.getSourceNo());
+		
+		try {
+			source.setBpm(buySource.getBpm());
+			source.setKey(buySource.getKey());
+			source.setPackNo(buySource.getPackNo());
+			source.setSourceName(buySource.getSourceName());
+			source.setTagNo(buySource.getTagNo());
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		
+		logger.info("사려는 음원 {}", source);
+		
+		orderDao.insertMySource(source);
+		
+	}
+
+	@Override
+	public void intoSourceDown(MySource source) {
+		
+		SourceDown down = new SourceDown();
+		down.setSourceNo(source.getSourceNo());
+		down.setUserNo(source.getUserNo());
+		
+		logger.info("다운로드 정보 : {}", down);
+	
+		orderDao.insertSourceDown(down);
+		
+	}
+
+	@Override
+	public void intoCredit(MySource source) {
+		
+		// 지출 크레딧 삽입
+		Credit pay = new Credit();
+		pay.setUserNo(source.getUserNo());
+		pay.setAmount(30);
+		pay.setDealCategory(2);
+		
+		orderDao.insertCreditPay(pay);
+		logger.info("pay : {}", pay);
+		
+		// 수입 크레딧 삽입
+		Credit income = new Credit();
+		
+		// 수입 업로더 정보 조회
+		Source insource = orderDao.selectSourceBySourceNo(source.getSourceNo());
+		
+		income.setAmount(27);
+		income.setDealCategory(3);
+		
+		// 업로드한 회원 입력
+		income.setUserNo(insource.getUserNo());
+		
+		orderDao.insertCreditIncome(income);
+		logger.info("income : {}", income);
+	}
+
+	@Override
+	public Tag getGenre(int source) {
+		
+		Source get = orderDao.selectSource(source);
+		
+		Tag tag = orderDao.selectTagBySourceNo(get.getTagNo());
+		
+		return tag;
+	}
 }
