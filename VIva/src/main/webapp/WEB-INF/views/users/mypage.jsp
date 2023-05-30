@@ -47,6 +47,9 @@ a {
 }
 .contentSmall{
 	font-size:20px;
+	padding:20px;
+	margin:30px;
+	
 }
 </style>
 
@@ -64,8 +67,8 @@ a {
 		<div id="colgrid2">
 			<div class="contentSide"></div>		
 			<div class="contentMiddle">
-				<div id="colgrid3">
 					<div class="contentSmall">프로필</div>
+				<div id="colgrid3">
 					<div class="contentSmall">프로필 사진</div>
 					<div class="contentSmall">아이디</div>
 					<div class="contentSmall">이름</div>

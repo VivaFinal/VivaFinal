@@ -31,7 +31,8 @@ public class OrderServiceImpl implements OrderService {
 		int chk = orderDao.selectSourceChkByUsernoSourceNo(source);
 		
 		logger.info("chk 숫자 확인 : {}", chk);
-    
+		
+		return false;
   }
 	
 	@Override

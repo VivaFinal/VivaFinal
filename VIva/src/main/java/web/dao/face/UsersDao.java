@@ -88,5 +88,13 @@ public interface UsersDao {
 	 */
 	public int selectAllInfo(Users users);
 
+	/**
+	 * 아이디 찾기 - 사용자 이름과 이메일 존재여부 
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public Users checkUserNameEmail(Users users);
+
 
 }
