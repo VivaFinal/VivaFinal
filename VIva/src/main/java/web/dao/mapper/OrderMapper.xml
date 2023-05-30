@@ -31,18 +31,35 @@
 		having deal_category in(2,4)
   	</select>
 
+<!--  ================================================================================== -->
+<!--  장바구니에서 진행하는 음원 구매 코드 (작성자 : 지선 ) -->
 	<select id="selectCreditAcc" resultType="int" parameterType="web.dto.Users">
 		SELECT 
-			(SELECT SUM(AMOUNT) FROM CREDIT
-			WHERE DEAL_CATEGORY IN (1, 3)
-			AND USER_NO=${userNo})  
-		- 
-			(SELECT SUM(AMOUNT) FROM CREDIT
-			WHERE DEAL_CATEGORY IN (2, 4)
-			AND USER_NO=${userNo}) 
+	    (
+	        SELECT nvl(SUM(AMOUNT),0) FROM CREDIT
+	        WHERE DEAL_CATEGORY IN (1, 3)
+	        AND USER_NO=#{userNo}
+	    )
+	    - 
+	    (
+	        SELECT nvl(SUM(AMOUNT),0) FROM CREDIT
+	        WHERE DEAL_CATEGORY IN (2, 4)
+	        AND USER_NO=#{userNo}
+	    ) AMOUNT
 		FROM DUAL
-	
 	</select>
+	
+	<select id="selectSourceAmount"  resultType="int" parameterType="web.dto.Source">
+		SELECT nvl(SUM(SOURCE_PRICE),0) FROM SOURCE
+		WHERE SOURCE_NO IN (${sourceNo})
+	</select>
+	
+	<insert id="expenditureCredit" parameterType="web.dto.Credit">
+		insert into credit (DEAL_NO, user_no, DEAL_DATE, DEAL_CATEGORY, AMOUNT) 
+		values (credit_seq.nextval, #{userNo}, SELECT to_char(CURRENT_timestamp,'yy/mm/dd hh24:mi:ss') from dual, 2, #{amount})
+	</insert>
+	
+	
 
 
 </mapper>
