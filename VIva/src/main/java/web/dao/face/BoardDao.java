@@ -70,6 +70,13 @@ public interface BoardDao {
 	 */
 	public void update(Board board);
 
+	/**
+	 * 게시글 정보 삭제
+	 * 
+	 * @param board - 삭제할 게시글의 글번호
+	 */
+	public void delete(Board board);
+
 
 
 

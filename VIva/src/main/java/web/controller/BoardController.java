@@ -79,16 +79,10 @@ public class BoardController {
 	public String writeProc( 
 			
 			Board board, MultipartFile file,Model model,
-//			@RequestParam(value="userId", required=false) String userId,
 			@RequestParam(value="boardTitle", required=false) String boardTitle,
-			@RequestParam(value="boardContent", required=false) String boardContent,
-			@RequestParam(value="categoryType", required=false) String categoryType
-//			@RequestParam(value="id") String id,
-//			@RequestParam(value="title") String title,
-//			@RequestParam(value="content") String content
+			@RequestParam(value="boardContent", required=false) String boardContent	
 			
-			){
-		
+			){		
 		logger.info("/board/write [POST]");	
 		
 		  //로그인 String id = null; if( session.getAttribute("id")!= null ) {
@@ -97,25 +91,14 @@ public class BoardController {
 //		  
 //		  } model.addAttribute("userId", id);
 		
-//		board.setUserNo(01);
-//		board.setUserId("id");
 		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
 		board.setBoardContent(boardContent);
-		board.setCategoryType(categoryType);
-		
-//		model.addAttribute("userId", userId);
-//		model.addAttribute("boardTitle", boardTitle);
-//		model.addAttribute("boardContent", boardContent);
-//		model.addAttribute("categoryType", categoryType);
-		
-		
-		
+	
 		boardService.write( board, file );
 		
 		return "redirect:./list";	//게시글 목록
 	}
 	
-
 	
 	@GetMapping("/update")
 	public String update( Board board, Model model ) {
@@ -137,12 +120,30 @@ public class BoardController {
 	}
 	
 	@PostMapping("/update")
-	public String updateProc( Board board, MultipartFile file ) {
+	public String updateProc( Board board, MultipartFile file ,
+			@RequestParam(value="boardTitle", required=false) String boardTitle,
+			@RequestParam(value="boardContent", required=false) String boardContent
+			) {
 		
+		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
+		board.setBoardContent(boardContent);
+		
+		
+		
+		System.out.println("===============================");
+		System.out.println(board);
+		System.out.println("===============================");
 		//게시글+첨부파일 수정
 		boardService.update( board, file );
 		
 		return "redirect:./view?boardNo=" + board.getBoardNo();
+	}
+	
+	@RequestMapping("/delete")
+	public String delete( Board board ) {
+		boardService.delete(board);
+		
+		return "redirect:./list";
 	}
 
 }

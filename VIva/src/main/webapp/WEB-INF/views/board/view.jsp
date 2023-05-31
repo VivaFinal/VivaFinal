@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
@@ -7,13 +8,17 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-	$("btnList").click(function() {
-		location.href="./list"
+	$("#btnList").click(function() {
+		location.href = "./list";
 	})
 	
-	$("btnUpdate").click(function() {
-		location.href="./update?boardNo=${viewBoard.boardNo}"
+	$("#btnUpdate").click(function() {
+		location.href="./update?boardNo=${viewBoard.boardNo}";
 	})
+	
+	$("#btnDelete").click(function() {
+		location.href="./delete?boardNo=${viewBoard.boardNo}";
+	}) 
 })
 
 </script>
@@ -28,8 +33,8 @@ $(document).ready(function() {
 	<td class="small">글번호</td><td>${viewBoard.boardNo }</td>
 </tr>
 <tr>
-<%-- 	<td class="table-info">아이디</td><td>${viewBoard.userId }</td>
-	<td class="table-info">닉네임</td><td>${viewBoard.userNick }</td> --%>
+<%-- 	<td class="table-info">아이디</td><td>${viewBoard.userId }</td> --%>
+	<td class="table-info">닉네임</td><td>${viewBoard.userNick }</td>
 </tr>
 <tr>
 	<td class="small">조회수</td><td>${viewBoard.boardHit }</td>
@@ -58,11 +63,11 @@ $(document).ready(function() {
 	
 <%--  	<c:if test="${id eq viewBoard.userId }"> --%>
  		<button id="btnUpdate">수정</button>
-<!-- 		<button id="btnDelete">삭제</button> -->
+ 		<button id="btnDelete">삭제</button>
 <%-- 	</c:if> --%>
 </div>
 
-</div>
+</div><!-- .container end -->
 
 
 <!-- 댓글 시작 -->
@@ -70,5 +75,4 @@ $(document).ready(function() {
 <!-- 댓글 끝 -->
 
 
-
-<a href="./list"><button>목록으로</button></a>
+<c:import url="/WEB-INF/views/layout/footer.jsp" />
