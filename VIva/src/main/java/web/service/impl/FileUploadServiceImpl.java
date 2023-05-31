@@ -8,6 +8,8 @@ import java.util.UUID;
 
 import javax.servlet.ServletContext;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +31,9 @@ public class FileUploadServiceImpl implements FileUploadService{
 	
 	//파일업로드에 필요한 context
 	@Autowired ServletContext context;
+	
+	//로그객체
+	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
 	@Override
 	public List<Source> getSourceList() {
@@ -86,6 +91,7 @@ public class FileUploadServiceImpl implements FileUploadService{
 		sourceImgInfo.setSourceImgOriginname(imgoriginName);
 		sourceImgInfo.setSourceImgStoredname(imgstoredName);
 		
+		logger.info("***********sourceImgInfo의 sourceno가 들어있는지 : {}",sourceImgInfo);
 		fileUploadDao.SourceInsertImg(sourceImgInfo);
 		
 		//-----------------------------------------------------------------------
@@ -116,96 +122,40 @@ public class FileUploadServiceImpl implements FileUploadService{
 		
 	}
 
-	
 	@Override
-	public void uploadPack(
-			//pack에 들어가는 음원소스파일여러개
-			List<MultipartFile> packFileList,
-			//pack에 들어가는 음원소스파일여러개의 파일들의 정보
-//			List<SourceFileInfo> sourceInfoList, 
-			MultipartFile packImg,
-			Pack pack,
-			Tag tag) {
+	public void uploadPack(Tag tag, Pack pack, MultipartFile packImg, Source source, List<MultipartFile> packFileList) {
 		
 		//Tag(instrument,genre,scape,detail,fx)
 		//함수재사용 ( 위에서 sourceupload에서 사용한 함수 ) 
 		fileUploadDao.TagInsert(tag);
 		
+		//tag에서 생성된 tag_no를 pack의 tag_no에 넣어버린다
 		pack.setTagNo(tag.getTag_no());
 		
 		//pack 테이블(no,name,content,date,tagno) insert부분 
-//		fileUploadDao.packInsert(pack);
+		fileUploadDao.packInsert(pack);
 		
-		//packFileList, sourceInfoList 2개를 for문으로 돌린다 
-		for (int i = 0; i < packFileList.size(); i++) {
-			
-		
-				//빈 파일일 경우
-				if( packFileList.get(i).getSize() <= 0) {
-					return;
-				}
-				
-				//파일이 저장될 경로
-				String storedPath = context.getRealPath("upload");
-				File storedFolder = new File(storedPath);
-				if( !storedFolder.exists() ) {
-					storedFolder.mkdir();
-				}
-				
-				//-----------------------------------------------------------------------
-				//이부분은 packFileList(sourcefile이 여러개 인것)에 관한 코드입니다 
-				//파일이 저장될 이름 - packFileList
-				String packoriginName = packFileList.get(i).getOriginalFilename();
-				String packstoredName = packoriginName + UUID.randomUUID().toString().split("-")[4];
-				
-				
-				//저장될 파일 정보 객체
-				File packdest = new File(storedFolder, packstoredName);
-
-				try {
-					packFileList.get(i).transferTo(packdest);
-				} catch (IllegalStateException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-				
-				//---------------------------------------------------------------------------
-				
-				//소스 음원 file 업로드 부분
-//				SourceFileInfo sourceFileInfo = new SourceFileInfo();
-//				sourceFileInfo.setSourceNo(source.getSourceNo());
-//				sourceFileInfo.setFileOriginname(originName);
-//				sourceFileInfo.setFileStoredname(storedName);
-//				sourceFileInfo.setFileSize((int)file.getSize());
-//				fileUploadDao.SourceInsertFile(sourceFileInfo);
-				
-		}//for문 끝 
-		
-		
-		//---------------------------------------------------------------------------------------
-		//팩이미지파일 업로드시작 
-		//packImg
+		//팩이미지파일 packImg 업로드시작 
 		//빈 파일일 경우
 		if( packImg.getSize() <= 0 ) {
 			return;
 		}
-		
+
 		//파일이 저장될 경로
 		String storedPath = context.getRealPath("upload");
 		File storedFolder = new File(storedPath);
 		if( !storedFolder.exists() ) {
 			storedFolder.mkdir();
 		}
-		
+
 		//-----------------------------------------------------------------------
 		//이부분은 packImg에 관한 코드입니다 
-		
+
 		//파일이 저장될 이름 - packImg
 		String packimgoriginName = packImg.getOriginalFilename();
 		String packimgstoredName = packimgoriginName + UUID.randomUUID().toString().split("-")[4];
-		
-		
+
+
 		//저장될 파일 정보 객체
 		File packimgdest = new File(storedFolder, packimgstoredName);
 
@@ -216,14 +166,64 @@ public class FileUploadServiceImpl implements FileUploadService{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
-		//소스 이미지 imgfile 업로드 부분 
+
+		//팩이미지 PackImgInfo 업로드 부분 
 		PackImgInfo packImgInfo = new PackImgInfo();
 		packImgInfo.setPackNo(pack.getPackNo());
 		packImgInfo.setPackImgOriginname(packimgoriginName);
 		packImgInfo.setPackImgStoredname(packimgstoredName);
+
+		fileUploadDao.PackImgInsert(packImgInfo);
+
+
 		
-//		fileUploadDao.PackImgInsert(packImgInfo);
+//		//packFileList를 for문으로 돌린다 List이기떄문에 
+//		for (int i = 0; i < packFileList.size(); i++) {
+//			
+//		
+//				//빈 파일일 경우
+//				if( packFileList.get(i).getSize() <= 0) {
+//					return;
+//				}
+//				
+//				//파일이 저장될 경로
+//				String storedPath = context.getRealPath("upload");
+//				File storedFolder = new File(storedPath);
+//				if( !storedFolder.exists() ) {
+//					storedFolder.mkdir();
+//				}
+//				
+//				//-----------------------------------------------------------------------
+//				//이부분은 packFileList(sourcefile이 여러개 인것)에 관한 코드입니다 
+//				//파일이 저장될 이름 - packFileList
+//				String packoriginName = packFileList.get(i).getOriginalFilename();
+//				String packstoredName = packoriginName + UUID.randomUUID().toString().split("-")[4];
+//				
+//				
+//				//저장될 파일 정보 객체
+//				File packdest = new File(storedFolder, packstoredName);
+//
+//				try {
+//					packFileList.get(i).transferTo(packdest);
+//				} catch (IllegalStateException e) {
+//					e.printStackTrace();
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//				
+				//---------------------------------------------------------------------------
+				
+				//소스 음원 file 업로드 부분
+//				SourceFileInfo sourceFileInfo = new SourceFileInfo();
+//				sourceFileInfo.setSourceNo(source.getSourceNo());
+//				sourceFileInfo.setFileOriginname(originName);
+//				sourceFileInfo.setFileStoredname(storedName);
+//				sourceFileInfo.setFileSize((int)file.getSize());
+//				fileUploadDao.SourceInsertFile(sourceFileInfo);
+				
+//		}//for문 끝 
+		
+		
 		
 	}
 

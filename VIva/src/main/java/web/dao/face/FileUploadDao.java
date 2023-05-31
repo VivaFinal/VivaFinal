@@ -2,6 +2,8 @@ package web.dao.face;
 
 import java.util.List;
 
+import web.dto.Pack;
+import web.dto.PackImgInfo;
 import web.dto.Source;
 import web.dto.SourceFileInfo;
 import web.dto.SourceImgInfo;
@@ -43,6 +45,22 @@ public interface FileUploadDao {
 	 * @param sourceFileInfo ( 소스 음원 파일 origin,stored)
 	 */
 	public void SourceInsertFile(SourceFileInfo sourceFileInfo);
+
+	
+	//--------------------------------------------------------
+	//팩 업로드 시작부분 
+	
+	/**
+	 * 팩 업로드 Pack 테이블 정보 삽입 
+	 * @param pack - (pack_no , pack_name , pack_content ,pack_date , tag_no)
+	 */
+	public void packInsert(Pack pack);
+
+	/**
+	 * 팩 이미지 업로드 PackImgInfo 테이블 정보 삽입 
+	 * @param packImgInfo - (pack_no, pack_img_originname, pack_img_storedname)
+	 */
+	public void PackImgInsert(PackImgInfo packImgInfo);
 
 
 

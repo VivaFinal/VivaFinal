@@ -1,138 +1,137 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
+<c:import url="../layout/header.jsp"/>
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
-  <title>Click Add Tag Demo</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.css" />
-  <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@3.1.0/dist/tagify.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
-  
-  <style type="text/css">
-  .tagify{    
-  width: 100%;
-  max-width: 700px;
-}
 
-.tags-look .tagify__dropdown__item{
-  display: inline-block;
-  border-radius: 3px;
-  padding: .3em .5em;
-  border: 1px solid #CCC;
-  background: #F3F3F3;
-  margin: .2em;
-  font-size: .85em;
-  color: black;
-  transition: 0s;
-}
+<title>FileUpPack</title>
 
-.tags-look .tagify__dropdown__item--active{
-  color: black;
-}
+<!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
-.tags-look .tagify__dropdown__item:hover{
-  background: lightyellow;
-  border-color: gold;
-}
-  </style>
-  
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+
+<style type="text/css">
+	.source{
+		color:grey;
+		font-size: 1.5em;
+		text-decoration: none;
+		margin-right: 10px;
+	}
+	
+	.pack{
+		color:grey;
+		font-size: 1.5em;
+	}
+	.title{
+	margin-top: 10px;
+	margin-bottom: 10px;
+	}
+	
+	#title{
+	display: inline-block;
+	width: 480px;
+	}
+	#key{
+	display: inline-block;
+	width:60px;
+	}
+	
+	#content{
+	display: inline-block;
+	resize: none;
+	}
+	
+	label{
+	display: inline-block;
+	width:50px;
+	text-align: left;
+	}
+	
+	#container{
+	display: grid;
+	grid-template-columns: 50% 50%;
+	grid-template-rows: 40px 188px;
+	margin-left: 0px;
+	}
+	
+	#containerid{
+	margin-left: 0px;
+	}
+	
+	.tag{
+/* 	grid-row:span 2; 그리드 합치기*/
+	border: 1px solid #d3d3d3;
+	border-radius: 10px;
+	}
+
+</style>
+
 </head>
 
 <body>
- <input name='tags' class='some_class_name' placeholder='write some tags' value='css, html, javascript'>
-  <script>
-  var inputElm = document.querySelector('input[name=tags]'),
-  whitelist = ["Trap", "R&B", "Soul", "boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
+<div class=body>
+<!-- container : div안에있는것들 다 가운데 -->
+<div id="containerid" class="container" >
+<h2> 자신만의 Pack으로 세상을 움직여주세요!</h2>
+<hr>
+<a class="source" href="/file/fileupsource">Source</a> 
+<a class="pack" href="/file/fileuppack"> Pack</a> 
 
 
-//initialize Tagify on the above input node reference
-var tagify = new Tagify(inputElm, {
-  enforceWhitelist: true,
+<br>
 
-  // make an array from the initial input value
-  whitelist: inputElm.value.trim().split(/\s*,\s*/) 
-})
 
-//Chainable event listeners
-tagify.on('add', onAddTag)
-    .on('remove', onRemoveTag)
-    .on('input', onInput)
-    .on('edit', onTagEdit)
-    .on('invalid', onInvalidTag)
-    .on('click', onTagClick)
-    .on('focus', onTagifyFocusBlur)
-    .on('blur', onTagifyFocusBlur)
-    .on('dropdown:hide dropdown:show', e => console.log(e.type))
-    .on('dropdown:select', onDropdownSelect)
 
-var mockAjax = (function mockAjax(){
-  var timeout;
-  return function(duration){
-      clearTimeout(timeout); // abort last request
-      return new Promise(function(resolve, reject){
-          timeout = setTimeout(resolve, duration || 700, whitelist)
-      })
-  }
-})()
+<form action="/file/fileuppack" method="post" enctype="multipart/form-data">
 
-//tag added callback
-function onAddTag(e){
-  console.log("onAddTag: ", e.detail);
-  console.log("original input value: ", inputElm.value)
-  tagify.off('add', onAddTag) // exmaple of removing a custom Tagify event
-}
 
-//tag remvoed callback
-function onRemoveTag(e){
-  console.log("onRemoveTag:", e.detail, "tagify instance value:", tagify.value)
-}
+<div id="container" >
+	<div class="item">
+		<label>제목</label>
+		<input type="text" id="title" name="title" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!">
+			Key
+			<input type="text" id="key" name="key" class="form-control" placeholder="Key">
+	</div>
+	
+	<div>
+	<span style="font-size: 1.5em;">태그</span>
+	
+	</div>
+	
+	<div class="item">
+	<label>설명</label>
+	<textarea id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7" style="width: 570px;"></textarea>
+	</div>
 
-//on character(s) added/removed (user is typing/deleting)
-function onInput(e){
-  console.log("onInput: ", e.detail);
-  tagify.settings.whitelist.length = 0; // reset current whitelist
-  tagify.loading(true).dropdown.hide.call(tagify) // show the loader animation
+	
+	<div class=tag>
+	
+	
+	</div>
+</div> <!-- left -->
 
-  // get new whitelist from a delayed mocked request (Promise)
-  mockAjax()
-      .then(function(result){
-          // replace tagify "whitelist" array values with new values
-          // and add back the ones already choses as Tags
-          tagify.settings.whitelist.push(...result, ...tagify.value)
 
-          // render the suggestions dropdown.
-          tagify.loading(false).dropdown.show.call(tagify, e.detail.value);
-      })
-}
 
-function onTagEdit(e){
-  console.log("onTagEdit: ", e.detail);
-}
+<!-- mb 마진바텀 -->
+<div class="mb-5">
+첨부파일
+<input type="file" name="file" class="form-control" multiple="multiple">
+</div>
 
-//invalid tag added callback
-function onInvalidTag(e){
-  console.log("onInvalidTag: ", e.detail);
-}
 
-//invalid tag added callback
-function onTagClick(e){
-  console.log(e.detail);
-  console.log("onTagClick: ", e.detail);
-}
 
-function onTagifyFocusBlur(e){
-  console.log(e.type, "event fired")
-}
+<div class="text-center">
+	<button type="button" id="btnWrite" class="btn btn-info">Upload</button>
+	<button type="button" id="btnCancel" class="btn btn-danger">Cancel</button>
+</div>
+</form>
+</div>
+</div>
 
-function onDropdownSelect(e){
-  console.log("onDropdownSelect: ", e.detail)
-}
-  </script>
 </body>
-
 </html>

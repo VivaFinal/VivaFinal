@@ -27,21 +27,16 @@ public interface FileUploadService {
 	 */
 	public void SourceUpload(Tag tag,Source source,MultipartFile imgfile,MultipartFile file);
 
-	
+
 	/**
-	 * Pack 업로드부분 
-	 * @param packFileList -팩(음원소스여러개) 업로드 부분 (sourceFileInfo 테이블)
-	 * @param sourceInfoList - ?
-	 * @param packImg - 팩 이미지 파일 부분 (packimginfo 테이블)
-	 * @param pack - pack(pack_no, pack_name, pack_content, pack_date, tag_no)
+	 * pack 업로드부분 
 	 * @param tag - Tag(instrument,genre,scape,detail,fx) 
+	 * @param pack - pack(pack_no, pack_name, pack_content, pack_date, tag_no)
+	 * @param packImg - 팩 이미지 파일 부분 (packimginfo 테이블사용)
+	 * @param source - source(source_name,BPM,Key,tag_no,pack_no,user_no) insert 팩이라서 bpm,key,time은 null로 들어감
+	 * @param packFileList - 음원소스 파일 여러개(pack)  (SourceFileInfo 테이블사용) 
 	 */
-	public void uploadPack(
-			List<MultipartFile> packFileList, 
-//			List<SourceFileInfo> sourceInfoList, 
-			MultipartFile packImg,
-			Pack pack,
-			Tag tag);
+	public void uploadPack(Tag tag, Pack pack, MultipartFile packImg, Source source, List<MultipartFile> packFileList);
 
 
 

@@ -303,37 +303,9 @@ $(function(){
   <label>장르</label>
   	 <input name='genre' class='some_class_name' placeholder='장르를 선택해주세요!' >
   <script>
-  
-
-  
-//   var input = document.querySelector('input[name="genre"]');
   var input = document.querySelector('input[name="genre"]');
 
   var whitelist = ["Trap", "R&B", "Soul", "boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
-
-//   var tagify = new Tagify(input, {
-//         whitelist:whitelist,
-//         maxTags: 1,
-//         dropdown: {
-//           maxItems: 20,          
-//           classname: "tags-look", 
-//           enabled: 0,            
-//           closeOnSelect: true   
-//         }
-//       })
-  
-  
-//   var tagify = new Tagify(input, {
-// 	  whitelist:whitelist,
-//       maxTags: 1,
-//       dropdown: {
-//         maxItems: 20,          
-//         classname: "tags-look", 
-//         enabled: 0,            
-//         closeOnSelect: true   
-//       }
-// // 	  originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-// 	})
  
   tagify = new Tagify (input, {
       whitelist:whitelist,
