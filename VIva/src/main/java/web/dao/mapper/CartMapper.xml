@@ -24,5 +24,14 @@
 		WHERE cart_no = #{cartNo}
 	</delete>
 
+	<select id="selectDuplicatedCartByUserNo" resultType="int" parameterType="web.dto.Cart">
+		select count(*) from cart
+		where user_no = #{userNo} and source_no = #{sourceNo}
+	</select>
+	
+	<insert id="insertCartItem" parameterType="web.dto.Cart">
+		INSERT INTO cart (CART_NO, SOURCE_NO, USER_NO )
+		VALUES( cart_seq.nextval, #{sourceNo}, #{userNo})
+	</insert>
 
 </mapper>  

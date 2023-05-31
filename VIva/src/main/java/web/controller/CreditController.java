@@ -1,22 +1,27 @@
 package web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import web.dto.Cart;
+import web.dto.Credit;
+import web.dto.Users;
+import web.service.face.CreditService;
 
 @Controller
 @RequestMapping("/credit")
 public class CreditController {
 	
 	private Logger logger = LoggerFactory.getLogger(this.getClass());
+	
+	@Autowired CreditService creditService;
 	
 	//로그인 기능 구현 전, userNo 알아내기 위해 임시로 만든 페이지
 	@RequestMapping("/test")
@@ -29,10 +34,42 @@ public class CreditController {
 	//----------------------------------------------------------------------------------------
 	//userNo 알아낸 뒤, 크레딧 목록 부르는 페이지
 	@PostMapping("/list")
-	public void list(Cart userNo, Model model) {
+	public void list(Credit userNo, Model model) {
 		logger.info("credit/list - list()");
 		logger.info("userno: {} ", userNo);
 		
 		
+		//크레딧 전체 내역(default) 조회하기
+		List<Credit> creditList = new ArrayList<>(); 
+		
+		creditList = creditService.getCreditList(userNo);
+		
+		logger.info("조회내역:{}", creditList);
+		
+		model.addAttribute("list", creditList);
+		
+		
+		Users user = new Users();
+		user.setUserNo(userNo.getUserNo());
+		//회원등급 확인하기 (0:일반회원, 1 : 업로더)
+		String grade = "";
+		grade = creditService.chkUserGrade(user);
+		
+		logger.info("회원등급 : {}", grade);
+		//HashMap 으로 view 로 전달할 정보 지정해주기
+		
+		
+	}
+	
+	@RequestMapping("/charge")
+	public void charge(Credit userNo, Model model) {
+		logger.info("credit/charge - charge()");
+		logger.info("userno: {} ", userNo);
+	}
+
+	@RequestMapping("/exchange")
+	public void exchange(Credit userNo, Model model) {
+		logger.info("credit/exchange - exchange()");
+		logger.info("userno: {} ", userNo);
 	}
 }

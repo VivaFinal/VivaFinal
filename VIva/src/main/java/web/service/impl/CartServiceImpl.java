@@ -33,4 +33,24 @@ public class CartServiceImpl implements CartService {
 		
 		return cartDao.deleteCartByCartNo(cartNo);
 	}
+	
+	@Override
+	public boolean addCartItem(Cart add) {
+		logger.info("addCartItem()");
+		
+		//장바구니 항목 중복 검사하기
+		int res = 0;
+		res = cartDao.selectDuplicatedCartByUserNo(add);
+		logger.info("중복여부 : {}", res);
+		
+		if(res==0) {
+			logger.info("중복아님 :{}", res);
+			cartDao.insertCartItem(add);
+			logger.info("장바구니 담았숩니당");
+			return true;
+		}
+		//중복일 경우... false 만이 존재한다.
+		logger.info("중복이다 : {}", res);
+		return false;
+	}
 }

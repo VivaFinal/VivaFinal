@@ -44,7 +44,6 @@ public class CartController {
 		logger.info("userno: {} ", userNo);
 		  
 		List<Map<String,Object>> cartList = cartService.getCartList(userNo);
-		
 		model.addAttribute("list", cartList);
 		
 	}

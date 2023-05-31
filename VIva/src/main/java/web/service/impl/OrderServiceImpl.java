@@ -45,9 +45,6 @@ public class OrderServiceImpl implements OrderService {
 		return false;
 	
   }
-
-	
-}
 	
 	//======================================================================================================
 
@@ -150,7 +147,7 @@ public class OrderServiceImpl implements OrderService {
 		mySourceList.setSourceNo(sourceNo.getSourceNo());
 		try {
 			mySourceList.setBpm(buySource.getBpm());
-			mySourceList.setKey(buySource.getKey());
+			mySourceList.setKey(buySource.getKey());  
 			mySourceList.setPackNo(buySource.getPackNo());
 			mySourceList.setSourceName(buySource.getSourceName());
 			mySourceList.setTagNo(buySource.getTagNo());
