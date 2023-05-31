@@ -41,7 +41,8 @@
 }
 .FunctionTitle {
 /* 	position: absolute; */
-	width: 115px;
+/*  각 Title의 길이에 따라 그라데이션 표현이 달라짐.. 각자에게 매기는 방법을 찾아봐야할것 같음... */
+ 	width: 200px; 
 	height: 50px;
 /* 	left: calc(50% - 115px/2 + 833.5px); */
 /* 	top: 286px; */    
@@ -311,9 +312,9 @@ ul.nav > li > ul > li > a:hover {
 	
 	  <div class = "item" id="header">
 <!-- 	  	<a class="icon" href=""><img src="../../../resources/icon/shopping-cart.png" alt="cart"></a> -->
-	  	<a class="icon" id="sound" href=""><span class="iconName">Cart</span></a>
+	  	<a class="icon" id="sound" href="/cart/test"><span class="iconName">Cart</span></a>
 	  	<a class="icon" id="sound" href=""><span class="iconName">My Sounds</span></a>
-	  	<a class="icon" id="sound" href=""><span class="iconName">Credits</span></a>
+	  	<a class="icon" id="sound" href="/credit/test"><span class="iconName">Credits</span></a>
 	  	<a class="icon" id="sound" href=""><span class="iconName">user</span></a>
 	  </div>
 	  
