@@ -47,25 +47,11 @@ public class OrderServiceImpl implements OrderService {
 		
 		return false;
 	
-    
-		return false;
 
   }
 	
-	@Override
-	public boolean checkCredit(int userNo) {
-		
-		logger.info("userNo 확인 {}",userNo);
-		
-		int[] credit = orderDao.selectCreditByUserNo(userNo);
-		
-		logger.info("credit : {}", credit);
-		
-		return false;
-	}
-
 	
-//======================================================================================================
+	//======================================================================================================
 	//지선의 코드
 	
 	//음원 소스의 총계를 전역변수로 지정해서 다른 메소드에서도 쓸수 있게 선언했다.
