@@ -23,6 +23,22 @@ public interface CartDao {
 	 */
 	public boolean deleteCartByCartNo(int cartNo);
 
+
+	/**
+	 * cart의 중복여부 확인하기. 
+	 * 
+	 * @param add - userNo, sourceNo
+	 * @return 중복이면 1, 아니면 0
+	 */
+	public int selectDuplicatedCartByUserNo(Cart add);
+
+	/**
+	 * 중복 결과 후, 중복이 아닐때는 장바구니 담기 진행하기
+	 * 
+	 * @param add - userNo, sourceNo
+	 */
+	public void insertCartItem(Cart add);
+
 	
 
 }

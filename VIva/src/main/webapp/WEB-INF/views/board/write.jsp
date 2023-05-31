@@ -69,7 +69,7 @@ $(document).ready(function() {
 
 <div class="form-group">
 	<label class="form-label" for="file">첨부파일</label>
-	<input type="file" id="file" name="file" class="form-control">
+	<input type="file" id="boardFile" name="boardFile" class="form-control">
 </div>
 
 <div class="text-center">

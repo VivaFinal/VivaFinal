@@ -35,25 +35,52 @@
 		FROM DUAL
 	</select>
 	
+	
+	<!--  트랜잭션 중 -->
+	<!--  트랜잭션 중 1. 회원 크레딧 지출 -->
+	<insert id="expenditureCredit" parameterType="web.dto.Credit">
+		insert into credit (DEAL_NO, user_no, DEAL_CATEGORY, AMOUNT) 
+		values (credit_seq.nextval, #{userNo}, 2, #{amount})
+		<!--  DEAL_DATE 는 현재 DB에서 sysdatd라고 되어있는 관계로...  쿼리문에서는 제외를 해놓은 상태임! -->
+		<!--  DB에서 default CURRENT_TIMESTAMP 라고 지정해놔서 이제 신경 안써도 됨 -->
+	</insert>
+	
 	<select id="selectSourceAmount"  resultType="int" parameterType="web.dto.Source">
 		SELECT nvl(SUM(SOURCE_PRICE),0) FROM SOURCE
 		WHERE SOURCE_NO IN (${sourceNo})
 	</select>
+
+	<!--  트랜잭션 중 2. 장바구니 항목에서 삭제 -->
+	<delete id="deletePurchasedCartItem"  parameterType="web.dto.Cart">
+		DELETE FROM cart
+		WHERE cart_no = #{cartNo}
+	</delete>
 	
-	<insert id="expenditureCredit" parameterType="web.dto.Credit">
-		insert into credit (DEAL_NO, user_no, DEAL_DATE, DEAL_CATEGORY, AMOUNT) 
-		values (credit_seq.nextval, #{userNo}, SELECT to_char(CURRENT_timestamp,'yy/mm/dd hh24:mi:ss') from dual, 2, #{amount})
+	<!--  트랜잭션 중 3. 해당 음원의 다운로드 내역 추가하기 -->
+	<insert id="addSourceToDownList" parameterType="web.dto.SourceDown">
+		INSERT INTO SOURCEDOWN (SOURCEDOWN_NO, USER_NO, SOURCE_NO )
+		VALUES( sourcedown_seq.nextval, #{userNo}, #{sourceNo} )
 	</insert>
 	
+	<!--  트랜잭션 중 4-1. 구매할 음원의 정보 가져오기. (채원 코드 활용 ) -->	
 	<select id="selectSourceBySourceNo" parameterType="int" resultType="web.dto.Source">
 		SELECT * FROM SOURCE
 		WHERE source_no = #{sourceNo}
 	</select>
 	
+
+	<!--  트랜잭션 중 4-2. 구매할 음원의 정보 MySource TB에 넣기 (채원 코드 활용 ) -->	
 	<insert id="insertMySource" parameterType="web.dto.MySource">
 		INSERT INTO MYSOURCE(LIST_NO, SOURCE_NAME, BPM, KEY, TAG_NO, USER_NO, PACK_NO, SOURCE_NO)
 		VALUES( MYSOURCE_SEQ.NEXTVAL, #{sourceName}, #{bpm}, #{key}, #{tagNo}, #{userNo}, #{packNo}, #{sourceNo})
 	</insert>
+	
+	<!--  트랜잭션 중 5. 구매한 음원의 업로더에게 수입내역 insert 하기 -->
+	<insert id="uploaderIncomeCredit" parameterType="web.dto.Credit">
+		insert into credit (DEAL_NO, user_no, DEAL_CATEGORY, AMOUNT) 
+		values (credit_seq.nextval, #{userNo}, #{dealCategory}, #{amount})
+	</insert>
+	
 	
 	<insert id="insertSourceDown" parameterType="web.dto.SourceDown">
 		INSERT INTO SOURCEDOWN (SOURCEDOWN_NO, USER_NO, SOURCE_NO )

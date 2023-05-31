@@ -39,13 +39,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   			SELECT board_seq.nextval FROM dual
   		</selectKey>
   		
-  		INSERT INTO board ( board_no, board_title, board_content, category_type, board_hit, user_no )
-  		VALUES ( #{boardNo}, #{boardTitle}, #{boardContent}, #{categoryType}, 0, 1 )
+  		INSERT INTO board ( board_no, board_title, board_content, board_hit, user_no )
+  		VALUES ( #{boardNo}, #{boardTitle}, #{boardContent}, 0, 1 )
   	</insert>
   	
   	<insert id="insertFile" parameterType="web.dto.Files">
-  		INSERT INTO Files ( file_no, originname, storedname, filesize, file_date, board_no )
-  		VALUES ( files_seq.nextval, #{originname}, #{storedname}, #{filesize}, #{file_date}, #{boardNo} )
+  		INSERT INTO Files ( file_no, originname, storedname, filesize, file_date, categoryType, board_no )
+  		VALUES ( files_seq.nextval, #{originname}, #{storedname}, #{filesize}, #{category_type},s #{file_date}, #{boardNo} )
   	</insert>
   	
   	<select id="selectBoardFileByBoardNo" resultType="web.dto.Files" parameterType="web.dto.Board">
@@ -57,11 +57,15 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	
   	<update id="update" parameterType="web.dto.Board">
   		UPDATE board
-  		SET title = #{title}
-  			, content = #{content}
+  		SET 		
+  			board_title = #{boardTitle}
+  			, board_content = #{boardContent}
   		WHERE board_no = #{boardNo}
   	</update>
 
-  
+  	<delete id="delete" parameterType="web.dto.Board">
+  		DELETE board
+  		WHERE board_no = #{boardNo}
+  	</delete>
  
   </mapper>
