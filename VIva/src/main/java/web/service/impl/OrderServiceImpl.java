@@ -47,22 +47,7 @@ public class OrderServiceImpl implements OrderService {
 		
 		return false;
 	
-    
-		return false;
-
   }
-	
-	@Override
-	public boolean checkCredit(int userNo) {
-		
-		logger.info("userNo 확인 {}",userNo);
-		
-		int[] credit = orderDao.selectCreditByUserNo(userNo);
-		
-		logger.info("credit : {}", credit);
-		
-		return false;
-	}
 
 	
 //======================================================================================================

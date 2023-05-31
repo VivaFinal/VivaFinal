@@ -23,6 +23,7 @@ public interface CartService {
 	 */
 	public boolean deleteCartItem(int cartNo);
 
+
 	
 
 }

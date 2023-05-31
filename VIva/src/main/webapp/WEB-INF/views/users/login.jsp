@@ -62,7 +62,7 @@ html{
 	height :100vh;
 	justify-content: center;
 	align-items: center;
-	background-color:#E27DFB; 
+	background-color:#FFD0AF; 
 }
 
 /* .boxcolor{ */
@@ -113,7 +113,7 @@ input{
 
 <form action="./login" method="post">
 
-	<h3 style="text-align:center; font-size:30px; color:#EB4646;">Viva</h3><br>
+	<h3 style="text-align:center; font-size:30px; color:#E57733;">Viva</h3><br>
 	
 	
 	<div class="select">

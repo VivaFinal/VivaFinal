@@ -22,6 +22,7 @@ public interface CartDao {
 	 * @return 성공하면 true, 아니면 false
 	 */
 	public boolean deleteCartByCartNo(int cartNo);
+
 	
 
 }
