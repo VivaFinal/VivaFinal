@@ -116,6 +116,42 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 		logger.info("악기별 카테고리 {}",instrument.getInstrument());
 		
 		model.addAttribute("inst", instrument.getInstrument());
+		
+		// 태그 조회
+		List<Tag> genre = sourceService.getTag(instrument);
+		List<Tag> scape = sourceService.getTagScape(instrument);
+		List<Tag> detail = sourceService.getTagDetail(instrument);
+		List<Tag> fx = sourceService.getTagFx(instrument);
+		
+		model.addAttribute("genre", genre);
+		model.addAttribute("scape", scape);
+		model.addAttribute("detail", detail);
+		model.addAttribute("fx", fx);
+		
+		
+		// 음원소스 조회
+		
+		
+		
+		// 구매이력이 있는 경우 메시지 반환
+//		if( msg != null && msg.equals("already")) {
+//			msg = msg.replace("already", "이미 해당 음원을 구매하셨습니다, 마이페이지에서 다운로드 해주세요!");
+//			logger.info(msg);
+//			model.addAttribute("msg", msg);
+//		}
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 	
 	

@@ -122,6 +122,7 @@ public interface OrderDao {
 
 
 	/**
+	 * credit TB에 삽입할 정보(회원번호, 금액)를 이용하여 내역 insert 하기
 	 * 트랜잭션 중, credit TB에 삽입할 정보(회원번호, 금액)를 이용하여 내역 insert 하기
 	 * 
 	 * @param credit - userNo, amount

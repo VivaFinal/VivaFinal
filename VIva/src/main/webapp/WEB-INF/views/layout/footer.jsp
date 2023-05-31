@@ -7,6 +7,7 @@
 <style type="text/css">
 #footer{
 	position: relative;
+/* 	pointer-events: none; */
 }
 #pop{
 	position: absolute;
@@ -18,17 +19,17 @@
 	color : white;
 }
 #playWrap{
-
 	width: 100%;
 	padding-left: 250px;
 	height: 80px;
-	background : #0000004f;
 	position: fixed;
 	bottom: 0px;
 	color: white;
+/* 	pointer-events: none; */
 }
 #playbar{
 	position: relative;
+/* 	pointer-events: none; */
 }
 #playimg{
 	position: absolute;
@@ -41,13 +42,14 @@
 #barbtn{
 	position: absolute;
 	top: 23px;
-	left: 550px;
+	left: 530px;
 	width: 35px;
+	z-index: 100;
 }
 #barsourcename{
 	position: absolute;
 	top: 20px;
-	left: 720px;
+	left: 585px;
 }
 #barprocess{
 	position: absolute;
@@ -57,13 +59,7 @@
 #barduration{
 	position: absolute;
 	top: 45px;
-	left: 775px;
-}
-#playmute{
-	position: absolute;
-	top: 23px;
-	left: 945px;
-	width: 35px;
+	left: 810px;
 }
 </style>
 <div id="footer">
@@ -71,10 +67,37 @@
 		<div id="playbar">
 			<img id="playimg" src="">
 			<img id="barbtn"src="">
+			<script type="text/javascript">
+			
+				$("#barbtn").hover(function() {
+					$("#barbtn").css("cursor","pointer")
+				})
+				
+				
+				$("#barbtn").click(function() {
+					console.log("플버튼")
+					
+					var idx = $("#barsourcename").attr('data-barno')
+					
+					if(wave[idx].isPlaying() == true) {
+						
+						wave[idx].pause()
+						// 네모 버튼
+						$("#barbtn").attr("src","../resources/icon/play-circle.svg")
+						$(".tr").eq(idx).html('<img src="../resources/icon/play-circle.svg" style="width:30%">')
+						
+					} else if(wave[idx].isPlaying() == false){
+						wave[idx].play()
+						// 재생 버튼
+						$("#barbtn").attr("src","../resources/icon/stop-circle.svg")
+						$(".tr").eq(idx).html('<img src="../resources/icon/stop-circle.svg" style="width:30%">')
+					}
+					
+				})
+			</script>
 			<span id="barsourcename"></span>
 			<span id="barprocess"></span>
 			<span id="barduration"></span>
-			<img id="playmute" src="">
 		</div>
 	</div>	
 </div>

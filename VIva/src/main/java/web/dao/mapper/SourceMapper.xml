@@ -7,23 +7,23 @@
   <mapper namespace="web.dao.face.SourceDao">
   
   	<select id="selectTagByGenre" parameterType="web.dto.Tag" resultType="web.dto.Tag">
-  		SELECT DISTINCT INSTRUMENT FROM TAG
-  		WHERE GENRE = #{genre}	
+  		SELECT DISTINCT GENRE FROM TAG
+	  	WHERE genre = #{genre}	
   	</select>
   	
   	<select id="selectTagByGenreforScape" parameterType="web.dto.Tag" resultType="web.dto.Tag">
   		SELECT DISTINCT SCAPE FROM TAG
-  		WHERE GENRE = #{genre}
+	  	WHERE GENRE = #{genre}
   	</select>
   	
   	<select id="selectTagByGenreforDetail" parameterType="web.dto.Tag" resultType="web.dto.Tag">
   		SELECT DISTINCT DETAIL FROM TAG
-  		WHERE GENRE = #{genre}
+	  	WHERE GENRE = #{genre}
   	</select>
   	
   	<select id="selectTagByGenreforFx" parameterType="web.dto.Tag" resultType="web.dto.Tag">
   		SELECT DISTINCT Fx FROM TAG
-  		WHERE GENRE = #{genre}	
+	  	WHERE GENRE = #{genre}
   	</select>
   
   	<select id="selectSourceByGenre" parameterType="String" resultType="hashmap">

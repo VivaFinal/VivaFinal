@@ -7,14 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import web.dao.face.OrderDao;
-import web.dto.Credit;
-import web.dto.MySource;
-import web.dto.Source;
-import web.dto.SourceDown;
 import web.dto.Cart;
 import web.dto.Credit;
 import web.dto.MySource;
 import web.dto.Source;
+import web.dto.SourceDown;
 import web.dto.SourceFileInfo;
 import web.dto.Tag;
 import web.dto.Users;
@@ -105,7 +102,6 @@ public class OrderServiceImpl implements OrderService {
 		if( credit > 30 ) {
 			return true;
 		}
-		
 		return false;
 	}
 
