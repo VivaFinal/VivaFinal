@@ -37,7 +37,7 @@ public class CartController {
 	}
 	
 	//----------------------------------------------------------------------------------------
-	//userNo 알아낸 뒤, 리스트 목록 부르는 페이지
+	//userNo 알아낸 뒤, cart 목록 부르는 페이지
 	@PostMapping("/list")
 	public void list(Cart userNo, Model model) {
 		logger.info("cart/list - list()");
@@ -72,4 +72,32 @@ public class CartController {
 	
 	//----------------------------------------------------------------------------------------
 	//항목 구매는 OrderController 페이지에서 처리하기
+	
+	//----------------------------------------------------------------------------------------
+	//음원 페이지에서 장바구니 담으면 오는 메소드
+	//여기서 중복 확인해서 장바구니 중복 리턴해줘야함
+	@GetMapping("/add")
+	public void add(Cart add, Writer out) {
+		logger.info("cart/add - add()");
+		logger.info("장바구니 담을 대상: {} ", add);
+		
+		//장바구니 담기(중복검사는 서비스에서 해주려고함)
+		boolean success = cartService.addCartItem(add);
+		 
+		logger.info("장바구니 담기 어쨌든 성공 : {}",success );
+		
+	    //장바구니 아이콘 누르면 어쨌든 담길거임. 
+		//다만, 중복 여부에 따라 true false로 반환되지만, 
+		//jsp에는 true 값일 경우에만 값을 보내게 해주려고 함.
+		if(success) {
+			try {
+				out.write("{\"result\": " + success + "}");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			logger.info("jsp로 true 값일 때만 전송 완료!");
+		}
+		
+	}
+	
 }

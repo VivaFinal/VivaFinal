@@ -50,7 +50,6 @@ public class OrderServiceImpl implements OrderService {
 
   }
 	
-	
 	//======================================================================================================
 	//지선의 코드
 	
@@ -113,7 +112,7 @@ public class OrderServiceImpl implements OrderService {
 	public boolean purchaseCartItem(Users userNo, Source sourceNo, Cart cartNo) {
 		logger.info("purchaseCartItem()");
     
-  //1. 구매자 크레딧 지출하기
+		//1. 구매자 크레딧 지출하기
 		//크레딧DTO 초기화
 		Credit credit = new Credit();
 		//지출내역 만들 회원, 금액 설정
@@ -122,9 +121,67 @@ public class OrderServiceImpl implements OrderService {
 		logger.info("지출대상 회원 : {}", credit.getUserNo());
 		logger.info("지출할 금액 : {}", credit.getAmount());
   
-    orderDao.expenditureCredit(credit);
-    
-    return false;
+		orderDao.expenditureCredit(credit);
+		logger.info("크레딧 삭감");
+
+		//2. 장바구니에서 해당 항목 삭제하기 (현재는 한개씩 지정했을때 경우만 구현해놨음..ㅠㅠ)
+		orderDao.deletePurchasedCartItem(cartNo);
+		logger.info("Cart 구매항목 삭제 : {}", cartNo);
+		
+		
+		//3. 음원 다운로드 정보 생성하기
+		SourceDown downSource = new SourceDown();
+		downSource.setUserNo(userNo.getUserNo());
+		downSource.setSourceNo(sourceNo.getSourceNo());
+		logger.info("회원번호 : {}", downSource.getUserNo());
+		logger.info("다운로드 소스번호 : {}", downSource.getSourceNo());
+		
+		orderDao.addSourceToDownList(downSource);
+		logger.info("음원 다운로드 정보 추가 {}", downSource);
+		
+		
+		//4. 나의 음원 구매내역에 추가하기
+		//4-1. 우선 음원번호로 음원 정보 부르기 (채원님 코드 활용)
+		Source buySource = orderDao.selectSourceBySourceNo(sourceNo.getSourceNo());
+		//4-2. 나의 음원 구매내역에 select 된 음원 정보 집어넣기
+		MySource mySourceList = new MySource();
+
+
+		mySourceList.setUserNo(userNo.getUserNo());
+		mySourceList.setSourceNo(sourceNo.getSourceNo());
+		try {
+			mySourceList.setBpm(buySource.getBpm());
+			mySourceList.setKey(buySource.getKey());
+			mySourceList.setPackNo(buySource.getPackNo());
+			mySourceList.setSourceName(buySource.getSourceName());
+			mySourceList.setTagNo(buySource.getTagNo());
+		} catch (NullPointerException e) {
+			e.printStackTrace();
+		}
+		logger.info("내 목록에 추가될 음원 {}", mySourceList);
+		
+		//채원 코드 활용
+		orderDao.insertMySource(mySourceList);
+		logger.info("내 음원 목록에 추가 완료");
+		
+		
+		//5. 사운드 디자이너에게 수익금 분배
+		//구매할 음원 총계 - 10% = 업로더 수입 크레딧 내역
+		int revenue = (int) (price * 0.9);
+		logger.info("업로더에게 전달될 수입 : {}", revenue);
+		
+		Credit uploaderInc = new Credit();
+		//업로더의 회원번호 : 구매할 sourceNo의 Source Tb에 있는 user_no 으로 검색
+		uploaderInc.setUserNo(buySource.getUserNo());
+		uploaderInc.setDealCategory(3);
+		uploaderInc.setAmount(revenue);
+		
+		orderDao.uploaderIncomeCredit(uploaderInc);
+		
+		//트랜잭션 완료 했음.... 근데 어떻게 알지?
+		logger.info("트랜잭션 5단계 거쳤는데.. 과연 결과는?");
+		
+		return true;
   }
   
   
