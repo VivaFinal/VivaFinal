@@ -387,8 +387,16 @@ div[data-itemtype='line']{
 		<div class="th"><span>icon</span></div>
 		
 		<c:forEach var="list" items="${list}">
-		
-			<div class="trimg" data-itemtype="line" data-img="${list.PACK_IMG_STOREDNAME}"><img src="../upload/${list.PACK_IMG_STOREDNAME}" style="width:40px; height: 40px;"></div>
+			
+			<c:choose>
+				<c:when test="${empty list.PACK_IMG_STOREDNAME }">
+					<div class="trimg" data-itemtype="line" data-img="${list.SOURCE_IMG_STOREDNAME}"><img src="../upload/${list.SOURCE_IMG_STOREDNAME}" style="width:40px; height: 40px;"></div>
+				</c:when>
+				<c:otherwise>
+					<div class="trimg" data-itemtype="line" data-img="${list.PACK_IMG_STOREDNAME}"><a href="./pack?packno=${list.PACK_NO }"><img src="../upload/${list.PACK_IMG_STOREDNAME}" style="width:40px; height: 40px;"></a></div>
+				</c:otherwise>
+			</c:choose>
+			
 			<div class="tr" data-itemtype="line"><img src="../resources/icon/play-circle.svg" style="width: 30%"></div>
 			<div class="sourcename" data-itemtype="line" data-sourcename="${list.FILE_ORIGINNAME}"><span>${list.FILE_ORIGINNAME}</span></div>
 			<div class="time" data-itemtype="line"><span class="timespace">${list.SOURCE_TIME}</span></div>
@@ -406,11 +414,26 @@ div[data-itemtype='line']{
 			</div>
 			
 		</c:forEach>
-		<script type="text/javascript" defer>
+		<script type="text/javascript">
+		
+			// 음원소스 시간 계산기
+			var timeCalculator = function(value){
+	        	second = Math.floor(value % 60);
+	        	minute = Math.floor((value / 60) % 60);
+	        	
+	        	if (second <10 ){
+	        		second = "0" + second;
+	        	} 
+	        	
+	        	return minute + ":" + second;
+	        };
 	
+	        // 음원소스 번호 리스트 배열 선언
 			var conA = document.querySelectorAll("div[data-no]");
 			var conB = document.querySelectorAll("div[data-name]");
 		
+			
+			// 음원소스 시각화
 			var wave = [];
 		
 			for( var i = 0; i<${list.size()}; i++) { 
@@ -433,7 +456,7 @@ div[data-itemtype='line']{
 			  wave[i].load('../upload/'+conB[i].getAttribute("data-name"))
 			}
 		
-			
+			// 파형 누를 시 재생	
 			$(".trwave").click(function() {
 				
 				//console.log($(".trwave").index(this))
@@ -443,59 +466,131 @@ div[data-itemtype='line']{
 				// 이미지 위치 알아내기
 				var imgno = $(".tr").index(this)
 				
-				$(".tr").eq(waveno).html('<img src="../resources/icon/play-circle-fill.svg" style="width:30%">')
+				var imgSrc = $(".trimg").eq(waveno).attr('data-img')
+				
+				var sourcename = $(".sourcename").eq(waveno).attr('data-sourcename')
+				
+				// 다른 음원 재생 시 모두 종료 후 현재 클릭한 음원소스 재생
+				for(var w=0; w<wave.length; w++) {
+					
+			       	$(".tr").eq(w).html('<img src="../resources/icon/play-circle.svg" style="width:30%">')
+			       	
+					if( w != waveno && wave[w].isPlaying() == true ) {
+					 	wave[w].pause()
+					} 
+				}
+				
+				if(wave[waveno].isPlaying() == true) {
+					wave[waveno].pause()
+				    $(".tr").eq(waveno).html('<img src="../resources/icon/stop-circle.svg" style="width:30%">')
+				    $("#barbtn").attr("src","../resources/icon/stop-circle.svg")
+				}
+				
 				
 				wave[waveno].play()	
+				$(".tr").eq(waveno).html('<img src="../resources/icon/stop-circle.svg" style="width:30%">')
+				$("#barbtn").attr("src","../resources/icon/stop-circle.svg")
 				
-				var imgSrc = $(".trimg").eq(waveno).attr('data-img')
-				console.log("이미지 경로 추적",imgSrc)
+				$("#playWrap").css({
+					"background":"#BE2465",
+				})
 				
-				var sourcename = $(".sourcename").eq(0).attr('data-sourcename')
-				console.log("음원 Name 추적", sourcename)
+				// 플레이바 구현
+				$("#playimg").attr("src","../upload/"+imgSrc)
+				$("#playimg").css("visibility","visible")
 				
-// 				$("#playWrap").html('<div style="padding-left:250px"><img src="../upload/'+ imgSrc +'" style="width:40px; height:40px;"><span>'+ sourcename +'</span></div>')
+				if(wave[waveno].isPlaying() == true) {
+					$("#barbtn").attr("src","../resources/icon/stop-circle.svg")
+				} else if(wave[waveno].isPlaying() == false){
+					$("#barbtn").attr("src","../resources/icon/play-circle.svg")
+				}
+				
+				$("#barprocess").html("0:00")
+				$("#barduration").html("0:00")
+				$("#barsourcename").html(sourcename)
+				$("#barsourcename").attr("data-barno",waveno)
+				
+// 				음원소스 재생 시간 계산 부분
+				var duration1 = document.querySelector("#barduration")
+				duration1.textContent = timeCalculator(wave[waveno].getDuration());
+				
+				var current1 = document.querySelector("#barprocess")
+				wave[waveno].on("audioprocess", function(e) {
+					
+				current1.textContent = timeCalculator(wave[waveno].getCurrentTime());
+					
+				})
+				
+				
+			})
+			
+			// 재생 아이콘 누를 시 재생
+			$(".tr").click(function() {
+				
+// 				console.log($(".tr").index(this))
+				var btnplay = $(".tr").index(this)
+				
+				var sourcename = $(".sourcename").eq(btnplay).attr('data-sourcename')
+// 				console.log("음원 Name 추적", sourcename)
+				
+				var imgSrc = $(".trimg").eq(btnplay).attr('data-img')
+// 				console.log("이미지 경로 추적",imgSrc)
+	
+				// 현재 음원소스 재생 외 다른 소스 전부 pause
+				for(var w=0; w<wave.length; w++) {
+			       	$(".tr").eq(w).html('<img src="../resources/icon/play-circle.svg" style="width:30%">')
+			       	
+					if( w != btnplay && wave[w].isPlaying() == true ) {
+					 	wave[w].pause()
+					} 
+				}
+				
+				if(wave[btnplay].isPlaying() == true) {
+					wave[btnplay].pause()
+				    $(".tr").eq(btnplay).html('<img src="../resources/icon/play-circle.svg" style="width:30%">')
+					$("#barbtn").attr("src","../resources/icon/play-circle.svg")
+					return
+				} 
+				
+				// 재생
+				wave[btnplay].play()
+			    $(".tr").eq(btnplay).html('<img src="../resources/icon/stop-circle.svg" style="width:30%">')
+				$("#barbtn").attr("src","../resources/icon/stop-circle.svg")
+				
+				// 플레이바 설정
 				$("#playWrap").css({
 					"background":"#BE2465",
 				})
 				
 				$("#playimg").attr("src","../upload/"+imgSrc)
 				$("#playimg").css("visibility","visible")
-				$("#barbtn").attr("src","../resources/icon/play-circle.svg")
-				$("#sourcename").html(sourcename)
-				$("#barprocess").attr("src","../upload/"+imgSrc)
-				$("#barduration").attr("src","../upload/"+imgSrc)
-				$("#barsourcename").html("src","../upload/"+imgSrc)
-				$("#playmute").attr("src","../resources/icon/volume-up.svg")
+				$("#barprocess").html("0:00")
+				$("#barduration").html("0:00")
+				$("#barsourcename").html(sourcename)
+				$("#barsourcename").attr("data-barno",btnplay)
 				
-			})
+				var duration = document.querySelector("#barduration")
+				duration.textContent = timeCalculator(wave[btnplay].getDuration());
+				
+				var current = document.querySelector("#barprocess")
+				wave[btnplay].on("audioprocess", function(e) {
+					
+					current.textContent = timeCalculator(wave[btnplay].getCurrentTime());
+					
+				})
+				
+ 			})
 			
-			$(".tr").click(function() {
-				
-				console.log($(".tr").index(this))
-				var btnplay = $(".tr").index(this)
-				
-				wave[btnplay].playPause()
-				
-				 if(wave[btnplay].isPlaying() == true){
-					 $(".tr").eq(btnplay).html('<img src="../resources/icon/play-circle-fill.svg" style="width:30%">')
-			     }
-			     else{
-			        	$(".tr").eq(btnplay).html('<img src="../resources/icon/play-circle.svg" style="width:30%">')
-			     }
-				
-			})
-	    	
+			// 좋아요 구현
 			var likes = document.querySelectorAll("div[data-like]");
 			
 			$(".like").click(function() {
 				
 				// 인덱스 변수
 				var idx = $(".like").index(this)
-				console.log("idx",idx)
 				
 				// SourceNo 변수
 				var sourceno = likes[idx].getAttribute('data-like')
-				console.log("소스번호",sourceno)
 				
 				$.ajax({
 					type: "get"
@@ -519,7 +614,8 @@ div[data-itemtype='line']{
 						}
 			     })
 			  })
-				
+			
+			  // 장바구니 구현
 			  var carts = document.querySelectorAll("div[data-cart]");
 			  
 			  $(".cart").click(function() {
@@ -556,25 +652,12 @@ div[data-itemtype='line']{
 				  	  }
 				  	, error : function(res) {
 				  		console.log("장바구니 ajax 실패")
-				  		$("#footer").html('<div id="pop">장바구니에 담겼습니다!</div>')
-		  				$("#pop").css({
-				  			"background":"#BE3455",
-				  			"width":"250px",
-				  			"height":"60px",
-				  			"fontSize":"1.2em",
-				  			"top":"30px",
-				  			"left":"950px",
-				  			"borderRadius":"5px",
-				  			"border":"2px solid #ccc",
-				  			"paddingTop":"10px"
-				  		})
 				  		$("#pop").fadeOut(2500)
 				  	}
 				  }) // ajax End
 			  }) // click end
 			  
 			  $(".already").fadeOut(2500)
-			  
 			  
 		</script> 
 	</div>

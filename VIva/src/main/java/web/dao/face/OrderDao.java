@@ -120,14 +120,6 @@ public interface OrderDao {
 	public int selectSourceAmount(Source sourceNo);
 
 	/**
-	 * 해당 회원의 크레딧에서 음원소스 금액 만큼 지출하기
-	 * 
-	 * @param userNo - credit TB 접근
-	 * @param price - credit TB에서 지출할 액수
-	 */
-	public void expenditureCredit(Users userNo, int price);
-
-	/**
 	 * credit TB에 삽입할 정보(회원번호, 금액)를 이용하여 내역 insert 하기
 	 * 
 	 * @param credit - userNo, amount

@@ -40,6 +40,21 @@ public class SourceServiceImpl implements SourceService{
 					e.printStackTrace();
 				}
 			}
+		} else if(genre.getGenre() != null) {
+			
+				for(int i=0; i<tag.size(); i++) {
+				
+				String remove = genre.getGenre();
+				
+				try {
+					if ( tag.get(i).getGenre() != null && tag.get(i).getGenre().equals(remove) ) {
+						tag.remove(i);
+					}
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			}
+			
 		}
 		
 		return tag;
@@ -57,6 +72,20 @@ public class SourceServiceImpl implements SourceService{
 				
 				try {
 					if ( tag.get(i).getScape() != null && tag.get(i).getScape().equals(remove) ) {
+						tag.remove(i);
+					}
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			}
+		} else if(genre.getDetail() != null) {
+			
+			for(int i=0; i<tag.size(); i++) {
+			
+			String remove = genre.getDetail();
+			
+				try {
+					if ( tag.get(i).getDetail() != null && tag.get(i).getDetail().equals(remove) ) {
 						tag.remove(i);
 					}
 				} catch (NullPointerException e) {
@@ -86,7 +115,22 @@ public class SourceServiceImpl implements SourceService{
 					e.printStackTrace();
 				}
 			}
+		} else if(genre.getDetail() != null) {
+			
+			for(int i=0; i<tag.size(); i++) {
+			
+				String remove = genre.getDetail();
+			
+				try {
+					if ( tag.get(i).getDetail() != null && tag.get(i).getDetail().equals(remove) ) {
+						tag.remove(i);
+					}
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			}
 		}
+		
 		return tag;
 	}
 
@@ -102,6 +146,20 @@ public class SourceServiceImpl implements SourceService{
 				
 				try {
 					if ( tag.get(i).getFx() != null && tag.get(i).getFx().equals(remove) ) {
+						tag.remove(i);
+					}
+				} catch (NullPointerException e) {
+					e.printStackTrace();
+				}
+			}
+		} else if(genre.getDetail() != null) {
+			
+			for(int i=0; i<tag.size(); i++) {
+			
+				String remove = genre.getDetail();
+			
+				try {
+					if ( tag.get(i).getDetail() != null && tag.get(i).getDetail().equals(remove) ) {
 						tag.remove(i);
 					}
 				} catch (NullPointerException e) {
