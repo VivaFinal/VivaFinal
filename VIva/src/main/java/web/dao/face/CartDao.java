@@ -23,6 +23,7 @@ public interface CartDao {
 	 */
 	public boolean deleteCartByCartNo(int cartNo);
 
+
 	/**
 	 * cart의 중복여부 확인하기. 
 	 * 
@@ -37,6 +38,7 @@ public interface CartDao {
 	 * @param add - userNo, sourceNo
 	 */
 	public void insertCartItem(Cart add);
+
 	
 
 }

@@ -1,6 +1,8 @@
 package web.controller;
 
 
+import java.io.IOException;
+import java.io.Writer;
 import java.util.HashMap;
 
 import javax.servlet.http.Cookie;
@@ -250,37 +252,87 @@ public class UsersController {
 	//아이디찾기에서 이름과 이메일 존재여부 ajax
 	@RequestMapping("/checkIdPw")
 	@ResponseBody
-	public String nameEmailfind(Users users, Model model) {
+	public void nameEmailfind(Users users, Model model, Writer out) {
 		
-		logger.info("userNameChk입니다", users);
+		logger.info("userNameEmailChk입니다 : {}", users);
 		
 		Users result = usersService.nameEmailCheck(users);
 		
 		logger.info("결과값 {} " , result);
 		
+		String input = users.getUserNick();
 		
-		//result가 DB에 이름과 닉네임 존재하지않으면 fail을 리턴
-		if(result == null || "".equals(result.getUserEmail())) {
-
-			return "fail";
-		}else {
-			model.addAttribute("userId",result.getUserId());
+		logger.info("입력한 아이디 {}",input);
+		logger.info("조회한 아이디 {} ",result.getUserId());
+		
+			if( result != null && input.equals(result.getUserNick())){
 			
-			return "success";
+			String id = result.getUserId();
+			
+			try {
+				out.write("{\"userId\": \"" + id + "\", \"result\": true}");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			
 		}
 	}
+//	//비밀번호찾기에서 아이디과 이메일 존재여부 ajax
+//	@RequestMapping("/checkIdPw")
+//	@ResponseBody
+//	public void idEmailfind(Users users, Model model, Writer out) {
+//		
+//		logger.info("userIdEmailChk입니다 : {}", users);
+//		
+//		Users result = usersService.nameEmailCheck(users);
+////		Users result = usersService.idEmailCheck(users);
+//		
+//		logger.info("결과값 {} " , result);
+//		
+//		String input = users.getUserNick();
+//		
+//		logger.info("입력한 아이디 {}",input);
+//		logger.info("조회한 아이디 {} ",result.getUserId());
+//		
+//		if( result != null && input.equals(result.getUserNick())){
+//			
+//			String id = result.getUserId();
+//			
+//			try {
+//				out.write("{\"userId\": \"" + id + "\", \"result\": true}");
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//			
+//		}
+//	}
 	
 	//아이디찾기
 	@RequestMapping("/idcheck")
 	public void idcheck(Users users) {
 		logger.info("/users/idcheck");
+		
 	}
 
 	//비밀번호 찾기
-	@RequestMapping("/pwcheck")
+	@GetMapping("/pwcheck")
 	public void pwfind(Users users) {
 		logger.info("/users/pwcheck");
+	}
+	//비밀번호 찾기
+	@PostMapping("/pwcheck")
+	public String pwfind2(Users users) {
+		logger.info("/users/pwcheck");
 		
+		return "/users/pwcheck";
+	}
+	
+	//비밀번호 재설정
+	@RequestMapping("/pwchange")
+	public String pwchagne(Users users) {
+		logger.info("/users/pwchange");
+		
+		return "/users/pwchange";
 	}
 	
 	// 마이페이지
