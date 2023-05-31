@@ -60,10 +60,17 @@ public interface BoardService {
 	 * 게시글 수정 처리
 	 * 첨부파일 수정 처리
 	 * 
-	 * @param board - 게슥ㄹ 정보 객체
+	 * @param board - 게시글 정보 객체
 	 * @param file - 파일업로드 객체
 	 */
 	public void update(Board board, MultipartFile file);
+
+	/**
+	 * 게시글 + 첨부파일 삭제 처리
+	 * 
+	 * @param board - 삭제할 게시글의 번호
+	 */
+	public void delete(Board board);
 
 
 

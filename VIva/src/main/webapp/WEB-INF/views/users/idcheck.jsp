@@ -14,31 +14,31 @@ $(function(){
 	
 	$("#id_check").on("click", function(){
 		
-		var userName = $("#userName").val();
+		var userNick = $("#userNick").val();
 		var userEmail = $("#userEmail").val();
+		
+		console.log(userNick)
+		console.log(userEmail)
 		
 		//아이디 찾기시 이름과 이메일 존재여부 확인
 		$.ajax({
 			type:"get",
 			url: " /users/checkIdPw",
 			data : {
-				"userName":userName,
+				"userNick":userNick,
 				"userEmail":userEmail
 			},
-			success: function(result){
+			dataType : "json",
+			success:function(res){
 				
-				console.log("ajax : " + result);
 				//result가 DB에 이름과 닉네임 존재하면 success을 리턴
-				if(result != "fail"){
-// 					var userId=${userId};
-					//이름과 이메일이 존재하므로 span 숨기기
-					$(".name_email_input").css("display","none");
-					alert('userId')
-				}else{
-					//이름과 이메일이 일치하지않으므로 span 띄우기
-					$(".name_email_input").css("display","inline-block");
+				if(res.result == true){
+					alert("당신의 아이디는 : "+res.userId)
 				}
-				
+			}, error: function() {
+				console.log("ajax 실패")
+				alert("닉네임, 이메일이 일치하지않습니다")
+				location.href="./idcheck"
 			}
 		})
 	})
@@ -53,7 +53,7 @@ html{
 	height :100vh;
 	justify-content: center;
 	align-items: center;
-	background-color:#E27DFB; 
+	background-color:#FFD0AF; 
 }
 
   
@@ -95,19 +95,18 @@ input{
 </head>
 <body>
 
-<form action="./idcheck" method="get">
-
-	<h3 style="text-align:center; font-size:30px; color:#EB4646;">Viva</h3><br>
+	<h3 style="text-align:center; font-size:30px; color:#E57733;">Viva</h3><br>
+	
 	
 	<div class="select">
-		<label for="userName" >이름</label>
-		<input type="text" id="userName" name="userName">
+		<label for="userNick" >닉네임</label>
+		<input type="text" id="userNick" name="userNick">
 	</div>
 		
 	<div class="select">
 		<label for="userEmail">이메일</label>
 		<input type="text" id="userEmail" name="userEmail">
-		<span class="name_email_input">이름과 이메일이 일치하지않습니다</span>
+<!-- 		<span class="name_email_input">이름과 이메일이 일치하지않습니다</span> -->
 	</div>
 	
 	<div class="select">
@@ -115,12 +114,9 @@ input{
 	</div>
 	
 	<div class="select" style=font-size:12px;>비밀번호를 찾으시겠습니까?
-	<a href="./pwfind" class="noline">비밀번호 찾기 | </a>
+	<a href="./pwcheck" class="noline">비밀번호 찾기 | </a>
 	<a href="./login" class="noline">뒤로가기</a> 
 	</div>
-
-
-</form>
 
 </body>
 </html>

@@ -235,16 +235,17 @@ $(function(){
 
 $(function(){
 	//유효성 검사 -- 버튼 눌렀을때 push 알람 띄우기
-	$("#mail-Check-Btn").click(function(){
-		//validate가 틀렸을경우 리턴값 false
-		//validate -이메일칸에 아무것도 적지않으면 false 
-		if(!valid()){
-			return true;
-		}
-		return false;
-	})
+// 	$("#mail-Check-Btn").click(function(){
+// 		//validate가 틀렸을경우 리턴값 false
+// 		//validate -이메일칸에 아무것도 적지않으면 false 
+// 		if(!valid()){
+// 			return true;
+// 		}
+// 		return false;
+// 	})
 	
 	//회원가입시 이메일인증(ajax) 
+	var isCertification = false;
 	$('#mail-Check-Btn').click(function() {
 		const email = $('#userEmail').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
 		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
@@ -269,6 +270,7 @@ $(function(){
 		const $resultMsg = $('#mail-check-warn');
 		
 		if(inputCode === code){
+			isCertification = true;
 			$resultMsg.html('인증번호가 일치합니다.');
 			$resultMsg.css('color','green');
 			$('#mail-Check-Btn').attr('disabled',true);
@@ -281,15 +283,16 @@ $(function(){
 			$resultMsg.css('color','red');
 		}
 	});
+	
 })
 
-function valid(){
-	//이메일칸에 이메일을 적지않으면 본인인증 클릭 불가
-		if($('#userEmail').val()==''){
-			return false;
-		}
-	return true;
-}
+// function valid(){
+// 	//이메일칸에 이메일을 적지않으면 본인인증 클릭 불가
+// 		if($('#userEmail').val()==''){
+// 			return false;
+// 		}
+// 	return true;
+// }
 
 </script>
 <style type="text/css">
@@ -299,7 +302,7 @@ html{
 	height :100vh;
 	justify-content: center;
 	align-items: center;
- 	background-color:#E27DFB; 
+ 	background-color:#FFD0AF; 
 }
 
 input{ 
@@ -412,7 +415,7 @@ input{
 
 <form action="./join" method="post">
 
-	<h3 style="text-align:center; font-size:30px; color:#EB4646;">Viva</h3><br>
+	<h3 style="text-align:center; font-size:30px; color:#E57733;">Viva</h3><br>
 	
 	<div class="select">
 		<label for="userId" >아이디</label><br>
@@ -459,7 +462,7 @@ input{
 	
 	<div class="select">
 		<label for="userEmail">이메일</label>
-		<input class="userEmail" type="text"  id="userEmail" name="userEmail" placeholder="이메일">
+		<input class="userEmail" type="text"  id="userEmail" name="userEmail" placeholder="이메일" required="required">
 		<select class="form-controll" id="userEmail2" name="userEmail2">
 			<option>@naver.com</option>
 			<option>@daum.net</option>
