@@ -83,7 +83,6 @@ public class OrderController {
 	
 	}
 	
-	
 	//--------------------------------------------------------------------
 	
 	//장바구니에서 항목 구매시 처리할 메소드
@@ -95,9 +94,9 @@ public class OrderController {
 		logger.info("sourceNo : {}", sourceNo);
 		logger.info("cartNo : {}", cartNo);
 		
-		//회원번호 임시로 지정(30번)
+		//회원번호 임시로 지정(n번)
 		//(세션 기능 완료되면 주석처리하기!!)
-		userNo.setUserNo(30);
+		userNo.setUserNo(44);
 		logger.info("userNo : {}", userNo.getUserNo());
 		
 		//회원의 구매가능 잔고 확인 
@@ -108,26 +107,19 @@ public class OrderController {
 		
 		if(purchase) {
 			logger.info("선택사항 구매가능!");
-		    
-			//try~catch 구문을 써주긴 해야할지 모르겠다...
-			try {
-		        out.write("{\"result\": " + purchase + "}");
-		    } catch (IOException e) {
-		        e.printStackTrace();
-		    }
-			
-			//내가 다운로드 받은 소스인지 검증하기
-			//근데 문제는 소스 선택 한번에 했을 때 부분 검증이 가능할지가... 걱정이다.
-			//=> 그냥 장바구니 담을 때부터 이미 다운받은 소스는 담기 불가능하게 해놓았다.
-//			orderDao.checkSource(sourceNo);
-		
-			
 			//본격적인 구매 진행
 			//service 에서 트랜잭션 진행할 생각!
 			boolean success = orderService.purchaseCartItem(userNo, sourceNo, cartNo);
+			//만약 트랜잭션이 잘 됐다면...true 가 나오겠지.. 
+			logger.info("{}", success);
+		
 			
-			
-			
+			//try~catch 구문을 써주긴 해야할지 모르겠다...
+			try {
+				out.write("{\"result\": " + success + "}");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			
 			
 		} else {
@@ -138,13 +130,11 @@ public class OrderController {
 			//그에 따른 반환값을 정해줘야할 듯 함... 
 			//아직은 모르겠음 ㅠ
 			
-			
 		}
 		
 		
-		
-		//sourceNo를 기반으로 장바구니 항목 구매 로직 수행
-//		boolean success = orderService.orderCartItem(sourceNo);
 	}
+	
+
 	
 }
