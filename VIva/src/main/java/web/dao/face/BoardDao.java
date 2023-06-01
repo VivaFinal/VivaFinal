@@ -3,6 +3,7 @@ package web.dao.face;
 import java.util.List;
 
 import web.dto.Board;
+import web.dto.Comments;
 import web.dto.Files;
 import web.dto.Tag;
 import web.util.Paging;
@@ -76,6 +77,14 @@ public interface BoardDao {
 	 * @param board - 삭제할 게시글의 글번호
 	 */
 	public void delete(Board board);
+
+	/**
+	 * 댓글 조회하기
+	 * 
+	 * @param boardNo - 조회할 댓글의 게시글 번호
+	 * @return
+	 */
+	public List<Comments> selectComment(int boardNo);
 
 
 
