@@ -38,7 +38,6 @@ public class UsersController {
 	@Autowired UsersService usersService;
 	@Autowired KakaoService kakaoService; 
 	@Autowired MailSendService mailService;
-	@Autowired UserQuestion userQuestion;
 	
 	@GetMapping("/login")
 	public void login() {
@@ -46,10 +45,10 @@ public class UsersController {
 	}
 	
 	//임시로 만든 main페이지
-	@RequestMapping("/main")
-	public void kakaoLogin() {
-		logger.info("users/main [GET]");
-	}
+//	@RequestMapping("/main")
+//	public void kakaoLogin() {
+//		logger.info("users/main [GET]");
+//	}
 	
 	@GetMapping("/kakaologin")
 	   public String kakaoLogin(
@@ -158,18 +157,18 @@ public class UsersController {
 
 	// 발급받은 토큰을 만료시켜 로그아웃 시킨다
    // 리턴은 메인페이지로
-    @RequestMapping("/logout")
-    public String logout(HttpSession session) {
-    	
-    	if(session.getAttribute("access_Token") != null) {
-    		kakaoService.kakaoLogout((String)session.getAttribute("access_Token"));
-    	}
-        
-    	// 세션 삭제
-        session.invalidate();
-        logger.info("logout() - 로그아웃 성공");
-        return "redirect:./main";
-    }
+//    @RequestMapping("/logout")
+//    public String logout(HttpSession session) {
+//    	
+//    	if(session.getAttribute("access_Token") != null) {
+//    		kakaoService.kakaoLogout((String)session.getAttribute("access_Token"));
+//    	}
+//        
+//    	// 세션 삭제
+//        session.invalidate();
+//        logger.info("logout() - 로그아웃 성공");
+//        return "redirect:./main";
+//    }
 
 
 	@GetMapping("/join")
@@ -367,23 +366,6 @@ public class UsersController {
 		logger.info("/users/question[GET]");
 	}
 	
-	@PostMapping("/question")
-	public void questionProc( 
-			
-			Users users, MultipartFile file,Model model,
-			@RequestParam(value="Q_title", required=false) String Q_title,
-			@RequestParam(value="Q_content", required=false) String Q_content	
-			
-			){		
-		logger.info("/users/question [POST]");	
-		
-//		userQuestion.setqTitle(Q_title);// 여기에 tilte담아야함
-//		userQuestion.setqContent(Q_content);
-//	
-//		usersService.question( users, file );
-//		
-//		return "redirect:./mypage";	//게시글 목록
-	}
 }
 
 
