@@ -89,7 +89,9 @@ $(function(){
 		}
 	})
 })
+
 </script>
+
 
 <style type="text/css">
 	.source{
@@ -305,7 +307,7 @@ $(function(){
   <script>
   var input = document.querySelector('input[name="genre"]');
 
-  var whitelist = ["Trap", "R&B", "Soul", "boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
+  var whitelist = ["Trap", "R&B", "Soul", "Boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
  
   tagify = new Tagify (input, {
       whitelist:whitelist,
@@ -325,7 +327,7 @@ $(function(){
   
   
   <label>악기</label>
-  	 <input name='instrument' class='some_class_name' placeholder='악기를 선택해주세요!'>
+  	 <input id="instrument" name='instrument' class='some_class_name' placeholder='악기를 선택해주세요!'>
   <script>
   var input = document.querySelector('input[name="instrument"]');
 
@@ -345,13 +347,13 @@ $(function(){
   </script>
   
     <label class="detail" style="width: 500px;">악기세부분류</label>
-  	 <input name='detail' class='some_class_name' placeholder='세부악기를 선택해주세요!'>
+  	 <input id="detail" name='detail' class='some_class_name' placeholder='세부악기를 선택해주세요!'>
   <script>
 //   if($('input[name="instrument"]').val()=="Drum"){
 	  
   var input = document.querySelector('input[name="detail"]');
   
-  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","rimshot"];
+  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","Rimshot"];
 
   var tagify = new Tagify(input, {
         whitelist:whitelist,

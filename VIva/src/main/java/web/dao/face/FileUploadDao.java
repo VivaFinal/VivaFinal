@@ -26,7 +26,7 @@ public interface FileUploadDao {
 	
 	/**
 	 * Source 테이블 정보 삽입 
-	 *  source(source_name,BPM,Key,tag_no,pack_no,user_no) insert
+	 *  source(source_name,BPM,Key,tag_no,pack_no,user_no,source_time) insert
 	 * @param source
 	 */
 	public void SourceInsertSource(Source source);
@@ -62,8 +62,11 @@ public interface FileUploadDao {
 	 */
 	public void PackImgInsert(PackImgInfo packImgInfo);
 
-
-
+	/**
+	 * 팩의 source 정보 insert
+	 * @param source -(source_no,source_name,bpm,key,source_price,tag_no,pack_no,user_no,source_time)
+	 */
+	public void PackSourceInsert(Source source);
 
 
 	

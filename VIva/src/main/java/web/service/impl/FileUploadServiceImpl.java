@@ -174,54 +174,61 @@ public class FileUploadServiceImpl implements FileUploadService{
 		packImgInfo.setPackImgStoredname(packimgstoredName);
 
 		fileUploadDao.PackImgInsert(packImgInfo);
+		
+		//----------------------------------------------------------------------------
+		
+		//pack 의 source 정보 insert(source_no,source_name,bpm,key,source_price,tag_no,pack_no,user_no,source_time)
+		source.setTagNo(tag.getTag_no());
+		source.setPackNo(pack.getPackNo());
+		fileUploadDao.PackSourceInsert(source);
 
 
 		
-//		//packFileList를 for문으로 돌린다 List이기떄문에 
-//		for (int i = 0; i < packFileList.size(); i++) {
-//			
-//		
-//				//빈 파일일 경우
-//				if( packFileList.get(i).getSize() <= 0) {
-//					return;
-//				}
-//				
-//				//파일이 저장될 경로
-//				String storedPath = context.getRealPath("upload");
-//				File storedFolder = new File(storedPath);
-//				if( !storedFolder.exists() ) {
-//					storedFolder.mkdir();
-//				}
-//				
-//				//-----------------------------------------------------------------------
-//				//이부분은 packFileList(sourcefile이 여러개 인것)에 관한 코드입니다 
-//				//파일이 저장될 이름 - packFileList
-//				String packoriginName = packFileList.get(i).getOriginalFilename();
-//				String packstoredName = packoriginName + UUID.randomUUID().toString().split("-")[4];
-//				
-//				
-//				//저장될 파일 정보 객체
-//				File packdest = new File(storedFolder, packstoredName);
-//
-//				try {
-//					packFileList.get(i).transferTo(packdest);
-//				} catch (IllegalStateException e) {
-//					e.printStackTrace();
-//				} catch (IOException e) {
-//					e.printStackTrace();
-//				}
-//				
+		//packFileList를 for문으로 돌린다 List이기떄문에 
+		for (int i = 0; i < packFileList.size(); i++) {
+			
+		
+				//빈 파일일 경우
+				if( packFileList.get(i).getSize() <= 0) {
+					return;
+				}
+				
+				//파일이 저장될 경로
+				String storedPath1 = context.getRealPath("upload");
+				File storedFolder1 = new File(storedPath1);
+				if( !storedFolder1.exists() ) {
+					storedFolder1.mkdir();
+				}
+				
+				//-----------------------------------------------------------------------
+				//이부분은 packFileList(sourcefile이 여러개 인것)에 관한 코드입니다 
+				//파일이 저장될 이름 - packFileList
+				String packoriginName = packFileList.get(i).getOriginalFilename();
+				String packstoredName = packoriginName + UUID.randomUUID().toString().split("-")[4];
+				
+				
+				//저장될 파일 정보 객체
+				File packdest = new File(storedFolder1, packstoredName);
+
+				try {
+					packFileList.get(i).transferTo(packdest);
+				} catch (IllegalStateException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				
 				//---------------------------------------------------------------------------
 				
 				//소스 음원 file 업로드 부분
-//				SourceFileInfo sourceFileInfo = new SourceFileInfo();
-//				sourceFileInfo.setSourceNo(source.getSourceNo());
-//				sourceFileInfo.setFileOriginname(originName);
-//				sourceFileInfo.setFileStoredname(storedName);
-//				sourceFileInfo.setFileSize((int)file.getSize());
-//				fileUploadDao.SourceInsertFile(sourceFileInfo);
+				SourceFileInfo sourceFileInfo = new SourceFileInfo();
+				sourceFileInfo.setSourceNo(source.getSourceNo());
+				sourceFileInfo.setFileOriginname(packoriginName);
+				sourceFileInfo.setFileStoredname(packstoredName);
+				sourceFileInfo.setFileSize((int)packFileList.get(i).getSize());
+				fileUploadDao.SourceInsertFile(sourceFileInfo);
 				
-//		}//for문 끝 
+		}//for문 끝 
 		
 		
 		

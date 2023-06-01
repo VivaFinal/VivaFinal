@@ -1,21 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
 
-<!-- 스마트 에디터 2 로드 -->
-<script type="text/javascript" src="/resources/se2/js/service/HuskyEZCreator.js"></script>
-
 <script type="text/javascript">
-function submitContents(elClickedObj) {
-	oEditors.getById["content"].exec("UPDATE_CONTENTS_FIELD", [])
-	
-	try {
-		elClickedObj.form.submit();
-	} catch(e) {}
-}
 
 $(document).ready(function() {
 	$("#cancel").click(function() {
@@ -24,7 +13,7 @@ $(document).ready(function() {
 
 	
 	$("#btnWrite").click(function() {
-		submitContents($("#btnWrite"))
+		//submitContents($("#btnWrite"))
 		
 		$("form").submit();
 	})
@@ -48,16 +37,14 @@ $(document).ready(function() {
 <hr>
 
 <div class="box">
-<form action="./write" method="post" enctype="multipart/form-data">
+<form action="./question" method="post" enctype="multipart/form-data">
 
-<select name="categoryType">
-	<option value="자유">자유</option>
-	<option value="공지">공지</option>
-</select>
+<h1>문의</h1>
 
 <div class="form-group">
-	<label class="form-label" for="write">작성자 번호</label>
-	<input type="text" id="userNo" name="userNo"  class="form-control">
+	<label class="form-label" for="write">작성자 아이디</label>
+	<div>${userInfo.userId }</div>
+<%-- 	<input type="text" id="userId" name="userId" value="${userInfo.userId }" class="form-control"> --%>
 </div>
 
 <div class="form-group">
@@ -66,13 +53,13 @@ $(document).ready(function() {
 </div>
 
 <div class="form-group">
-	<label class="form-label" for="content">본문</label>
-	<textarea type="text" id="boardContent" name="boardContent" class="form-control"></textarea>
+	<label class="form-label" for="content">내용</label>
+	<input type="text" id="boardContent" name="boardContent" class="form-control">
 </div>
 
 <div class="form-group">
 	<label class="form-label" for="file">첨부파일</label>
-	<input type="file" id="file" name="file" class="form-control" multiple="multiple">
+	<input type="file" id="boardFile" name="boardFile" class="form-control">
 </div>
 
 <div class="text-center">
@@ -82,16 +69,6 @@ $(document).ready(function() {
 
 </form>
 </div>
-
-<script type="text/javascript">
-var oEditors = [];
-nhn.husky.EZCreator.createInIFrame({
-	oAppRef: oEditors
-	, elPlaceHolder: "content"
-	, sSkinURI: "/resources/se2/SmartEditor2Skin.html"
-	, fCreator: "createSEditor2"
-})
-</script>
 
 </div><!-- .container end -->
 

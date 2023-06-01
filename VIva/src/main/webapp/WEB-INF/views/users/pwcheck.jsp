@@ -62,26 +62,34 @@ input{
 .btn-btn-primary{
 	position: absolute;
 	top: 71px;
-	right:43px;
+	right:18px;
 }
 
 .mail-check-input{
 	margin-top:10px;
 }
 
+#mail-check-warn{
+	color:red;
+}
 </style>
 
 <script type="text/javascript">
 
-
 //비밀번호찾기 이메일인증(ajax) 
 $(function(){
-		
-	var isCertification = false;
+
 	$('#mail-Check-Btn').click(function() {
 		const email = $('#userEmail').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
 		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+		
+		var userEmail = $("#userEmail").val();
+		
+		if( userEmail == '' ) {
+			$('#mail-check-warn').html("이메일을 입력해주세요")
+			return
+		}
 		
 		$.ajax({
 			type : 'get',
@@ -95,6 +103,8 @@ $(function(){
 		}); // end ajax
 	}); // end send email
 	
+	var code = ""; // 인증번호 저장을 위한 코드
+	var isCertification = false; // 인증 여부 변수
 	// 인증번호 비교 
 	// blur -> focus가 벗어나는 경우 발생
 	$('.mail-check-input').blur(function () {
@@ -102,35 +112,53 @@ $(function(){
 		const $resultMsg = $('#mail-check-warn');
 		
 		if(inputCode === code){
-			isCertification = true;
+		    isCertification = true; // 인증이 완료되었음을 표시
+		    
 			$resultMsg.html('인증번호가 일치합니다.');
 			$resultMsg.css('color','green');
 			$('#mail-Check-Btn').attr('disabled',true);
+			//비밀번호 변경 버튼 disabled
+			$('#pw_check').attr('disabled',false);
+			
 			$('#userEamil').attr('readonly',true);
 			$('#userEamil2').attr('readonly',true);
 			$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-	         $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+	        $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
 		}else{
 			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 			$resultMsg.css('color','red');
 		}
-	});
+	})
 	
-	// 인증번호가 다르면 sumit 안되게
-    $('#pw_check').click(function() {
-       if(!isCertification){
-          alert('인증이 완료되지 않았습니다.');
-          return false;
-       }else{
-          return true;
-       }
-    })
+// 	인증번호가 다르면 sumit 안되게
+//     $('#pw_check').click(function() {
+//         if(!isCertification){
+//             alert('인증이 완료되지 않았습니다.');
+//             return false;
+//          }else{
+//             return true;
+//          }
+//     })
+    
+    //이메일 입력란 클릭시 밑에 메시지 없애기
+	$("#userEmail").focus(function(){
+		$("#mail-check-warn").html("")	
+	})
     
     //비밀번호 찾기를 눌렀을 때 ajax를 이용하여 DB에 아이디, 이메일이 존재하면 pwchange 페이지로 넘기기
 	$("#pw_check").on("click", function(){
-		
 		var userId = $("#userId").val();
 		var userEmail = $("#userEmail").val();
+		
+		if( userId == '' ) {
+			$('#userid_msg').html("아이디를 입력해주세요")
+			return
+		}
+		
+		if( userEmail == '' ) {
+			$('#mail-check-warn').html("이메일을 입력해주세요")
+			return
+		}
 		
 		console.log(userId)
 		console.log(userEmail)
@@ -149,7 +177,7 @@ $(function(){
 				//result가 DB에 이름과 닉네임 존재하면 success을 리턴
 				if(res.result == true){
 // 					alert("당신의 아이디는 : "+res.userId)
-					location.href="./pwchange"
+					location.href="./pwchange?userNo="+res.userNo
 				}
 			}, error: function() {
 				console.log("ajax 실패")
@@ -160,13 +188,7 @@ $(function(){
 	})
 })	
 
-// function valid(){
-// 	//이메일칸에 이메일을 적지않으면 본인인증 클릭 불가
-// 		if($('#userEmail').val()==''){
-// 			return false;
-// 		}
-// 	return true;
-// }
+
 </script>
 
 </head>
@@ -174,14 +196,17 @@ $(function(){
 
 	<h3 style="text-align:center; font-size:30px; color:#E57733	;">Viva</h3><br>
 	
+<!-- 	<input type="hidden" id="compare" value="0"> -->
+	
 	<div class="select">
-		<label for="userid">아이디</label>
-		<input type="text"  id="userid" name="userid" class="name_bord2">
+		<label for="userId">아이디</label>
+		<input type="text"  id="userId" name="userId" class="name_bord2">
+		<span id="userid_msg" class="msg"></span>
 	</div>
 	
 	<div class="select">
 		<label for="userEmail">이메일</label>
-		<input class="userEmail" type="text"  id="userEmail" name="userEmail">
+		<input class="userEmail" type="text"  id="userEmail" name="userEmail" placeholder="이메일 인증을 해주세요">
 		<select class="form-controll" id="userEmail2" name="userEmail2">
 			<option>@naver.com</option>
 			<option>@daum.net</option>
@@ -194,7 +219,7 @@ $(function(){
 		</div>
 		
 		<div class="input-group-addon">
-			<button type="button" class="btn-btn-primary" id="mail-Check-Btn">본인인증</button>
+			<button type="button" class="btn-btn-primary" id="mail-Check-Btn">인증코드전송</button>
 		</div>
 		
 		<div>
@@ -203,12 +228,13 @@ $(function(){
 	</div>
 	
 	<div class="select">
-		<button id="pw_check" class="auth">비밀번호 찾기</button>
+		<button id="pw_check" class="auth" disabled="disabled">비밀번호 변경하기</button>
 	</div>
 		
 	<div class="select" style=font-size:12px;>아이디를 찾으시겠습니까?
 		<a href="./idcheck" class="noline">아이디 찾기 | </a>
 		<a href="./login" class="noline">뒤로가기</a>
 	</div>
+	
 </body>
 </html>
