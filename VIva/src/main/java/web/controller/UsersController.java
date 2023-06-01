@@ -20,7 +20,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import web.dto.Board;
+import web.dto.UserQuestion;
 import web.dto.Users;
 import web.service.face.KakaoService;
 import web.service.face.MailSendService;
@@ -35,6 +38,7 @@ public class UsersController {
 	@Autowired UsersService usersService;
 	@Autowired KakaoService kakaoService; 
 	@Autowired MailSendService mailService;
+	@Autowired UserQuestion userQuestion;
 	
 	@GetMapping("/login")
 	public void login() {
@@ -42,7 +46,7 @@ public class UsersController {
 	}
 	
 	//임시로 만든 main페이지
-	@GetMapping("/main")
+	@RequestMapping("/main")
 	public void kakaoLogin() {
 		logger.info("users/main [GET]");
 	}
@@ -101,6 +105,7 @@ public class UsersController {
 			,HttpServletRequest request
 			,HttpServletResponse response
 			,boolean rememberId
+			,Model model
 			){
 		logger.info("{}", users);
 
@@ -112,6 +117,7 @@ public class UsersController {
 			logger.info("로그인 성공");
 			//유저 번호 가져오기
 			Users getUserNo = usersService.getNo(users);
+			
 			//세션에 true값 저장
 			session.setAttribute("login", loginResult);
 			
@@ -262,7 +268,7 @@ public class UsersController {
 		
 		String input = users.getUserNick();
 		
-		logger.info("입력한 아이디 {}",input);
+		logger.info("입력한 닉네임 {}",input);
 		logger.info("조회한 아이디 {} ",result.getUserId());
 		
 			if( result != null && input.equals(result.getUserNick())){
@@ -277,41 +283,37 @@ public class UsersController {
 			
 		}
 	}
-//	//비밀번호찾기에서 아이디과 이메일 존재여부 ajax
-//	@RequestMapping("/checkIdPw")
-//	@ResponseBody
-//	public void idEmailfind(Users users, Model model, Writer out) {
-//		
-//		logger.info("userIdEmailChk입니다 : {}", users);
-//		
-//		Users result = usersService.nameEmailCheck(users);
-////		Users result = usersService.idEmailCheck(users);
-//		
-//		logger.info("결과값 {} " , result);
-//		
-//		String input = users.getUserNick();
-//		
-//		logger.info("입력한 아이디 {}",input);
-//		logger.info("조회한 아이디 {} ",result.getUserId());
-//		
-//		if( result != null && input.equals(result.getUserNick())){
-//			
-//			String id = result.getUserId();
-//			
-//			try {
-//				out.write("{\"userId\": \"" + id + "\", \"result\": true}");
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//			
-//		}
-//	}
+	//비밀번호찾기에서 아이디과 이메일 존재여부 ajax
+	@RequestMapping("/checkIdEmail")
+	@ResponseBody
+	public void idEmailfind(Users users, Model model, Writer out) {
+		
+		logger.info("userIdEmailChk입니다 : {}", users);
+		//아이디와 이메일이 DB에 존재하면 사용자 모든정보를 result에 저장
+		Users result = usersService.idEmailCheck(users);
+		
+		logger.info("결과값 {} " , result);
+		
+		String input = users.getUserId();
+		
+		logger.info("입력한 아이디 {}",input);
+		//아이디와 이메일이 DB에 존재하면 pwcheck ajax로 사용자아이디,번호, true값 보내기
+		if( result != null && input.equals(result.getUserId())){
+			
+			String id = result.getUserId();
+			
+			try {
+				out.write("{\"userId\": \"" + id +	 "\", \"result\": true,\"userNo\": \"" + result.getUserNo() + "\" }");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	//아이디찾기
 	@RequestMapping("/idcheck")
 	public void idcheck(Users users) {
 		logger.info("/users/idcheck");
-		
 	}
 
 	//비밀번호 찾기
@@ -319,28 +321,69 @@ public class UsersController {
 	public void pwfind(Users users) {
 		logger.info("/users/pwcheck");
 	}
-	//비밀번호 찾기
-	@PostMapping("/pwcheck")
-	public String pwfind2(Users users) {
-		logger.info("/users/pwcheck");
-		
-		return "/users/pwcheck";
-	}
 	
-	//비밀번호 재설정
-	@RequestMapping("/pwchange")
-	public String pwchagne(Users users) {
+	//비밀번호 찾기 - 새로운 비밀번호 설정하기
+	@GetMapping("/pwchange")
+	public void pwchange(Users users, Model model) {
 		logger.info("/users/pwchange");
 		
-		return "/users/pwchange";
+		//비밀번호찾기 창에서 유저번호 저장
+		model.addAttribute("userNo", users.getUserNo());
 	}
 	
-	// 마이페이지
-	@RequestMapping("/mypage")
-	public void userInfo(Users users) {
+	//비밀번호 찾기 - 새로운 비밀번호 설정하기
+	@PostMapping("/pwchange")
+	public String pwchangeProc(Users users) {
+		logger.info("/users/pwchange");
+		
+		//사용자 새로운 비밀번호 설정하기
+		usersService.update(users);
+		
+		return "redirect:./login";
+	}
+	
+	//마이페이지
+	@GetMapping("/mypage")
+	public void userInfo(Users users, HttpSession session , Model model) {
 		logger.info("/users/mypage[GET]");
+		
+		int userNo = (int)session.getAttribute("userNo");
+		logger.info("마이페이지 : {}" , users.getUserNo());
+		
+		Users userInfo = usersService.selectAllInfo(userNo);
+		logger.info("userInfo:{}", userInfo);
+		
+		model.addAttribute("userInfo",userInfo);
+	}
+	//마이페이지
+	@PostMapping("/mypage")
+	public void userInfoProc(Users users, HttpSession session , Model model) {
+		logger.info("/users/mypage[POST]");
+		
+	}
+	//마이페이지
+	@GetMapping("/question")
+	public void userQuestion(Users users, HttpSession session , Model model) {
+		logger.info("/users/question[GET]");
 	}
 	
+	@PostMapping("/question")
+	public void questionProc( 
+			
+			Users users, MultipartFile file,Model model,
+			@RequestParam(value="Q_title", required=false) String Q_title,
+			@RequestParam(value="Q_content", required=false) String Q_content	
+			
+			){		
+		logger.info("/users/question [POST]");	
+		
+//		userQuestion.setqTitle(Q_title);// 여기에 tilte담아야함
+//		userQuestion.setqContent(Q_content);
+//	
+//		usersService.question( users, file );
+//		
+//		return "redirect:./mypage";	//게시글 목록
+	}
 }
 
 

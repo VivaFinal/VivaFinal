@@ -96,5 +96,29 @@ public interface UsersDao {
 	 */
 	public Users checkUserNameEmail(Users users);
 
+	/**
+	 * 비밀번호 찾기 - 사용자 아이디와 이메일 존재여부
+	 * 
+	 * @param users
+	 * @return
+	 */
+	public Users checkUserIdEmail(Users users);
+
+
+	/**
+	 * 비밀번호 찾기 - 새로운 비밀번호 설정하기
+	 * 
+	 * @param users
+	 */
+	public void updatePw(Users users);
+
+	/**
+	 * 회원 모든 정보 저장
+	 * 
+	 * @param userNo
+	 * @return 
+	 */
+	public Users selectUserAll(int userNo);
+	
 
 }

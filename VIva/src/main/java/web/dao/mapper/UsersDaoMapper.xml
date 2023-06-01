@@ -65,6 +65,22 @@
 		WHERE user_nick = #{userNick} and user_email = #{userEmail}
 	</select>
 	
+	<select id="checkUserIdEmail" resultType="web.dto.Users" parameterType="web.dto.Users">
+		SELECT * FROM users
+		WHERE user_id = #{userId} and user_email = #{userEmail}
+	</select>
+
+	<update id="updatePw" parameterType="web.dto.Users">
+		UPDATE users
+		SET user_pw = #{userPw}
+		WHERE user_no = #{userNo}
+	</update>
+	
+	<select id="selectUserAll" resultType="web.dto.Users" parameterType="int">
+		SELECT * FROM users
+		WHERE user_no = #{userNo}
+	</select>
+	
 </mapper>
 
 
