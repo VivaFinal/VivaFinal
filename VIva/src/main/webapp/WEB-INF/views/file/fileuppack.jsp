@@ -91,29 +91,6 @@ $(function(){
 	width: 480px;
 	}
 	
-	#sourceName{
-	display: inline-block;
-	width: 400px;
-	}
-	#key{
-	display: inline-block;
-	width: 505px;
-	}
-	#bpm{
-	display: inline-block;
-	width: 505px;
-	}
-	#price{
-	display: inline-block;
-	width: 505px;
-	}
-	#sourceTime{
-	display: inline-block;
-	width: 505px;
-	}
-	
-	
-	
 	label{
 	display: inline-block;
 	width:50px;
@@ -226,7 +203,7 @@ Pack을 올리기전에 <a href="/file/guide">가이드</a>를 확인해주세�
 
 
 
-<form action="/file/fileupsource" method="post" enctype="multipart/form-data">
+<form action="/file/fileuppack" method="post" enctype="multipart/form-data">
 
 
 <div id="container" >
@@ -234,22 +211,22 @@ Pack을 올리기전에 <a href="/file/guide">가이드</a>를 확인해주세�
 	
 		<div class="item">
 		<label>제목</label>
-		<input type="text" id="title" name="title" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!"><br>
+		<input type="text" id="title" name="packName" class="form-control" placeholder="회원들에게 보일 제목을 써주세요!"><br>
 		<span id="title_msg" class="msg"></span>
 	<br>
 	
 	<label>설명</label>
-	<textarea id="content" name="content" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7"></textarea><br>
+	<textarea id="content" name="packContent" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7"></textarea><br>
 	<span id="content_msg" class="msg"></span>
 	<!-- mb 마진바텀 -->
 		<div class="inputfile">
 		<div >
 		이미지파일
-		<input type="file" id="imgfile" name="imgfile" class="form-control" style="width: 237px;">
+		<input type="file" id="imgfile" name="packImg" class="form-control" style="width: 237px;">
 		</div>
 		<div>
 		음원파일 
-		<input type="file" id="file" name="file" class="form-control">
+		<input type="file" id="file" name="packFileList" class="form-control" multiple="multiple">
 		</div>
 
 </div>
@@ -264,7 +241,7 @@ Pack을 올리기전에 <a href="/file/guide">가이드</a>를 확인해주세�
   <script>
   var input = document.querySelector('input[name="genre"]');
 
-  var whitelist = ["Trap", "R&B", "Soul", "boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
+  var whitelist = ["Trap", "R&B", "Soul", "Boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
  
   tagify = new Tagify (input, {
       whitelist:whitelist,
@@ -310,7 +287,7 @@ Pack을 올리기전에 <a href="/file/guide">가이드</a>를 확인해주세�
 	  
   var input = document.querySelector('input[name="detail"]');
   
-  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","rimshot"];
+  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","Rimshot"];
 
   var tagify = new Tagify(input, {
         whitelist:whitelist,
