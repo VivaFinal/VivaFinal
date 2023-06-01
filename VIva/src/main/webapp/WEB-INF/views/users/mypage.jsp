@@ -42,47 +42,75 @@ a {
 	padding-left: 16px;
 }
 .contentMiddle{
-	border-left: 1px solid #ccc;
-	border-right: 1px solid #ccc;
+/* 	border-left: 1px solid #ccc; */
+/* 	border-right: 1px solid #ccc; */
 }
-.contentSmall{
-	font-size:20px;
+
+/* 프로필 글자 */
+.contentSmalls{
+	font-size:26px;
 	padding:20px;
-	margin:30px;
-	
+	margin:8px;
+}
+
+/* 컬럼명 글자 */
+.contentSmall{
+	font-size:22px;
+	padding:2px;
+	margin:25px;
+	border-bottom: 1px solid #ccc;
+}
+
+/* 회원정보 글자 */
+.contentMedium{
+	font-size:22px;
+	padding:2px;
+	margin:25px;
+	text-align:end;
+	border-bottom: 1px solid #ccc;
 }
 </style>
 
 <div id="wrap">
 	<div id="grid">
+	
 		<div id="colgrid">
 			<div class="items"><h1>마이페이지</h1></div>
-			<div class="items"><a href="">회원정보</a></div>
+			<div class="items"><a href="./mypage">회원정보</a></div>
 			<div class="items"><a href="">내가 쓴글</a></div>
 			<div class="items"><a href="">내 음원</a></div>
 			<div class="items"><a href="">결제내역</a></div>
-			<div class="items"><a href="">문의하기</a></div>
+			<div class="items"><a href="./question">문의하기</a></div>
 		</div>	
 		
 		<div id="colgrid2">
 			<div class="contentSide"></div>		
 			<div class="contentMiddle">
-					<div class="contentSmall">프로필</div>
+					<div class="contentSmalls">프로필</div>
 				<div id="colgrid3">
 					<div class="contentSmall">프로필 사진</div>
+					<div class="contentMedium">${userInfo.userProfile}</div>
 					<div class="contentSmall">아이디</div>
+					<div class="contentMedium">${userInfo.userId}</div>
 					<div class="contentSmall">이름</div>
+					<div class="contentMedium">${userInfo.userName}</div>
 					<div class="contentSmall">닉네임</div>
+					<div class="contentMedium">${userInfo.userNick}</div>
 					<div class="contentSmall">생일</div>
+					<div class="contentMedium">${userInfo.userBirth}</div>
 					<div class="contentSmall">이메일</div>
+					<div class="contentMedium">${userInfo.userEmail}</div>
 					<div class="contentSmall">연락처</div>
+					<div class="contentMedium">${userInfo.userMobile}</div>
 				</div>
 			</div>		
+				<a href="./main"><button>메인으로</button></a>
 			<div class="contentSide"></div>		
 		</div>
 		
 	</div>
 </div>
+
 
 
 <c:import url="../layout/footer.jsp" />

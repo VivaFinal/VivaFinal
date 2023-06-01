@@ -97,5 +97,19 @@ public class UsersServiceImpl implements UsersService {
 	public Users nameEmailCheck(Users users) {
 		return usersDao.checkUserNameEmail(users);
 	}
+
+	@Override
+	public Users idEmailCheck(Users users) {
+		return usersDao.checkUserIdEmail(users);
+	}
+	
+	@Override
+	public void update(Users users) {
+		usersDao.updatePw(users);
+	}
+	@Override
+	public Users selectAllInfo(int userNo) {
+		return usersDao.selectUserAll(userNo);
+	}
 	
 }

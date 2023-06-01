@@ -14,6 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Pack;
@@ -58,6 +59,10 @@ public class FileUploadController {
 		
 	}
 	
+	@RequestMapping("/file/test7")
+	public void test7() {
+		
+	}
 	@RequestMapping("/file/guide")
 	public void guide() {
 		
@@ -81,18 +86,17 @@ public class FileUploadController {
 	
 	@PostMapping("/file/fileupsource")
 	public String FileUpSourcePost(
-			Source source,
 			MultipartFile imgfile,
 			MultipartFile file,
-			String genre,
-			String instrument,
-			String detail,
-			String scape,
-			String fx,
-			String key,
+			@RequestParam(defaultValue = "no")String genre,
+			@RequestParam(defaultValue = "no")String instrument,
+			@RequestParam(defaultValue = "no")String detail,
+			@RequestParam(defaultValue = "no")String scape,
+			@RequestParam(defaultValue = "no")String fx,
+			@RequestParam(defaultValue = "no")String key,
 			String sourceName,
 			String sourceTime,
-			int bpm
+			@RequestParam(defaultValue = "0") int bpm
 			) {
 		logger.info("/file/fileupsource [Post]");
 		
@@ -104,7 +108,6 @@ public class FileUploadController {
 		JSONArray jsonObject = null;
 		
 		Tag tag = null;
-		Source source1 = null;
 		
 		try {
 			jsonObject = (JSONArray) jsonParser.parse(genre);
@@ -119,27 +122,44 @@ public class FileUploadController {
 			jsonObject = (JSONArray) jsonParser.parse(scape);
 			scape = ((JSONObject) jsonObject.get(0)).get("value").toString();
 			
-			jsonObject = (JSONArray) jsonParser.parse(fx);
-			fx = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			if((JSONArray) jsonParser.parse(fx) != null) {
+				
+				jsonObject = (JSONArray) jsonParser.parse(fx);
+				fx = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			}
 			
-			jsonObject = (JSONArray) jsonParser.parse(key);
-			key = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			
 
 			
 			//tag에다가 위에 있는 값 집어넣기 
 			//int형은 뭘 넣든간에 insert가 되는 값으로 들어가는거같음 
 			tag = new Tag(0, instrument, genre, scape, detail, fx);
-			source1 = new Source(0,sourceName,bpm,key,0,0,0,0,sourceTime);
+			
+		} catch (ParseException e ) {
+			e.printStackTrace();
+		}
+		
+		
+		Source source = null;
+		
+		try {
+			jsonObject = (JSONArray) jsonParser.parse(key);
+			key = ((JSONObject) jsonObject.get(0)).get("value").toString();
+			
+			source = new Source(0,sourceName,bpm,key,0,0,0,0,sourceTime);
 			
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
+		
+		
+		
 
 
 		logger.info("tag {}", tag);
 		logger.info("*******key의 값 입니다! : {}",key);
-		logger.info("*******source1의 값 : {}",source1);
-		fileUploadService.SourceUpload(tag,source1,imgfile,file);
+		logger.info("*******source의 값 : {}",source);
+		fileUploadService.SourceUpload(tag,source,imgfile,file);
 		
 //		
 		

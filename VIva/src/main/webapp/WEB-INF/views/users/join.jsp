@@ -160,8 +160,7 @@ $(function(){
 		}
 		return true;
 	})
-}
-)
+})
 //버튼을 클릭했을 경우 비밀번호와 비밀번호재확인이 일치하지않으면 버튼푸시 실패
 //비밀번호와 비밀번호 재확인 입력 유효성검사
 function compare_check(){
@@ -181,6 +180,12 @@ $(function(){
 		
 		var userId = $("#userId").val();
 		var data = {userId : userId}
+
+		if(userId == ''){
+			$('#userid_msg').html("아이디를 입력해주세요")
+			return
+		}
+		
 		//회원가입시 아이디 중복검사
 		$.ajax({
 			type:"get",
@@ -211,6 +216,11 @@ $(function(){
 		var userNick = $("#userNick").val();
 		var data = {userNick : userNick}
 		
+		if(userNick == ''){
+			$('#usernick_msg').html("닉네임을 입력해주세요")
+			return
+		}
+		
 		$.ajax({
 			type:"get",
 			url: " /users/userNickChk",
@@ -234,22 +244,19 @@ $(function(){
 })
 
 $(function(){
-	//유효성 검사 -- 버튼 눌렀을때 push 알람 띄우기
-// 	$("#mail-Check-Btn").click(function(){
-// 		//validate가 틀렸을경우 리턴값 false
-// 		//validate -이메일칸에 아무것도 적지않으면 false 
-// 		if(!valid()){
-// 			return true;
-// 		}
-// 		return false;
-// 	})
 	
 	//회원가입시 이메일인증(ajax) 
-	var isCertification = false;
 	$('#mail-Check-Btn').click(function() {
 		const email = $('#userEmail').val() + $('#userEmail2').val(); // 이메일 주소값 얻어오기!
 		console.log('완성된 이메일 : ' + email); // 이메일 오는지 확인
 		const checkInput = $('.mail-check-input') // 인증번호 입력하는곳 
+		
+		var userEmail = $("#userEmail").val();
+		
+		if( userEmail == '' ) {
+			$('#mail-check-warn').html("이메일을 입력해주세요")
+			return
+		}
 		
 		$.ajax({
 			type : 'get',
@@ -263,6 +270,7 @@ $(function(){
 		}); // end ajax
 	}); // end send email
 	
+	var isCertification = false;
 	// 인증번호 비교 
 	// blur -> focus가 벗어나는 경우 발생
 	$('.mail-check-input').blur(function () {
@@ -279,20 +287,30 @@ $(function(){
 			$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
 	         $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
 		}else{
+			isCertification = false;
 			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
 			$resultMsg.css('color','red');
+			
 		}
+	
 	});
 	
-})
+    //이메일 입력란 클릭시 밑에 메시지 없애기
+	$("#userEmail").focus(function(){
+		$("#mail-check-warn").html("")	
+	})
+	
+	//인증번호가 다르면 sumit 안되게
+	 $('#btn').click(function() {
+	     if(!isCertification){
+	         alert('인증이 완료되지 않았습니다.');
+	         return false;
+	      }else{
+	         return true;
+	      }
 
-// function valid(){
-// 	//이메일칸에 이메일을 적지않으면 본인인증 클릭 불가
-// 		if($('#userEmail').val()==''){
-// 			return false;
-// 		}
-// 	return true;
-// }
+	})
+})	
 
 </script>
 <style type="text/css">
@@ -346,7 +364,7 @@ input{
 	height: 35px;
 }
 
-.msg{
+.msg, #mail-check-warn{
 	color:red;
 }
 
@@ -402,7 +420,7 @@ input{
 .btn-btn-primary{
 	position: absolute;
 	top: 71px;
-	right:138px;
+	right:101px;
 }
 .mail-check-input{
 	margin-top:10px;
@@ -475,7 +493,7 @@ input{
 		</div>
 		
 		<div class="input-group-addon">
-			<button type="button" class="btn-btn-primary" id="mail-Check-Btn">본인인증</button>
+			<button type="button" class="btn-btn-primary" id="mail-Check-Btn">인증코드전송</button>
 		</div>
 		
 		<div>

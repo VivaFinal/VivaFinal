@@ -12,10 +12,29 @@
 //아이디 중복 검사
 $(function(){
 	
+	//닉네임 입력란 클릭시 밑에 메시지 없애기
+	$("#userNick").focus(function(){
+		$("#usernick_msg").html("")	
+	})
+	//이메일 입력란 클릭시 밑에 메시지 없애기
+	$("#userEmail").focus(function(){
+		$("#useremail_msg").html("")	
+	})
+	
 	$("#id_check").on("click", function(){
 		
 		var userNick = $("#userNick").val();
 		var userEmail = $("#userEmail").val();
+		
+		if( userNick == '' ) {
+			$('#usernick_msg').html("닉네임을 입력해주세요")
+			return
+		}
+		
+		if( userEmail == '' ) {
+			$('#useremail_msg').html("이메일을 입력해주세요")
+			return
+		}
 		
 		console.log(userNick)
 		console.log(userEmail)
@@ -90,6 +109,9 @@ input{
 .noline{
 	 text-decoration-line: none;
 }
+.msg{
+	color:red;
+}
 </style>
 
 </head>
@@ -101,12 +123,14 @@ input{
 	<div class="select">
 		<label for="userNick" >닉네임</label>
 		<input type="text" id="userNick" name="userNick">
+		<span id="usernick_msg" class="msg"></span>
+		
 	</div>
 		
 	<div class="select">
 		<label for="userEmail">이메일</label>
 		<input type="text" id="userEmail" name="userEmail">
-<!-- 		<span class="name_email_input">이름과 이메일이 일치하지않습니다</span> -->
+		<span id="useremail_msg" class="msg"></span>
 	</div>
 	
 	<div class="select">

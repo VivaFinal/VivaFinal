@@ -67,7 +67,7 @@ public class BoardController {
 		
 		//모델값 전달  - 게시글
 		model.addAttribute("viewBoard", viewBoard);
-		
+		logger.info("viewBoard : {} ",viewBoard);
 		//첨부파일 정보 모델값 전달
 		Files boardFile = boardService.getAttachFile(viewBoard);
 		
