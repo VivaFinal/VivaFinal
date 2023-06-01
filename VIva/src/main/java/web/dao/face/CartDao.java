@@ -24,10 +24,10 @@ public interface CartDao {
 	/**
 	 * cartNo을 이용하여 cart 항목 삭제하기
 	 * 
-	 * @param cartNo
+	 * @param cartNo, userNo
 	 * @return 성공하면 true, 아니면 false
 	 */
-	public boolean deleteCartByCartNo(int cartNo);
+	public boolean deleteCartByCartNo(Cart cartNo);
 
 //=========================================================================	
 	/**

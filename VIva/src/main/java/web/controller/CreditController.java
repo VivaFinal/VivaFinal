@@ -39,28 +39,34 @@ public class CreditController {
 		logger.info("userno: {} ", userNo);
 		
 		
-		//크레딧 전체 내역(default) 조회하기
+		//1. 크레딧 전체 내역(default) 조회하기
 		List<Credit> creditList = new ArrayList<>(); 
-		
 		creditList = creditService.getCreditList(userNo);
-		
 		logger.info("조회내역:{}", creditList);
-		
 		model.addAttribute("list", creditList);
 		
+		//2.크레딧 총계 보내주기
+		//회원 크레딧 잔액 구하기 (DB 조회 결과 null 일 경우 0 으로 반환)
+		int res = 0; 
+		res = creditService.selectCreditAcc(userNo);
+		logger.info("크레딧잔액:{}", res);
 		
+		model.addAttribute("creditAcc", res);
+		
+		//3. 회원등급 보내주기
+		//회원등급 확인하기 (0:일반회원, 1 : 업로더)
 		Users user = new Users();
 		user.setUserNo(userNo.getUserNo());
-		//회원등급 확인하기 (0:일반회원, 1 : 업로더)
 		String grade = "";
 		grade = creditService.chkUserGrade(user);
-		
 		logger.info("회원등급 : {}", grade);
-		//HashMap 으로 view 로 전달할 정보 지정해주기
+		
 		model.addAttribute("grade", grade);
 		logger.info("전송할 회원등급:{}", model.getAttribute("grade"));
 		//문제는 이런 방식으로는 (String은 view로 전달 안되는가? Object 타입만 전달이 가능한가?) null 이 들어가 있어서 해결이 안된다,,,ㅠ
 		//=> model.getAttribute()괄호 안에 따옴표까지 포함해서 써야 출력이 되는거다!!!!
+		
+		
 		
 	}
 	

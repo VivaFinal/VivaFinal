@@ -24,4 +24,19 @@
 		where user_no = #{userNo}
 	</select>
 
+	<select id="selectCreditAcc" resultType="int" parameterType="web.dto.Credit">
+		SELECT 
+	    (
+	        SELECT nvl(SUM(AMOUNT),0) FROM CREDIT
+	        WHERE DEAL_CATEGORY IN (1, 3)
+	        AND USER_NO=#{userNo}
+	    )
+	    - 
+	    (
+	        SELECT nvl(SUM(AMOUNT),0) FROM CREDIT
+	        WHERE DEAL_CATEGORY IN (2, 4)
+	        AND USER_NO=#{userNo}
+	    ) AMOUNT
+		FROM DUAL
+	</select>
 </mapper>

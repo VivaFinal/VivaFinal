@@ -20,10 +20,10 @@ public interface CartService {
 	/**
 	 * cartNo를 통해 CART TB에서 해당 항목 삭제하기
 	 * 
-	 * @param cartNo
+	 * @param cartNo, userNo
 	 * @return 성공 여부에 따라 true/false
 	 */
-	public boolean deleteCartItem(int cartNo);
+	public boolean deleteCartItem(Cart cartNo);
 
 
 	/**
@@ -55,6 +55,7 @@ public interface CartService {
 	 * 작성자 : 지선
 	 */
 	public boolean purchaseCartItem(Users userNo, Source sourceNo, Cart cartNo);
+
 
 
 }

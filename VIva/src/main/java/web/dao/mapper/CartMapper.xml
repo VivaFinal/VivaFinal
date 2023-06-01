@@ -20,9 +20,10 @@
 	</select>
 	
 <!--  ====================================================================== -->	
-	<delete id="deleteCartByCartNo"  parameterType="int">
+	<delete id="deleteCartByCartNo"  parameterType="web.dto.Cart">
 		DELETE FROM cart
 		WHERE cart_no = #{cartNo}
+		AND user_no = #{userNo}
 	</delete>
 
 <!--  ====================================================================== -->	
