@@ -39,13 +39,13 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   			SELECT board_seq.nextval FROM dual
   		</selectKey>
   		
-  		INSERT INTO board ( board_no, board_title, board_content, board_hit, user_no )
-  		VALUES ( #{boardNo}, #{boardTitle}, #{boardContent}, 0, 1 )
+  		INSERT INTO board ( board_no, board_title, board_content, board_date, category_type, board_hit, board_like, user_no )
+  		VALUES ( #{boardNo}, #{boardTitle}, #{boardContent}, sysdate, #{categoryType}, 0, 0, 1 )
   	</insert>
   	
   	<insert id="insertFile" parameterType="web.dto.Files">
-  		INSERT INTO Files ( file_no, originname, storedname, filesize, file_date, categoryType, board_no )
-  		VALUES ( files_seq.nextval, #{originname}, #{storedname}, #{filesize}, #{category_type},s #{file_date}, #{boardNo} )
+  		INSERT INTO Files ( file_no, originname, storedname, filesize, file_date, board_no )
+  		VALUES ( files_seq.nextval, #{originname}, #{storedname}, #{filesize}, '23/05/31', #{boardNo} )
   	</insert>
   	
   	<select id="selectBoardFileByBoardNo" resultType="web.dto.Files" parameterType="web.dto.Board">
@@ -67,5 +67,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   		DELETE board
   		WHERE board_no = #{boardNo}
   	</delete>
+  	
+  	<select id="selectComment" resultType="web.dto.Comments">
+  		SELECT COMM_NO, COMM_CONTENT, COMM_DATE, BOARD_NO, USER_NO
+  		FROM Comments
+  		WHERE board_no = #{boardNo}
+  	</select>
  
   </mapper>

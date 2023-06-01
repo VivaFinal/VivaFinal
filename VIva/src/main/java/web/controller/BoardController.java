@@ -1,6 +1,8 @@
 package web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -9,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Board;
+import web.dto.Comments;
 import web.dto.Files;
 import web.dto.Tag;
 import web.dto.Users;
@@ -49,7 +53,7 @@ public class BoardController {
 	}
 	
 	@RequestMapping("/view")
-	public String view( Board viewBoard, Model model ) {
+	public String view( Board viewBoard, Model model, List<MultipartFile> file ) {
 		logger.info("/board/view");
 		
 		//잘못된 게시글 번호 처리
@@ -66,24 +70,27 @@ public class BoardController {
 		logger.info("viewBoard : {} ",viewBoard);
 		//첨부파일 정보 모델값 전달
 		Files boardFile = boardService.getAttachFile(viewBoard);
+		
+		logger.info("************************파일!{}", file);
+		logger.info("^^^^^컨트롤러 {}", boardFile);
 		model.addAttribute("boardFile", boardFile);
 		
+		//댓글 목록 보기
+		List<Comments> commentList = boardService.viewComment(viewBoard.getBoardNo());
+		model.addAttribute("commentList", commentList);
+	
 		return "board/view";
-	}
-		
+	}		
+	
 	
 	@GetMapping("/write")
 	public void write() {}
 	
 	@PostMapping("/write")
-	public String writeProc( 
-			
-			Board board, MultipartFile file,Model model,
-			@RequestParam(value="boardTitle", required=false) String boardTitle,
-			@RequestParam(value="boardContent", required=false) String boardContent	
-			
-			){		
+	public String writeProc( Board board, @RequestParam(required=false) List<MultipartFile> file, Model model ){		
 		logger.info("/board/write [POST]");	
+		logger.info("컨트롤러 보드 {}", board);
+		logger.info("컨트롤러 파일 {}", file);
 		
 		  //로그인 String id = null; if( session.getAttribute("id")!= null ) {
 //		  logger.info("로그인 실패"); return "redirect:./main"; } else {
@@ -91,9 +98,10 @@ public class BoardController {
 //		  
 //		  } model.addAttribute("userId", id);
 		
-		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
-		board.setBoardContent(boardContent);
-	
+//		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
+//		board.setBoardContent(boardContent);
+//		board.setBoardContent(categoryType);
+		
 		boardService.write( board, file );
 		
 		return "redirect:./list";	//게시글 목록
@@ -114,21 +122,27 @@ public class BoardController {
 		
 		//첨부파일 정보 모델값 전달
 		Files boardFile = boardService.getAttachFile(board);
+		
 		model.addAttribute("boardFile", boardFile);
+		
+		logger.info("BoardController {}", boardFile);
 			
 		return "board/update";
 	}
 	
 	@PostMapping("/update")
-	public String updateProc( Board board, MultipartFile file ,
+	public String updateProc( 
+			
+			Board board, List<MultipartFile> file ,
 			@RequestParam(value="boardTitle", required=false) String boardTitle,
-			@RequestParam(value="boardContent", required=false) String boardContent
+			@RequestParam(value="boardContent", required=false) String boardContent,
+			@RequestParam(value="categoryType", required=false) String categoryType
+			
 			) {
 		
 		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
 		board.setBoardContent(boardContent);
-		
-		
+		board.setBoardContent(categoryType);
 		
 		System.out.println("===============================");
 		System.out.println(board);
@@ -145,5 +159,6 @@ public class BoardController {
 		
 		return "redirect:./list";
 	}
+	
 
 }
