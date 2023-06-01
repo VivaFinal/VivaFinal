@@ -363,7 +363,7 @@ div[data-itemtype='line']{
 				${tag.fx }
 			</c:if>
 			<c:if test="${not empty tag.fx }">
-				<a class="tagA" href="/source/genre?genre=${genre}&scape=${tag.fx}"><div class="tagcover">${tag.fx}</div></a> 
+				<a class="tagA" href="/source/genre?genre=${genre}&fx=${tag.fx}"><div class="tagcover">${tag.fx}</div></a> 
 			</c:if>
 		</c:forEach>
 	</div>
@@ -648,7 +648,7 @@ div[data-itemtype='line']{
 				  			"border":"2px solid #ccc",
 				  			"paddingTop":"10px"
 				  		})
-				  		$("#pop").fadeOut(2500)
+				  		$("#pop").fadeOut(3000)
 				  	  }
 				  	, error : function(res) {
 				  		console.log("장바구니 ajax 실패")

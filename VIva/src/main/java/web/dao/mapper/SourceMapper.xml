@@ -80,6 +80,100 @@
   		WHERE SOURCE_NO = #{sourceNo}	
   	</select>
   	
+  	<select id="selectTagByInstDetail" parameterType="web.dto.Tag" resultType="web.dto.Tag">
+  		SELECT DISTINCT GENRE FROM TAG
+  		WHERE 1=1
+  		<if test="detail != null and !detail.equals('')">
+  			AND DETAIL = #{detail}
+  		</if>
+  		<if test="instrument != null and !instrument.equals('')">
+			AND INSTRUMENT = #{instrument}
+  		</if>
+  	</select>
+  	
+  	<select id="selectScapeByInstDetail" parameterType="web.dto.Tag" resultType="web.dto.Tag">
+  		SELECT DISTINCT SCAPE FROM TAG
+  		WHERE 1=1
+  		<if test="detail != null and !detail.equals('')">
+  			AND DETAIL = #{detail}
+  		</if>
+  		<if test="instrument != null and !instrument.equals('')">
+			AND INSTRUMENT = #{instrument}
+  		</if>
+  	</select>
+  	
+  	<select id="selectFxByInstDetail" parameterType="web.dto.Tag" resultType="web.dto.Tag">
+  		SELECT DISTINCT FX FROM TAG
+  		WHERE 1=1
+  		<if test="detail != null and !detail.equals('')">
+  			AND DETAIL = #{detail}
+  		</if>
+  		<if test="instrument != null and !instrument.equals('')">
+			AND INSTRUMENT = #{instrument}
+  		</if>
+  	</select>
+  	
+  	
+  	<select id="selectDetailByInst" parameterType="web.dto.Tag" resultType="web.dto.Tag">
+  		SELECT DISTINCT DETAIL FROM TAG
+  		WHERE 1=1
+  		<if test="detail != null and !detail.equals('')">
+  			AND DETAIL = #{detail}
+  		</if>
+  		<if test="instrument != null and !instrument.equals('')">
+			AND INSTRUMENT = #{instrument}
+  		</if>
+  	</select>
+  	
+  	<select id="selectSourceByInstDetail" parameterType="web.dto.Tag" resultType="hashmap">
+  		SELECT s.source_no, s.source_name, s.bpm, s.key, s.source_time,
+        t.tag_no, t.genre, t.instrument,
+        p.pack_no, pi.pack_img_storedname, pi.pack_img_originname,
+        sf.file_originname, sf.file_storedname,
+        sif.source_img_storedname
+		FROM source S
+		INNER JOIN tag t on s.tag_no = t.tag_no
+		INNER JOIN pack p on s.pack_no = p.pack_no 
+		INNER JOIN packimginfo pi on p.pack_no = pi.pack_no
+		INNER JOIN sourcefileinfo sf on s.source_no = sf.source_no
+		INNER JOIN sourceimginfo sif on s.source_no = sif.source_no
+		WHERE 1=1 
+		
+		<if test="detail != null and !detail.equals('')">
+			AND t.detail = #{detail}
+		</if>
+		
+		<if test="instrument != null and !instrument.equals('')">
+			AND t.instrument = #{instrument}
+		</if>
+	  	
+	  	<if test="scape != null and !scape.equals('')">
+			AND t.scape = #{scape}
+		</if>
+	  	
+  		<if test="fx != null and !fx.equals('')">
+			AND t.fx = #{fx}
+		</if>
+		
+	  	ORDER BY S.SOURCE_NO
+  	</select>
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
+  	
   	
   
   </mapper>

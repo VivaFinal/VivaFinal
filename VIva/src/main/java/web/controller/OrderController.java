@@ -29,9 +29,10 @@ public class OrderController {
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
 	
 	@GetMapping("/source/download")
-	public String buy(MySource source, Model model, HttpSession session) {
+	public String buy(MySource source, Model model, HttpSession session, String inst) {
 		logger.info("download링크 클릭 확인 {}");
 		logger.info("source : {}",source);
+		
 		
 		session.setAttribute("userno", 1);
 		Users user = new Users();
@@ -45,7 +46,7 @@ public class OrderController {
 		logger.info("chkSource {}", chkSource);
 		
 		// 구매(다운로드) 실패 시 얻을 장르
-		Tag getGenre = null;
+		Tag getTag = null;
 		String get = null;
 		
 		// 추가 시작
@@ -65,14 +66,31 @@ public class OrderController {
 			
 		} else {
 			
-			// GENRE
-			getGenre = orderService.getGenre(source.getSourceNo());
-			logger.info("+++ getGenre : {}", getGenre);
+			if(inst != null && !"".equals(inst)) {
+				
+				logger.info("inst : {}", inst);
+				
+				// Instrument
+				getTag = orderService.getInstrument(source.getSourceNo());
+				logger.info("+++ getINST : {}", getTag);
+				
+				get = getTag.getInstrument();
+				
+				// 30 미만의 크레딧과 기존 구매 이력이 있는 경우
+				return "redirect: /source/inst?msg=already&instrument="+get+"";
+				
+				
+			}
 			
-			get = getGenre.getGenre();
+			// GENRE
+			getTag = orderService.getGenre(source.getSourceNo());
+			logger.info("+++ getGenre : {}", getTag);
+			
+			get = getTag.getGenre();
 			
 			// 30 미만의 크레딧과 기존 구매 이력이 있는 경우
 			return "redirect: /source/genre?msg=already&genre="+get+"";
+			
 		}
 		
 		SourceFileInfo down = orderService.getFile(source.getSourceNo());

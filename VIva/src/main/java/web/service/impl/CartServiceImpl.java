@@ -33,4 +33,10 @@ public class CartServiceImpl implements CartService {
 		
 		return cartDao.deleteCartByCartNo(cartNo);
 	}
+
+	@Override
+	public boolean addCartItem(Cart add) {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

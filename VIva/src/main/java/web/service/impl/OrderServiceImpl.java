@@ -47,7 +47,6 @@ public class OrderServiceImpl implements OrderService {
   }
 
 	
-}
 	
 	//======================================================================================================
 
@@ -255,6 +254,16 @@ public class OrderServiceImpl implements OrderService {
 	public Tag getGenre(int source) {
 		
 		Source get = orderDao.selectSource(source);
+		
+		Tag tag = orderDao.selectTagBySourceNo(get.getTagNo());
+		
+		return tag;
+	}
+
+	@Override
+	public Tag getInstrument(int sourceNo) {
+		
+		Source get = orderDao.selectSource(sourceNo);
 		
 		Tag tag = orderDao.selectTagBySourceNo(get.getTagNo());
 		

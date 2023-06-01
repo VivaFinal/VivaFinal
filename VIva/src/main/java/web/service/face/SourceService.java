@@ -79,6 +79,51 @@ public interface SourceService {
 	 */
 	public SourceFileInfo getFile(SourceFileInfo down);
 
+	/**
+	 * inst페이지에서 필요한 태그(Genre)를 조회한다
+	 * instrument나 detail을 가진 태그를 추출한다
+	 * @param instrument - 같은 악기, 디테일에 포함된 태그를 불러온다
+	 * @return
+	 */
+	public List<Tag> getTagGenre(Tag instrument);
+
+	/**
+	 * Instrument의 detail을 선택한 경우 detail에 해당하는 악기를 지정해 반환
+	 * @param instrument - detail만 들어있는 객체
+	 * @return - 조회된 instrument의 detail이 포함된 객체
+	 */
+	public Tag getInst(Tag instrument);
+
+	/**
+	 * 같은 Instrument를 가진 scape태그를 조회한다
+	 * @param instrument - 지정된 악기가 있는 태그 객체
+	 * @return - 지정된 악기가 있는 scape 태그 조회결과
+	 */
+	public List<Tag> getTagScapeforInst(Tag instrument);
+
+	/**
+	 * 같은 Instrument를 가진 Fx태그를 조회한다
+	 * @param instrument - 지정된 악기가 있는 태그 객체
+	 * @return - 지정된 악기가 있는 Fx 태그 조회 결과
+	 */
+	public List<Tag> getTagFxforInst(Tag instrument);
+
+	/**
+	 * instrument만 선택했을 경우 Detail 태그를 조회한다
+	 * @param instrument - inst만 들어있는 태그 객체
+	 * @return - detail 태그 조회 결과
+	 */
+	public List<Tag> getTagDetailforInst(Tag instrument);
+
+	/**
+	 * 클라이언트가 선택한 Instrument, Detail에 맞는 
+	 * 음원소스 리스트를 불러온다
+	 * 
+	 * @param instrument - inst 또는 inst,Detail 만 담겨있는 객체
+	 * @return - 조건에 맞는 음원소스 조회 결과
+	 */
+	public List<Map<String, Object>> getSourceByInstDetail(Tag instrument);
+
 
 
 	

@@ -74,6 +74,48 @@ public interface SourceDao {
 	 */
 	public SourceFileInfo selectBySourceNoforFile(SourceFileInfo down);
 
+	/**
+	 * 해당 악기 또는 디테일 태그를 가진 
+	 * 장르 태그를 검색한다
+	 * 
+	 * @param instrument - instrument 또는 detail이 들어간 태그
+	 * @return - instrumnet, detail이 들어간 장르 태그 List
+	 */
+	public List<Tag> selectTagByInstDetail(Tag instrument);
+
+	/**
+	 * 해당 악기 또는 디테일 태그를 가진
+	 * scape를 검색한다
+	 * @param instrument - instrument나 detail이 들어간 태그
+	 * @return - nstrumnet, detail이 들어간 악기 태그 List
+	 */
+	public List<Tag> selectScapeByInstDetail(Tag instrument);
+
+	/**
+	 * 해당 악기 또는 디테일 태그를 가진
+	 * Fx 태그를 검색한다
+	 * @param instrument - instrument나 detail이 들어간 태그
+	 * @return - nstrumnet, detail이 들어간 효과음 태그 List
+	 */
+	public List<Tag> selectFxByInstDetail(Tag instrument);
+
+	/**
+	 * 악기만 선택한 경우에 디테일 태그를 조회한다
+	 * @param instrument - inst만 선택한 객체
+	 * @return - detail 태그 List
+	 */
+	public List<Tag> selectDetailByInst(Tag instrument);
+
+	/**
+	 * 사용자가 선택한 Inst 또는 Inst와 Detail에 맞는
+	 * 음원소스 조회 결과를 반환한다
+	 *
+	 * 
+	 * @param instrument - inst / inst,Detail 이 들어있는 객체
+	 * @return - 조회 결과
+	 */
+	public List<Map<String, Object>> selectSourceByInstDetail(Tag instrument);
+
 
 
 

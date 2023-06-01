@@ -92,9 +92,18 @@ public interface OrderService {
 	 * 구매 실패 시 같은 장르의 음원소스페이지로 리다이렉트를 위한
 	 * 장르를 조회한다
 	 * @param i - 음원구매 실패한 정보
-	 * @return - 실패한 음원소스의 장르
+	 * @return - 구매 실패한 음원소스의 장르
 	 */
 	public Tag getGenre(int i);
+
+	/**
+	 * 구매 실패 시 같은 악기의 음원소스페이지로 리다이렉트를 위한
+	 * 악기를 조회한다
+	 * @param sourceNo - 음원구매 실패한 정보
+	 * @return - 구매 실패한 음원소스의 악기
+	 */
+	public Tag getInstrument(int sourceNo);
+
 
 
 }
