@@ -42,31 +42,6 @@ public interface OrderService {
 	public boolean checkCredit(Users user);
 
 
-//=========================================================================================================
-	//장바구니에서 진행하는 메소드
-	
-	/**
-	 * userNo을 통해 크레딧 TB 의 총 계 확인하여 구매 가능여부 확인하기
-	 * 
-	 * @param userNo, sourceNo
-	 * @return 구매 가능 여부
-	 * 작성자 : 지선
-	 */
-	public boolean chkCreditAcc(Users userNo, Source sourceNo);
-	
-	/**
-	 * 크레딧 지출, 장바구니항목 삭제, 다운로드 정보 생성, 내 음원내역 추가, 업로더의 크레딧 수입 생성
-	 * 
-	 * @param userNo - 본인 회원번호
-	 * @param sourceNo - 선택한 음원 항목
-	 * @param cartNo - 해당 장바구니 항목
-	 * @return 구매 완료 여부
-	 * 작성자 : 지선
-	 */
-	public boolean purchaseCartItem(Users userNo, Source sourceNo, Cart cartNo);
-
-	
-
 	/**
 	 * 구매(다운로드) 음원에 대해 나의 음원 소스 테이블에 정보를 추가한다
 	 * 
