@@ -45,7 +45,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   	
   	<insert id="insertFile" parameterType="web.dto.Files">
   		INSERT INTO Files ( file_no, originname, storedname, filesize, file_date, categoryType, board_no )
-  		VALUES ( files_seq.nextval, #{originname}, #{storedname}, #{filesize}, #{category_type},s #{file_date}, #{boardNo} )
+  		VALUES ( files_seq.nextval, #{originname}, #{storedname}, #{filesize}, #{category_type}, #{file_date}, #{boardNo} )
   	</insert>
   	
   	<select id="selectBoardFileByBoardNo" resultType="web.dto.Files" parameterType="web.dto.Board">

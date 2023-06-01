@@ -57,7 +57,10 @@ public class CreditController {
 		
 		logger.info("회원등급 : {}", grade);
 		//HashMap 으로 view 로 전달할 정보 지정해주기
-		
+		model.addAttribute("grade", grade);
+		logger.info("전송할 회원등급:{}", model.getAttribute("grade"));
+		//문제는 이런 방식으로는 (String은 view로 전달 안되는가? Object 타입만 전달이 가능한가?) null 이 들어가 있어서 해결이 안된다,,,ㅠ
+		//=> model.getAttribute()괄호 안에 따옴표까지 포함해서 써야 출력이 되는거다!!!!
 		
 	}
 	

@@ -29,14 +29,17 @@
 <div class="FunctionTitleLine">
    <img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
 </div>
-전체 내역 조회만 구현해놨음
-선택 삭제 및 충전/사용/수익/환전 에 따른 필터 구현해야함
+전체 내역 조회만 구현해놨음<br>
+선택 삭제 및 충전/사용/수익/환전 에 따른 필터 구현해야함<br>
+회원등급 : ${grade }
 
 <div id="CreditStatus">
 	<div id="MyCreditAmount">
 		<span>보유한 크레딧 : 0000 </span>
 		<a href="./charge"><button id="chargeCredit" class="charge-button">충전하기</button></a>
 	</div>
+	<!--  회원 등급 0 or 1인지에 따라 visible hidden 처리해줄 예정 -->
+	<!--  회원 크레딧 확인 후 환전가능 금액인지에 따라 활성화 비활성화 처리해줄 예정 -->
 	<a href="./exchange"><button id="exchangeCredit" class="exchange-button">환전하기</button></a>
 </div>
 
@@ -59,7 +62,7 @@
 				</div>
 		      </th>
 		      <th scope="col">사용일자</th>
-		      <th scope="col">내용</th>
+		      <th scope="col">내역</th>
 		      <th scope="col">금액</th>
 		      <th scope="col">delete</th>
 		    </tr>
