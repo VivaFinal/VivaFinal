@@ -156,6 +156,16 @@ public class OrderServiceImpl implements OrderService {
 		return tag;
 	}
 
+	@Override
+	public Tag getInstrument(int sourceNo) {
+		
+		Source get = orderDao.selectSource(sourceNo);
+		
+		Tag tag = orderDao.selectTagBySourceNo(get.getTagNo());
+		
+		return tag;
+	}
+  
   @Override
 	public boolean checkCredit(Users userNo) {
 		

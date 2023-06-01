@@ -270,31 +270,31 @@ ul.nav > li > ul > li > a:hover {
 			
 	  		<!--  목록2 : 음원소스 -->
 			<li class="category">
-				<a href="">Sounds</a>	
+				<a href="/source/sound">Sounds</a>	
 				<ul>
 					<li><a href="/source/genre?genre=Trap">Trap</a></li>
-					<li><a href="/source/inst?instrument=Kick">Kick</a></li>
+					<li><a href="/source/inst?detail=Kick">Kick</a></li>
 					
 					<li><a href="/source/genre?genre=BoomBap">BoomBap</a></li>
-					<li><a href="/source/inst?instrument=Snare">Snare</a></li>
+					<li><a href="/source/inst?detail=Snare">Snare</a></li>
 					
 					<li><a href="/source/genre?genre=Pop">Pop</a></li>
-					<li><a href="/source/inst?instrument=Female">Female</a></li>
+					<li><a href="/source/inst?detail=Female">Female</a></li>
 					
 					<li><a href="/source/genre?genre=Soul">Soul</a></li>
-					<li><a href="/source/inst?instrument=Male">Male</a></li>
+					<li><a href="/source/inst?detail=Male">Male</a></li>
 					
 					<li><a href="/source/genre?genre=Jazz">Jazz</a></li>
-					<li><a href="/source/inst?instrument=Lead">Lead</a></li>
+					<li><a href="/source/inst?detail=Lead">Lead</a></li>
 					
 					<li><a href="/source/genre?genre=RnB">R&B</a></li>
-					<li><a href="/source/inst?instrument=Pad">Pad</a></li>
+					<li><a href="/source/inst?detail=Pad">Pad</a></li>
 					
 					<li><a href="/source/genre?genre=EDM">EDM</a></li>
-					<li><a href="/source/inst?instrument=Acoustic">Acoustic</a></li>
+					<li><a href="/source/inst?detail=Acoustic">Acoustic</a></li>
 					
 					<li><a href="/source/genre?genre=Disco">Disco</a></li>
-					<li><a href="/source/inst?instrument=Flute">Flute</a></li>
+					<li><a href="/source/inst?detail=Flute">Flute</a></li>
 				</ul>
 			</li>
 
