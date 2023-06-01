@@ -16,7 +16,6 @@ public interface OrderDao {
 	 * 
 	 * @param source - 요청된 음원소스 번호
 	 * @return - 요청된 파일 정보
-	 * 작성자 : 채원
 	 */
 	public SourceFileInfo selectSourceFileBysourceNo(int source);
 
@@ -27,21 +26,16 @@ public interface OrderDao {
 	 * @param userNo
 	 * @param sourceNo
 	 * @return
-	 * 작성자 : 채원
 	 */
 	public int selectSourceChkByUsernoSourceNo(MySource source);
-
   
 	/**
 	 * 사용자의 모든 크레딧 카테고리별 합계를 가져온다
 	 * 
 	 * @param userNo - 크레딧 조회 대상 사용자
 	 * @return - 충전, 지출, 수입, 환전의 크레딧 정보 배열
-	 * 작성자 : 채원
 	 */
 	public int[] selectCreditByUserNo(int userNo);
-  
-	
 	
 	/**
 	 * 나의음원정보 TB에 기입을 위해
@@ -57,7 +51,6 @@ public interface OrderDao {
 	 * 에 추가한다
 	 * 
 	 * @param source - 사용자가 구매한 음원정보
-	 * 작성자 : 채원
 	 */
 	public void insertMySource(MySource source);
 
@@ -98,61 +91,14 @@ public interface OrderDao {
 	 * @return
 	 */
 	public Tag selectTagBySourceNo(int tagNo);
-
-//============================================================================================
-//지선의 코드
 	
 	/**
 	 * 회원자격 확인 중, userNo 을 통해 credit TB 조회 하여 총액 구하기
 	 * 
 	 * @param userNo
 	 * @return 크레딧 총계 구하기
-	 * 작성자 : 지선
 	 */
 	public int selectCreditAcc(Users userNo);
-
-	/**
-	 * 회원자격 확인 중, 선택한 sourceNo 을 통해 sourcePrice 합계 알아내기
-	 * 
-	 * @param sourceNo
-	 * @return 구매원하는 source 총계 
-	 * 작성자 : 지선
-	 */
-	public int selectSourceAmount(Source sourceNo);
-
-
-	/**
-	 * credit TB에 삽입할 정보(회원번호, 금액)를 이용하여 내역 insert 하기
-	 * 트랜잭션 중, credit TB에 삽입할 정보(회원번호, 금액)를 이용하여 내역 insert 하기
-	 * 
-	 * @param credit - userNo, amount
-	 * 작성자 : 지선
-	 */
-	public void expenditureCredit(Credit credit);
-
-	/**
-	 * 트랜잭션 중, Cart TB에서 해당 cartNo 항목을 delete 하기
-	 * 
-	 * @param cartNo - cartNo
-	 * 작성자 : 지선
-	 */
-	public void deletePurchasedCartItem(Cart cartNo);
-
-	/**
-	 * 트랜잭션 중, SourceDown TB 에 해당 source 항목 다운로드 내역을 insert 하기
-	 * 
-	 * @param downSource - userNo, sourceNo
-	 * 작성자 : 지선
-	 */
-	public void addSourceToDownList(SourceDown downSource);
-
-	/**
-	 * 트랜잭션 중, Credit TB에 구매할 음원의 업로더의 수익금 내역 insert 하기
-	 * 
-	 * @param uploaderInc - userNo, category, amount
-	 */
-	public void uploaderIncomeCredit(Credit uploaderInc);
-
 
 
 }

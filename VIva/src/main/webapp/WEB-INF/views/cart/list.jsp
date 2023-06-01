@@ -130,7 +130,8 @@
 <div class="FunctionTitleLine">
    <img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
 </div>
-${list }
+선택 삭제, 선택 구매 구현함.
+전체 선택에 따른 기능 구현과 음원페이지 이동 및 구매와 동시에 다운로드 기능 구현해야함.
 <form>
 
 	<div id="allCheck">	

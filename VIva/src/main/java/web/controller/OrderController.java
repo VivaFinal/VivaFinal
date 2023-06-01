@@ -101,57 +101,7 @@ public class OrderController {
 	
 	}
 	
-	//--------------------------------------------------------------------
-	
-	//장바구니에서 항목 구매시 처리할 메소드
-//	@ResponseBody
-	@RequestMapping("/cart/buy")
-	public void cartBuy(Users userNo, Source sourceNo, Cart cartNo, Writer out) {
-		logger.info("cart buy()");
-		
-		logger.info("sourceNo : {}", sourceNo);
-		logger.info("cartNo : {}", cartNo);
-		
-		//회원번호 임시로 지정(n번)
-		//(세션 기능 완료되면 주석처리하기!!)
-		userNo.setUserNo(44);
-		logger.info("userNo : {}", userNo.getUserNo());
-		
-		//회원의 구매가능 잔고 확인 
-		//구매할 소스의 총계 구하기
-		//비교해서 구매가능한지(true, false 로 반환)
-		boolean purchase = orderService.chkCreditAcc(userNo, sourceNo);
-		logger.info("{}", purchase);
-		
-		if(purchase) {
-			logger.info("선택사항 구매가능!");
-			//본격적인 구매 진행
-			//service 에서 트랜잭션 진행할 생각!
-			boolean success = orderService.purchaseCartItem(userNo, sourceNo, cartNo);
-			//만약 트랜잭션이 잘 됐다면...true 가 나오겠지.. 
-			logger.info("{}", success);
-		
-			
-			//try~catch 구문을 써주긴 해야할지 모르겠다...
-			try {
-				out.write("{\"result\": " + success + "}");
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			
-			
-		} else {
-			logger.info("선택사항 구매 불가능!");
-			//크레딧이 부족해서 그런건지
-			//source가 이미 구매해서 그런건지
-			//source가 더이상 구매 불가능해서 그런건지 등등 
-			//그에 따른 반환값을 정해줘야할 듯 함... 
-			//아직은 모르겠음 ㅠ
-			
-		}
-		
-		
-	}
+
 	
 
 	

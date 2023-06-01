@@ -1,17 +1,15 @@
 package web.dto;
 
-import java.util.Date;
-
 public class Credit {
 	private int dealNo;
 	private int userNo;
-	private Date dealDate;
+	private String dealDate;
 	private int dealCategory;
 	private int amount;
 	
 	public Credit() {	}
 
-	public Credit(int dealNo, int userNo, Date dealDate, int dealCategory, int amount) {
+	public Credit(int dealNo, int userNo, String dealDate, int dealCategory, int amount) {
 		super();
 		this.dealNo = dealNo;
 		this.userNo = userNo;
@@ -42,11 +40,11 @@ public class Credit {
 		this.userNo = userNo;
 	}
 
-	public Date getDealDate() {
+	public String getDealDate() {
 		return dealDate;
 	}
 
-	public void setDealDate(Date dealDate) {
+	public void setDealDate(String dealDate) {
 		this.dealDate = dealDate;
 	}
 

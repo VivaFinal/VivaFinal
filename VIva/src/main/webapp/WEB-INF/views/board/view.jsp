@@ -34,7 +34,7 @@ $(document).ready(function() {
 </tr>
 <tr>
 <%-- 	<td class="table-info">아이디</td><td>${viewBoard.userId }</td> --%>
-	<td class="table-info">닉네임</td><td>${viewBoard.userNick }</td>
+	<td class="table-info">회원번호</td><td>${viewBoard.userNo }</td>
 </tr>
 <tr>
 	<td class="small">조회수</td><td>${viewBoard.boardHit }</td>
@@ -55,6 +55,7 @@ $(document).ready(function() {
 <div class="file">
 	<c:if test="${not empty boardFile }">
 		<a href="./download?fileNo=${boardFile.fileNo }">${boardFile.originname }</a>
+		<img src="/boardUpload/${boardFile.storedname }" alt="왜안돼!">
 	</c:if>
 </div>
 
@@ -71,7 +72,28 @@ $(document).ready(function() {
 
 
 <!-- 댓글 시작 -->
-
+<!-- 댓글 작성 -->
+<div text-align:left;>
+     <c:if test="${sessionScope.userNo != null }">
+         <textarea rows="5" cols="80" id="replytext"
+             placeholder="댓글을 작성하세요"></textarea>
+         <br>
+         <button type="button" id="btnReply">댓글쓰기</button>
+     </c:if>
+</div>
+<div id="comment">
+	<ol class="commentList">
+		<c:forEach items="${commentList}" var="commentList">
+		    <li>
+		      <p>
+		      작성자 : ${commentList.userNo}<br />
+		      작성일 :  <fmt:formatDate value="${commentList.commDate}" pattern="yyyy-MM-dd" />
+              </p>
+                  <p>${commentList.commContent}</p>
+		     </li>
+		 </c:forEach>   
+	</ol>
+</div>
 <!-- 댓글 끝 -->
 
 

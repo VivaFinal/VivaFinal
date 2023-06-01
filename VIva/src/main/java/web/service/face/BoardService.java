@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Board;
+import web.dto.Comments;
 import web.dto.Files;
 import web.dto.Tag;
 import web.util.Paging;
@@ -46,7 +47,7 @@ public interface BoardService {
 	 * @param board - 게시글 정보 DTO
 	 * @param file - 첨부파일 정보 DTO
 	 */
-	public void write(Board board, MultipartFile file);
+	public void write(Board board,  List<MultipartFile> file);
 
 	/**
 	 * 게시글 번호를 이용하여 업로드된 파일 정보를 조회한다
@@ -63,7 +64,7 @@ public interface BoardService {
 	 * @param board - 게시글 정보 객체
 	 * @param file - 파일업로드 객체
 	 */
-	public void update(Board board, MultipartFile file);
+	public void update(Board board,  List<MultipartFile> file);
 
 	/**
 	 * 게시글 + 첨부파일 삭제 처리
@@ -71,6 +72,14 @@ public interface BoardService {
 	 * @param board - 삭제할 게시글의 번호
 	 */
 	public void delete(Board board);
+
+	/**
+	 * 댓글 조회하기 
+	 * 
+	 * @param boardNo - 댓글 조회할 게시글의 번호
+	 * @return
+	 */
+	public List<Comments> viewComment(int boardNo);
 
 
 

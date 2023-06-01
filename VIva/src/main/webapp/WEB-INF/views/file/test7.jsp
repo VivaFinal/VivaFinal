@@ -262,6 +262,7 @@ $(function(){
 <!-- 		<input type="text" id="key" name="key" class="form-control" placeholder="Key를 입력해주세요!"><br> -->
 <!-- 		<span id="key_msg" class="msg"></span> -->
 <!-- 		<br> -->
+
 		
 		  <label>Key</label>
   	 <input name='key' class='some_class_name' placeholder='Key를 선택해주세요!'>
@@ -325,179 +326,63 @@ $(function(){
   </script>
  
   
-  
-  <label>악기</label>
-  	 <input id="instrument" name='instrument' class='some_class_name' placeholder='악기를 선택해주세요!'>
+ <label>악기</label>
+<input id="instrument" name="instrument" class="some_class_name" placeholder="악기를 선택해주세요!" title="">
+
+<script>
+	var inputInstrument = document.querySelector('input[name="instrument"]');
+	var instrumentWhitelist = ["Drum", "Vocal", "Synth", "Brass", "Woodwinds", "Guitar", "Bass", "String", "ABSET", "Piano"];
+	
+	var instrumentTagify = new Tagify(inputInstrument, {
+	  whitelist: instrumentWhitelist,
+	  maxTags: 1,
+	  dropdown: {
+	    maxItems: 20,
+	    classname: "tags-look",
+	    enabled: 0,
+	    closeOnSelect: true
+	  }
+	});
+</script>
+
+<label class="detail" style="width: 500px;">악기세부분류</label>
+<input id="detail" name="detail" class="some_class_name" placeholder="세부악기를 선택해주세요!">
   <script>
-  var input = document.querySelector('input[name="instrument"]');
+  
 
-  var whitelist = ["Drum", "Vocal", "Synth", "Brass", "Woodwinds", "Guitar", "Bass", "String" ,"Piano"];
+    inputInstrument.addEventListener('change', function () {
+    	
+    	console.log("change이벤트가 발생할까?")
+      var inputDetail = document.querySelector('input[name="detail"]');
+      var detailWhitelist = [];
 
-  var tagify = new Tagify(input, {
-        whitelist:whitelist,
+      if (inputInstrument.value === "Drum") {
+        detailWhitelist = ["Kick", "Snare", "Hihat", "Clap", "Tom", "Cymbal", "Acoustic", "808", "Fills", "Percussion", "rimshot"];
+      } else if (inputInstrument.value === "Vocal") {
+        detailWhitelist = ["Female", "Male", "Phrases", "Whispers", "Screams"];
+      } else if (inputInstrument.value === "Synth") {
+        detailWhitelist = ["Bass", "Lead", "Pad", "Arp", "Pluck", "Melody", "Fx", "Chord"];
+      } else if (inputInstrument.value === "Brass") {
+        detailWhitelist = ["Saxophone", "Trumpet", "Trombone", "Pad", "Ensemble"];
+      }
+
+      var detailTagify = new Tagify(inputDetail, {
+        whitelist: detailWhitelist,
         maxTags: 1,
         dropdown: {
-          maxItems: 20,          
-          classname: "tags-look", 
-          enabled: 0,            
-          closeOnSelect: true   
+          maxItems: 20,
+          classname: "tags-look",
+          enabled: 0,
+          closeOnSelect: true
         }
-      })
-  
+      });
+    });
   </script>
-  
-    <label class="detail" style="width: 500px;">악기세부분류</label>
-  	 <input id="detail" name='detail' class='some_class_name' placeholder='세부악기를 선택해주세요!' data-boolean="false">
 
-  	
-  <script type="text/javascript">
 
-  	$(".tagify__input").eq(2).blur(function(){
-//   	$("input[name='instrument']").change(function(){
-  		
-  		console.log("blur 입니다!")
-  		
-  		if($("tag").attr('title') == 'Drum' && $("#detail").attr("data-boolean") == 'false'){
-  			
-  			$("#detail").attr("data-boolean","true")
-  			
-  			  var input = document.querySelector('input[name="detail"]');
-  			  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","rimshot"];
-  			  var tagify = new Tagify(input, {
-  			        whitelist:whitelist,
-  			        maxTags: 1,
-  			        dropdown: {
-  			          maxItems: 20,          
-  			          classname: "tags-look", 
-  			          enabled: 0,            
-  			          closeOnSelect: true   
-  			        }
-  			      })
-  			
-  		} else if($("tag").attr('title')=="Vocal" && $("#detail").attr("data-boolean") == 'false'){
-  			
-  			 $("#detail").attr("data-boolean","true")
-  			
-  			  var input = document.querySelector('input[name="detail"]');
-  			  var whitelist = ["Female","Male","Phrases","Whispers","Screams","Screams"];
-  			  var tagify = new Tagify(input, {
-  			        whitelist:whitelist,
-  			        maxTags: 1,
-  			        dropdown: {
-  			          maxItems: 20,          
-  			          classname: "tags-look", 
-  			          enabled: 0,            
-  			          closeOnSelect: true   
-  			        }
-  			      })
-  			
-  		}  else if($("tag").attr('title')=="Synth" && $("#detail").attr("data-boolean") == 'false'){
-  			
- 			 $("#detail").attr("data-boolean","true")
- 			
- 			  var input = document.querySelector('input[name="detail"]');
- 			  var whitelist = ["Bass","Lead","Pad","Arp","Pluck","Melody","Fx","Chord"];
- 			  var tagify = new Tagify(input, {
- 			        whitelist:whitelist,
- 			        maxTags: 1,
- 			        dropdown: {
- 			          maxItems: 20,          
- 			          classname: "tags-look", 
- 			          enabled: 0,            
- 			          closeOnSelect: true   
- 			        }
- 			      })
- 
-  		} else if($("tag").attr('title')=="Brass" && $("#detail").attr("data-boolean") == 'false'){
-  			
-			 $("#detail").attr("data-boolean","true")
-			
-			  var input = document.querySelector('input[name="detail"]');
-			  var whitelist = ["Saxophone","Trumpet","Trombone","Pad","Ensemble"];
-			  var tagify = new Tagify(input, {
-			        whitelist:whitelist,
-			        maxTags: 1,
-			        dropdown: {
-			          maxItems: 20,          
-			          classname: "tags-look", 
-			          enabled: 0,            
-			          closeOnSelect: true   
-			        }
-			      })
-			  
-  		}else if($("tag").attr('title')=="Woodwinds" && $("#detail").attr("data-boolean") == 'false'){
-  			
-			 $("#detail").attr("data-boolean","true")
-			
-			  var input = document.querySelector('input[name="detail"]');
-			  var whitelist = ["Flute","Harmonica","Clarinet"];
-			  var tagify = new Tagify(input, {
-			        whitelist:whitelist,
-			        maxTags: 1,
-			        dropdown: {
-			          maxItems: 20,          
-			          classname: "tags-look", 
-			          enabled: 0,            
-			          closeOnSelect: true   
-			        }
-			      })
-  		}else if($("tag").attr('title')=="Gutiar" && $("#detail").attr("data-boolean") == 'false'){
-  			
-			 $("#detail").attr("data-boolean","true")
-			
-			  var input = document.querySelector('input[name="detail"]');
-			  var whitelist = ["Electric","Acoustic","Clean","Dist","Lead","Rhythm","Melody","Riff"];
-			  var tagify = new Tagify(input, {
-			        whitelist:whitelist,
-			        maxTags: 1,
-			        dropdown: {
-			          maxItems: 20,          
-			          classname: "tags-look", 
-			          enabled: 0,            
-			          closeOnSelect: true   
-			        }
-			      })
-			  
- 		}else if($("tag").attr('title')=="Bass" && $("#detail").attr("data-boolean") == 'false'){
-  			
-			 $("#detail").attr("data-boolean","true")
-			
-			  var input = document.querySelector('input[name="detail"]');
-			  var whitelist = ["Synth","Analog","Acoustic","Electric"];
-			  var tagify = new Tagify(input, {
-			        whitelist:whitelist,
-			        maxTags: 1,
-			        dropdown: {
-			          maxItems: 20,          
-			          classname: "tags-look", 
-			          enabled: 0,            
-			          closeOnSelect: true   
-			        }
-			      })
-			  
-		}else if($("tag").attr('title')=="String" && $("#detail").attr("data-boolean") == 'false'){
-  			
-			 $("#detail").attr("data-boolean","true")
-			
-			  var input = document.querySelector('input[name="detail"]');
-			  var whitelist = ["Violin","Cello","Viola","Contrabass","Orchestral","Synth","StringPad","Staccato","Pizzicato"];
-			  var tagify = new Tagify(input, {
-			        whitelist:whitelist,
-			        maxTags: 1,
-			        dropdown: {
-			          maxItems: 20,          
-			          classname: "tags-look", 
-			          enabled: 0,            
-			          closeOnSelect: true   
-			        }
-			      })
-		}
 
-  		
-  	})
 
-  	 
-  	 </script>
+
 
   
 
