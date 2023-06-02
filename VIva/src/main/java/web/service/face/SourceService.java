@@ -124,6 +124,18 @@ public interface SourceService {
 	 */
 	public List<Map<String, Object>> getSourceByInstDetail(Tag instrument);
 
+	/**
+	 * Souud 화면에서 최신 팩 정보를 가져온다
+	 * @return - 업로드 순서로 최상위 10개의 정보를 가져온다
+	 */
+	public List<Map<String, Object>> getPack();
+
+	/**
+	 * Sound 화면에서 좋아요가 많은 순서대로 팩 정보를 가져온다 
+	 * @return - 좋아요가 많은 순서로 최대 10개를 가져온다
+	 */
+	public List<Map<String, Object>> getLikePack();
+
 
 
 	

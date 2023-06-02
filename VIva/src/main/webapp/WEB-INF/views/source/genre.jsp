@@ -636,24 +636,37 @@ div[data-itemtype='line']{
 				  	, dataType :"json"
 				  	, success : function(res) {
 				  		console.log("장바구니 ajax 성공")
-				  		$("#footer").html('<div id="pop">장바구니에 담겼습니다!</div>')
+				  		if(res.result == true) {
+					  		$("#cartWrap").html('<div id="pop">장바구니에 담겼습니다!</div>')
+			  				$("#pop").css({
+					  			"background":"#BE3455",
+					  			"width":"300px",
+					  			"height":"60px",
+					  			"fontSize":"1.2em",
+					  			"top":"-300px",
+					  			"left":"800px",
+					  			"borderRadius":"5px",
+					  			"border":"2px solid #ccc",
+					  			"paddingTop":"10px"
+					  		}) 
+				  		} 
+					  $("#pop").fadeOut(3000)
+				  	  }
+				  , error : function() {
+				  		$("#cartWrap").html('<div id="pop">이미 장바구니에 담겨있습니다!</div>')
 		  				$("#pop").css({
 				  			"background":"#BE3455",
-				  			"width":"250px",
+				  			"width":"300px",
 				  			"height":"60px",
 				  			"fontSize":"1.2em",
-				  			"top":"30px",
-				  			"left":"950px",
+				  			"top":"-300px",
+				  			"left":"800px",
 				  			"borderRadius":"5px",
 				  			"border":"2px solid #ccc",
 				  			"paddingTop":"10px"
-				  		})
-				  		$("#pop").fadeOut(3000)
+			  			})
+			  			$("#pop").fadeOut(3000)
 				  	  }
-				  	, error : function(res) {
-				  		console.log("장바구니 ajax 실패")
-				  		$("#pop").fadeOut(2500)
-				  	}
 				  }) // ajax End
 			  }) // click end
 			  

@@ -6,6 +6,20 @@
 <c:import url="../layout/header.jsp"/>
 <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/wavesurfer.js"></script>
 <script type="text/javascript">
+$(function() {
+	$(".tagcover").hover(function() {
+		$(this).css({
+			'background':'#Be3455',
+			'color':'white'
+		})
+	})
+	$(".tagcover").mouseout(function() {
+		$(this).css({
+			'background':'white',
+			'color':'black'
+		})
+	})
+})
 </script>
 <style type="text/css">
 #btn{
@@ -599,23 +613,42 @@ div[data-itemtype='line']{
 				  	, dataType :"json"
 				  	, success : function(res) {
 				  		console.log("장바구니 ajax 성공")
-				  		$("#footer").html('<div id="pop">장바구니에 담겼습니다!</div>')
-		  				$("#pop").css({
-				  			"background":"#BE3455",
-				  			"width":"250px",
-				  			"height":"60px",
-				  			"fontSize":"1.2em",
-				  			"top":"30px",
-				  			"left":"950px",
-				  			"borderRadius":"5px",
-				  			"border":"2px solid #ccc",
-				  			"paddingTop":"10px"
-				  		})
+				  		if(res.result == true) {
+				  			
+					  		$("#cartWrap").html('<div id="pop">장바구니에 담겼습니다!</div>')
+			  				$("#pop").css({
+					  			"background":"#BE3455",
+					  			"width":"300px",
+					  			"height":"60px",
+					  			"fontSize":"1.2em",
+					  			"top":"-300px",
+					  			"left":"8000px",
+					  			"borderRadius":"5px",
+					  			"border":"2px solid #ccc",
+					  			"paddingTop":"10px"
+					  		})
+					  		
+				  		}
 				  		$("#pop").fadeOut(3000)
 				  	  }
 				  	, error : function(res) {
 				  		console.log("장바구니 ajax 실패")
-				  		$("#pop").fadeOut(2500)
+				  		
+					  		$("#cartWrap").html('<div id="pop">이미 장바구니에 담겨있습니다!</div>')
+			  				$("#pop").css({
+					  			"background":"#BE3455",
+					  			"width":"300px",
+					  			"height":"60px",
+					  			"fontSize":"1.2em",
+					  			"top":"-300px",
+					  			"left":"800px",
+					  			"borderRadius":"5px",
+					  			"border":"2px solid #ccc",
+					  			"paddingTop":"10px"
+					  		})
+				  		
+				  		
+				  		$("#pop").fadeOut(3000)
 				  	}
 				  }) // ajax End
 			  }) // click end

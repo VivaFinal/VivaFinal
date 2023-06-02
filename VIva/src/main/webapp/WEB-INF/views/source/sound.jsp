@@ -3,6 +3,8 @@
 <!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<div id="con">
+
 <c:import url="../layout/header.jsp"/>
 <script src="https://unpkg.com/wavesurfer.js@6.6.3/dist/wavesurfer.js"></script>
 <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
@@ -32,13 +34,14 @@
 }
 .a{
  	text-decoration: none; 
+ 	color: black;
 }
 .midtitle{
 	margin-top: 20px;
 	margin-bottom: 20px;
 }
 .content{
-	margin: 0 auto;
+	margin: 0px;
 	width: 1300px;
 	height: 250px;
 }
@@ -47,7 +50,6 @@
 	height: 150px;
 }
 .slickbtn{
-	background: #ccc;
 	position: absolute;
 }
 .slideContent{
@@ -55,18 +57,44 @@
 	width: 1300px;
 	margin: auto;
 }
+#slideContent2{
+	position: relative;
+	width: 1300px;
+	margin: auto;
+}
 #next{
 	top: 64px;
-	right: 40px
+	right: 40px;
+	z-index: 5;
 }
 #prev{
+	top: 64px;
+	left: -65px;
+}
+#next2{
+	top: 64px;
+	right: 40px;
+	z-index: 5;
+}
+#prev2{
 	top: 64px;
 	left: -65px;
 }
 .packName{
 	width: 150px;
 	text-align: center;
-	margin-top:5px;
+	padding-top: 10px;
+}
+#wave{
+	display: none;
+}
+.show{ 
+ 	width: 150px; 
+ 	height: 210px; 
+ } 
+.a{
+	width: 150px;
+	display: block;
 }
 </style>
 <script type="text/javascript">
@@ -75,12 +103,46 @@ $(function() {
 	$(".content").slick({
 		infinite: true,
 		slidesToShow: 5,
-		slidesToScroll: 5,
+		slidesToScroll: 1,
 		arrows: true,
 		prevArrow: $("#prev"),
-		nextArrow: $("#next")
+		nextArrow: $("#next"),
+		autoplay: true,
+		autoplaySpeed: 3000
 	})
 	
+
+	
+	// 마우스 이벤트
+	$(".img").hover(function() {
+		var idx = $(".img").index(this)
+		console.log("11")
+		$(".img").eq(idx).next().css("backgroundColor","lightgray")
+	})
+
+	$(".img").mouseleave(function() {
+		$(".packName").css("backgroundColor","white")
+	})
+	
+	$(".packName").hover(function() {
+		var idx = $(".packName").index(this)
+		$(".packName").eq(idx).css("backgroundColor","lightgray")
+	})
+	
+	$(".packName").mouseleave(function() {
+		$(".packName").css("backgroundColor","white")
+	})
+	
+	$(".likeContent").slick({
+		infinite: true,
+		slidesToShow: 5,
+		slidesToScroll: 1,
+		arrows: true,
+		prevArrow: $("#prev2"),
+		nextArrow: $("#next2"),
+		autoplay: true,
+		autoplaySpeed: 3000
+	})
 	
 })	
 
@@ -98,41 +160,59 @@ $(function() {
 	</div>
 	<div id="WrapMiddle">
 		<div class="midtitle">
-			<span class="cate">Recommend For you</span>
+			<span class="cate">Recent For you</span>
 		</div>
 		
 		<div class="slideContent">
 			<div id="prev" class="slickbtn"><img src="../resources/icon/chevron-left.svg"></div>
 			<div class="content">
-				<div>
-					<img class="img" src="../upload/SnopdogHippack123">
-					<div class="packName">SnopdogHippack</div>
-					<div id="wave">11</div>
-				</div>
-				<div>
-					<img class="img" src="../upload/default-image">
-				</div>
-				<div>
-					<img class="img" src="../upload/SnopdogHippack123">
-				</div>
-				<div>
-					<img class="img" src="../upload/default-image">
-				</div>
-				<div>
-					<img class="img" src="../upload/SnopdogHippack123">
-				</div>
-				
-				<div><img class="img" src="../upload/default-image"></div>
-				<div><img class="img" src="../upload/SnopdogHippack123"></div>
-				<div><img class="img" src="../upload/default-image"></div>
-				<div><img class="img" src="../upload/SnopdogHippack123"></div>
-				<div><img class="img" src="../upload/default-image"></div>
+				<c:forEach items="${list}" var="list">
+						<div class="show">
+						<a class="a" href="./pack?packno=${list.PACK_NO }">
+						<c:if test="${empty list.PACK_IMG_STOREDNAME }">
+							<img class="img" src="../upload/default-image">
+						</c:if>
+						<c:if test="${not empty list.PACK_IMG_STOREDNAME }">
+							<img class="img" src="../upload/${list.PACK_IMG_STOREDNAME }">
+						</c:if>
+							<div class="packName">${list.PACK_NAME }</div>
+						</a>
+							<div id="wave${list.PACK_NO }"></div>
+						</div>
+				</c:forEach>
 			</div>
 			<div id="next" class="slickbtn"><img src="../resources/icon/chevron-right.svg"></div>
 		</div>
 		
-
+		<div class="midtitle">
+			<span class="cate">Recommend For you</span>
+		</div>
+		
+		<div id="slideContent2">
+			<div id="prev2" class="slickbtn"><img src="../resources/icon/chevron-left.svg"></div>
+			<div class="likeContent">
+				<c:forEach items="${likelist }" var="likelist">
+					<div class="show">
+					<a class="a" href="./pack?packno=${likelist.PACK_NO }">
+						<c:if test="${empty likelist.PACK_IMG_STOREDNAME }">
+							<img class="img" src="../upload/default-image">
+						</c:if>
+						<c:if test="${not empty likelist.PACK_IMG_STOREDNAME }">
+							<img class="img" src="../upload/${likelist.PACK_IMG_STOREDNAME }">
+						</c:if>
+							<div class="packName">${likelist.PACK_NAME }</div>
+						</a>
+							<div id="wave${likelist.PACK_NO }"></div>
+					</div>
+				</c:forEach>
+			</div>	
+			<div id="next2" class="slickbtn"><img src="../resources/icon/chevron-right.svg"></div>
+		</div>
 	</div>
+		
+
 </div>
 
+
 <c:import url="../layout/footer.jsp"/>
+</div>

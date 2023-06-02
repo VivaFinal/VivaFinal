@@ -38,7 +38,6 @@ public class UsersController {
 	@Autowired UsersService usersService;
 	@Autowired KakaoService kakaoService; 
 	@Autowired MailSendService mailService;
-	@Autowired UserQuestion userQuestion;
 	
 	@GetMapping("/login")
 	public void login() {
@@ -355,35 +354,20 @@ public class UsersController {
 		
 		model.addAttribute("userInfo",userInfo);
 	}
+	
 	//마이페이지
 	@PostMapping("/mypage")
 	public void userInfoProc(Users users, HttpSession session , Model model) {
 		logger.info("/users/mypage[POST]");
 		
 	}
+	
 	//마이페이지
 	@GetMapping("/question")
 	public void userQuestion(Users users, HttpSession session , Model model) {
 		logger.info("/users/question[GET]");
 	}
 	
-	@PostMapping("/question")
-	public void questionProc( 
-			
-			Users users, MultipartFile file,Model model,
-			@RequestParam(value="Q_title", required=false) String Q_title,
-			@RequestParam(value="Q_content", required=false) String Q_content	
-			
-			){		
-		logger.info("/users/question [POST]");	
-		
-//		userQuestion.setqTitle(Q_title);// 여기에 tilte담아야함
-//		userQuestion.setqContent(Q_content);
-//	
-//		usersService.question( users, file );
-//		
-//		return "redirect:./mypage";	//게시글 목록
-	}
 }
 
 

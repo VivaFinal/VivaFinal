@@ -116,6 +116,18 @@ public interface SourceDao {
 	 */
 	public List<Map<String, Object>> selectSourceByInstDetail(Tag instrument);
 
+	/**
+	 * Sound 초기 화면의 최신 업로드 순의 Pack 정보 10개를 가져온다
+	 * @return - 최신 업로드 10개 Pack 자료
+	 */
+	public List<Map<String, Object>> selectPackForSound();
+
+	/**
+	 * Sound 초기 화면의 최다 좋아요 순의 Pack 정보를 10개 가져온다
+	 * @return - 최다 좋아요 10개 Pack 자료
+	 */
+	public List<Map<String, Object>> selectLikePackForSound();
+
 
 
 

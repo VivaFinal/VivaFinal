@@ -30,12 +30,14 @@
 		SELECT s.source_no, s.source_name, s.bpm, s.key, s.source_time,
 			t.tag_no, t.genre, 
 		    p.pack_no, pi.pack_img_storedname, pi.pack_img_originname,
-		    sf.file_originname, sf.file_storedname
+		    sf.file_originname, sf.file_storedname,
+		    sif.source_img_originname, sif.source_img_storedname
 		FROM source S
 		INNER JOIN tag t on s.tag_no = t.tag_no
 		INNER JOIN pack p on s.pack_no = p.pack_no 
 		INNER JOIN packimginfo pi on p.pack_no = pi.pack_no
 		INNER JOIN sourcefileinfo sf on s.source_no = sf.source_no
+		INNER JOIN sourceimginfo sif on s.source_no = sif.source_no
 		WHERE t.genre = #{genre}
 		
 		<if test="instrument != null and !instrument.equals('')">
@@ -158,10 +160,28 @@
 	  	ORDER BY S.SOURCE_NO
   	</select>
   	
+	<select id="selectPackForSound" resultType="hashmap">
+		SELECT p.pack_no, p.pack_name, pmg.pack_img_storedname
+		FROM pack p 
+		INNER JOIN packimginfo pmg on pmg.pack_no = p.pack_no
+		where rownum<![CDATA[<=]]>10
+		order by p.pack_no desc
+	</select>  	
   	
   	
-  	
-  	
+  	<select id="selectLikePackForSound" resultType="hashmap">
+		SELECT distinct p.pack_name, p.pack_no,
+		    (SELECT count(*) FROM pack_like where pack_no = p.pack_no ) rec,
+		    p.tag_no,
+		    (SELECT genre FROM tag where p.tag_no = tag_no)genre,
+		    (SELECT instrument FROM tag where p.tag_no = tag_no)instrument,
+		    pmg.pack_img_storedname
+		FROM pack p
+		INNER JOIN pack_like pl on p.pack_no = pl.pack_no
+		INNER join packimginfo pmg on p.pack_no = pmg.pack_no
+		INNER JOIN source s on p.pack_no = s.pack_no
+		order by rec desc
+  	</select>
   	
   	
   	

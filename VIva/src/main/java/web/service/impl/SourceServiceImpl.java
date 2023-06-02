@@ -298,6 +298,16 @@ public class SourceServiceImpl implements SourceService{
 		return sourceDao.selectSourceByInstDetail(instrument);
 	}
 
+	@Override
+	public List<Map<String, Object>> getPack() {
+		return sourceDao.selectPackForSound();
+	}
+
+	@Override
+	public List<Map<String, Object>> getLikePack() {
+		return sourceDao.selectLikePackForSound();
+	}
+
 	
 	
 	

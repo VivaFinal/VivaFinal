@@ -11,7 +11,7 @@
 }
 #pop{
 	position: absolute;
-	top: 50px;
+	top: -120px;
 	left: 950px;
 	display : flex;
 	justify-content :center;
@@ -61,8 +61,12 @@
 	top: 45px;
 	left: 810px;
 }
+#cartWrap{
+	position: relative;
+}
 </style>
 <div id="footer">
+	<div id="cartWrap"></div>
 	<div id="playWrap">
 		<div id="playbar">
 			<img id="playimg" src="">

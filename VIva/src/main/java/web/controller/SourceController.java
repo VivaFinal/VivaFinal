@@ -28,11 +28,19 @@ private final Logger logger = LoggerFactory.getLogger(getClass());
 	@Autowired SourceService sourceService;
 	
 	@GetMapping("/source/sound")
-	public void sound() {
+	public void sound(Model model) {
 		logger.info("Sound 화면 확인");
 		
+		// 최신 업로드 List 조회
+		List<Map<String, Object>> list = sourceService.getPack();
 		
+		// 최다 좋아요별 List 조회
+		List<Map<String, Object>> likelist = sourceService.getLikePack();
 		
+		logger.info("++ likelist 확인 : {}", likelist);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("likelist", likelist);
 	}
 	
 	
