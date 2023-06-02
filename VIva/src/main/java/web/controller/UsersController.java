@@ -38,7 +38,7 @@ public class UsersController {
 	@Autowired UsersService usersService;
 	@Autowired KakaoService kakaoService; 
 	@Autowired MailSendService mailService;
-	@Autowired UserQuestion userQuestion;
+//	@Autowired UserQuestion userQuestion;
 	
 	@GetMapping("/login")
 	public void login() {
@@ -123,6 +123,8 @@ public class UsersController {
 			
 			//***************아이디 저장하기********************
 			session.setAttribute("id", users.getUserId());
+			session.setAttribute("nick", usersService.getNick(users));
+			session.setAttribute("userNo", getUserNo.getUserNo());
 			//rememberId는 체크박스 name이다
 			//아이디 저장 체크박스가 체크되어있으면 쿠키저장
 			if(rememberId(rememberId)) {
@@ -135,8 +137,6 @@ public class UsersController {
 				response.addCookie(cookie);
 			}
 			
-			session.setAttribute("nick", usersService.getNick(users));
-			session.setAttribute("userNo", getUserNo.getUserNo());
 			
 			return "redirect:./main";
 			
@@ -178,11 +178,35 @@ public class UsersController {
 	//회원가입시 이메일 인증
 	@GetMapping("/mailCheck")
 	@ResponseBody
-	public String mailCheck(String email) {
+	public boolean mailCheck(String email, HttpSession session) {
 		System.out.println("이메일 인증 요청이 들어옴!");
 		System.out.println("이메일 인증 이메일 : " + email);
+		session.setAttribute("code", mailService.joinEmail(email));
+		//인증 코드 유효 시간 -> 세션 시간을 변경했기에 로그인시 세션이 30분이 유지되는지 
+		//확인 필요, 만약 30분 유지 못하고 3분으로 고정된다면 로그인시에 세션시간을 30분으로 변경하는
+		//코드가 필요하다고 생각됨
+		session.setMaxInactiveInterval(3*60);
+		return true;
+	}
+	
+	//회원가입시 이메일 인증
+	@PostMapping("/mailCheck")
+	@ResponseBody
+	public boolean mailUserCheck(int inputCode, HttpSession session) {
+		System.out.println("이메일 인증 요청이 들어옴!");
+
 		
-		return mailService.joinEmail(email);
+		//인증 코드 유효 시간 -> 세션 시간을 변경했기에 로그인시 세션이 30분이 유지되는지 
+		//확인 필요, 만약 30분 유지 못하고 3분으로 고정된다면 로그인시에 세션시간을 30분으로 변경하는
+		//코드가 필요하다고 생각됨
+		
+		logger.info("userCode: {}, session Code: {}", inputCode, (Integer)session.getAttribute("code"));
+		
+		if(inputCode == (Integer)session.getAttribute("code")) {
+			return true;
+		}
+	
+		return false;
 	}
 	
 	@PostMapping("/join")
@@ -243,7 +267,7 @@ public class UsersController {
 		
 		logger.info("userNickChk입니다");
 		
-		int result = usersService.idCheck(users);
+		int result = usersService.nickCheck(users);
 		
 		logger.info("결과값 {} " , result);
 		
@@ -347,6 +371,7 @@ public class UsersController {
 	public void userInfo(Users users, HttpSession session , Model model) {
 		logger.info("/users/mypage[GET]");
 		
+		//로그인했을 때 유저 번호 세션에 저장한거 userNo에 저장
 		int userNo = (int)session.getAttribute("userNo");
 		logger.info("마이페이지 : {}" , users.getUserNo());
 		
@@ -359,31 +384,56 @@ public class UsersController {
 	@PostMapping("/mypage")
 	public void userInfoProc(Users users, HttpSession session , Model model) {
 		logger.info("/users/mypage[POST]");
+	}
+
+	//회원정보수정 페이지
+	@GetMapping("/update")
+	public void userupdate(Users users, HttpSession session , Model model) {
+		logger.info("/users/update[GET]");
+		
+		//로그인했을 때 유저 번호 세션에 저장한거 userNo에 저장
+		int userNo = (int)session.getAttribute("userNo");
+		logger.info("마이페이지 : {}" , users.getUserNo());
+		
+		Users userInfo = usersService.selectAllInfo(userNo);
+		logger.info("userInfo:{}", userInfo);
+		
+		model.addAttribute("userInfo",userInfo);
+	}
+	
+	//회원정보수정 페이지
+	@PostMapping("/update")
+	public void userupdateProc(Users users, HttpSession session , Model model) {
+		logger.info("/users/update[POST]");
+		
+		
 		
 	}
-	//마이페이지
+	
+	//문의하기 페이지
 	@GetMapping("/question")
 	public void userQuestion(Users users, HttpSession session , Model model) {
 		logger.info("/users/question[GET]");
 	}
 	
-	@PostMapping("/question")
-	public void questionProc( 
-			
-			Users users, MultipartFile file,Model model,
-			@RequestParam(value="Q_title", required=false) String Q_title,
-			@RequestParam(value="Q_content", required=false) String Q_content	
-			
-			){		
-		logger.info("/users/question [POST]");	
-		
-//		userQuestion.setqTitle(Q_title);// 여기에 tilte담아야함
-//		userQuestion.setqContent(Q_content);
-//	
-//		usersService.question( users, file );
+	//문의하기 페이지
+//	@PostMapping("/question")
+//	public void questionProc( 
+//			
+//			Users users, MultipartFile file,Model model,
+//			@RequestParam(value="Q_title", required=false) String Q_title,
+//			@RequestParam(value="Q_content", required=false) String Q_content	
+//			
+//			){		
+//		logger.info("/users/question [POST]");	
 //		
-//		return "redirect:./mypage";	//게시글 목록
-	}
+////		userQuestion.setqTitle(Q_title);// 여기에 tilte담아야함
+////		userQuestion.setqContent(Q_content);
+////	
+////		usersService.question( users, file );
+////		
+////		return "redirect:./mypage";	//게시글 목록
+//	}
 }
 
 
