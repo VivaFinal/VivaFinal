@@ -4,6 +4,51 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <c:import url="../layout/header.jsp"/>
+
+<script type="text/javascript">
+
+$(function(){
+	//닉네임 중복 검사
+	$(".nick_input").on("click", function(){
+	// 		console.log("keyup 테스트");
+	
+		var userNick = $("#userNick").val();
+		var data = {userNick : userNick}
+		
+		if(userNick == ''){
+			$('#usernick_msg').html("닉네임을 입력해주세요")
+			return
+		}
+		
+		//닉네임 입력란 클릭시 밑에 메시지 없애기
+		$("#userNick").focus(function(){
+			$("#usernick_msg").html("")	
+		})
+		
+		$.ajax({
+			type:"get",
+			url: " /users/userNickChk",
+			data : data,
+			success: function(result){
+				//
+				if(result != "fail"){
+					//중복아이디가 없어서 사용가능한 닉네임입니다
+					$(".nick_input1").html("display","inline-block");
+					//span input2는 안보이게
+					$(".nick_input2").css("display","none");
+				}else{
+					//중복닉네임이므로 '닉네임 이미 존재합니다' 띄우기
+					$(".nick_input1").css("display","none");
+					$(".nick_input2").css("display","inline-block");
+				}
+				
+			}
+		})
+	})
+})
+	
+</script>
+
 <style type="text/css">
 #grid{
 	display: grid;
@@ -70,11 +115,17 @@ a {
 	border-bottom: 1px solid #ccc;
 }
 
-#lastbtn{
-	display:flex;
-/* 	height :100vh; */
-	justify-content: center;
-	align-items: center;
+/* .select{ */
+/*  	width: 420px; */
+/*  	margin: 15px; */
+/*  	position: relative; */
+/* } */
+
+/* 닉네임중복확인 버튼 */
+.nick_input{
+	position: absolute;
+	top: 629px;
+	right:179px;
 }
 </style>
 
@@ -96,13 +147,19 @@ a {
 					<div class="contentSmalls">프로필</div>
 				<div id="colgrid3">
 					<div class="contentSmall">프로필 사진</div>
-					<div class="contentMedium">${userInfo.userProfile}</div>
+					<div class="contentMedium"><input type="file" id="userProfile" name="userProfile"></div>
 					<div class="contentSmall">아이디</div>
 					<div class="contentMedium">${userInfo.userId}</div>
+					<div class="contentSmall">비밀번호</div>
+					<div class="contentMedium"><input type="text" id="userPw" placeholder="비밀번호"></div>
 					<div class="contentSmall">이름</div>
 					<div class="contentMedium">${userInfo.userName}</div>
 					<div class="contentSmall">닉네임</div>
-					<div class="contentMedium">${userInfo.userNick}</div>
+					<div class="contentMedium"><input type="text" id="userNick" placeholder="닉네임">
+					<span id="usernick_msg" class="msg"></span>
+					<button type="button" value="닉네임중복확인" class="nick_input">닉네임중복확인</button>
+					<span class="nick_input1" >사용 가능한 닉네임입니다.</span>
+					<span class="nick_input2">닉네임이 이미 존재합니다.</span></div>
 					<div class="contentSmall">생일</div>
 					<div class="contentMedium">${userInfo.userBirth}</div>
 					<div class="contentSmall">이메일</div>
@@ -115,8 +172,7 @@ a {
 			<div class="contentSide"></div>	
 		</div>
 		<div>
-			<a href="./update"><button type="button" id="lastbtn">회원수정</button></a>
-			<a href="./delete"><button type="button" id="lastbtn">탈퇴하기</button></a>	
+			<a href="./mypage"><button type="button">뒤로가기</button></a>
 		</div>
 	</div>
 </div>

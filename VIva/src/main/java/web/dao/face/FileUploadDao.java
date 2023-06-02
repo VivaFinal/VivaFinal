@@ -1,6 +1,7 @@
 package web.dao.face;
 
 import java.util.List;
+import java.util.Map;
 
 import web.dto.Pack;
 import web.dto.PackImgInfo;
@@ -12,11 +13,17 @@ import web.dto.Tag;
 public interface FileUploadDao {
 
 	/**
-	 * Source 테이블 전체 조회 
+	 * Source list 조회 
 	 * @return
 	 */
-	public List<Source> selectAllSourceList();
+	public List<Map<String, Object>> selectAllSourceList();
 
+	/**
+	 * pack list 조회
+	 * @return
+	 */
+	public List<Map<String, Object>> selectAllPackList();
+	
 	/**
 	 * Tag 테이블 정보 삽입 
 	 * tag(tag_no,instrument,genre,scape,detail,fx) insert
@@ -67,6 +74,7 @@ public interface FileUploadDao {
 	 * @param source -(source_no,source_name,bpm,key,source_price,tag_no,pack_no,user_no,source_time)
 	 */
 	public void PackSourceInsert(Source source);
+
 
 
 	

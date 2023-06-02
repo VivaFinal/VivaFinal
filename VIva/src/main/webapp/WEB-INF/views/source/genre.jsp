@@ -630,7 +630,7 @@ div[data-itemtype='line']{
 					type :"get"
 					, url :"/cart/add"
 					, data : {
-						"userNo" : 1,
+						"userNo" : 44,
 						"sourceNo" : csourceNo
 					}
 				  	, dataType :"json"

@@ -7,6 +7,6 @@ public interface MailSendService {
 	 *
 	 * @param email
 	 */
-	public String joinEmail(String email);
+	public int joinEmail(String email);
 
 }

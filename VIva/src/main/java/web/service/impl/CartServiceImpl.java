@@ -35,7 +35,7 @@ public class CartServiceImpl implements CartService {
 	
 //======================================================================================================
 	@Override
-	public boolean deleteCartItem(int cartNo) {
+	public boolean deleteCartItem(Cart cartNo) {
 		logger.info("deleteCartItem()");
 		
 		
@@ -75,7 +75,8 @@ public class CartServiceImpl implements CartService {
 		logger.info("chkCreditAcc()");
 		
 		//회원 크레딧 잔액 구하기 (null 일 경우 0 으로 반환)
-		int res = cartDao.selectCreditAcc(userNo);
+		int res = 0; 
+		res = cartDao.selectCreditAcc(userNo);
 		logger.info("credit rest : {}", res);
 		
 		//비교대상 : 구매할 음원의 총계 select 하기 (현재는 한개항목에 대한 경우만 구해놨음..)
@@ -178,4 +179,5 @@ public class CartServiceImpl implements CartService {
 		
 		return true;
   }
+
 }

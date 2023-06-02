@@ -4,6 +4,36 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:import url="/WEB-INF/views/layout/header.jsp" />
+<script type="text/javascript">
+
+// 전체선택 
+function checkSelectAll(checkbox)  {
+  const selectall 
+    = document.querySelector('input[name="checkall"]');
+  
+  if(checkbox.checked === false)  {
+    selectall.checked = false;
+  }
+}
+
+function selectAll(selectAll)  {
+  const checkboxes 
+     = document.getElementsByName('check');
+  
+  checkboxes.forEach((checkbox) => {
+    checkbox.checked = selectAll.checked
+  })
+}
+
+//삭제하는건데 DB를 거쳐야하기때문에 이건 아닌거같긴함 
+// document.addEventListener("DOMContentLoaded", function() {
+//     var del = document.querySelector("#btnDelete");
+//     del.onclick = function() {
+//         // 삭제 작업 수행
+//         del.parentElement.parentElement.remove();
+//     }
+// });
+</script>
 
 <style>
 table {
@@ -30,6 +60,12 @@ th, td {
 <table>
 <thead>
 <tr>
+	<c:if test="${not empty adminlogin and adminlogin }">
+	<th><input type='checkbox'
+       name='checkall' 
+       value='selectall'
+       onclick='selectAll(this)'/> Check All</th>
+	</c:if>
 	<th>게시글 번호</th>
 	<th>카테고리
 		<select name="category">
@@ -49,6 +85,13 @@ th, td {
 <tbody>
 <c:forEach var="boardList" items="${boardList}">
 <tr>
+	<c:if test="${not empty adminlogin and adminlogin }">
+	
+	<td><input type='checkbox'
+       name='check' 
+       value="${boardList.boardNo }"
+       onclick='checkSelectAll(this)'/></td>
+	</c:if>
 	<td>${boardList.boardNo }</td>
 	<td>${boardList.categoryType }</td>
 	<td><a href="./view?boardNo=${boardList.boardNo }">${boardList.boardTitle }</a></td>
@@ -62,6 +105,11 @@ th, td {
 </table>
 
 <a href="./write"><button>게시글 작성하기</button></a>
+	<c:if test="${not empty adminlogin and adminlogin }">
+	<form action="./list" method="post">
+		<button id="btnDelete" name = "btnDelete" class="btn btn-danger">선택삭제</button>
+		</form>
+	</c:if>
 <span class="float-end mb-3">total : ${paging.totalCount }</span>
 
 <c:import url="/WEB-INF/views/layout/paging.jsp" />

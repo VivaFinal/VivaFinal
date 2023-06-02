@@ -64,6 +64,7 @@ $(function() {
 <script>
 <!-- // /* API키 ) 테스트 클라이언트 키 (외부에 노출되면 안된다고함...) */ -->
 var clientKey = 'test_ck_oeqRGgYO1r5XDApxvq1VQnN2Eyaz' // 상점을 특정하는 키
+var tossPayments = TossPayments(clientKey)
 console.log(clientKey); 
  	console.log(tossPayments); 
 	
@@ -71,9 +72,9 @@ console.log(clientKey);
 $(document).on('click', '#payment-button', function() { 
 	console.log("토스 클릭!!!!!") 
   
- 	var $button = document.getElementById('payment-button') // 결제하기 버튼 
+//  	var $button = document.getElementById('payment-button') // 결제하기 버튼 
 
- 	button.addEventListener('click', function () { 
+//  	button.addEventListener('click', function () { 
  		tossPayments.requestPayment('카드', { 
  			amount: 15000, 
  			orderId: 'L84sqOnguyAQ4rZYlAfl4', 
@@ -82,7 +83,7 @@ $(document).on('click', '#payment-button', function() {
 			successUrl: 'http://localhost:8888/credit/success', 
  			failUrl: 'http://localhost:8888/credit/fail'
  		})
- 	}) 
+//  	}) 
 }); 
 </script> 
 

@@ -28,7 +28,7 @@ public class MailSendServiceImpl implements MailSendService {
 	}
 	
 	@Override
-	public String joinEmail(String email) {
+	public int joinEmail(String email) {
 		
 		makeRandomNumber();
 		String setFrom = "knight1837@gmail.com"; // email-config에 설정한 자신의 이메일 주소를 입력 
@@ -41,7 +41,7 @@ public class MailSendServiceImpl implements MailSendService {
 			    "<br>" + 
 			    "해당 인증번호를 인증번호 확인란에 기입하여 주세요."; //이메일 내용 삽입
 		mailSend(setFrom, toMail, title, content);
-		return Integer.toString(authNumber);
+		return authNumber;
 	}
 
 	//이메일 전송 메소드

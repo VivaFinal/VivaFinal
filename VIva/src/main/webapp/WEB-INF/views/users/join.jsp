@@ -84,7 +84,7 @@ $(function(){
 		
 		return true;
 	})
-	
+	 
 	//아이디 입력란 클릭시 밑에 메시지 없애기
 	$("#userId").focus(function(){
 		$("#userid_msg").html("")	
@@ -263,36 +263,55 @@ $(function(){
 			url : '/users/mailCheck?email='+email, // GET방식이라 Url 뒤에 email을 뭍힐수있다.
 			success : function (data) {
 				console.log("data : " +  data);
+				if(data){
 				checkInput.attr('disabled',false);
-				code =data;
 				alert('인증번호가 전송되었습니다.')
-			}			
+				}
+			}
+			,error : function() {
+				console.log("실패!")
+			}
 		}); // end ajax
 	}); // end send email
-	
+	var code = ""; // 인증번호 저장을 위한 코드
 	var isCertification = false;
 	// 인증번호 비교 
 	// blur -> focus가 벗어나는 경우 발생
 	$('.mail-check-input').blur(function () {
 		const inputCode = $(this).val();
 		const $resultMsg = $('#mail-check-warn');
-		
-		if(inputCode === code){
-			isCertification = true;
-			$resultMsg.html('인증번호가 일치합니다.');
-			$resultMsg.css('color','green');
-			$('#mail-Check-Btn').attr('disabled',true);
-			$('#userEamil').attr('readonly',true);
-			$('#userEamil2').attr('readonly',true);
-			$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
-	         $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
-		}else{
-			isCertification = false;
-			$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
-			$resultMsg.css('color','red');
-			
-		}
 	
+		//controller로 입력한 인증 코드 보내기
+
+	
+		//사용자가 입력한 인증번호를 비교하는 AJAX
+		$.ajax({
+			type : 'POST',
+			data: {inputCode: inputCode},
+			url : '/users/mailCheck',
+			success : function (data) {
+				console.log("data : " +  data);
+				if(data){
+					isCertification = true;
+					$resultMsg.html('인증번호가 일치합니다.');
+					$resultMsg.css('color','green');
+					$('#mail-Check-Btn').attr('disabled',true);
+					$('#pw_check').attr('disabled',false);
+					$('#userEmail').attr('readonly',true);
+					$('#userEmail2').attr('readonly',true);
+					$('#userEmail2').attr('onFocus', 'this.initialSelect = this.selectedIndex');
+			        $('#userEmail2').attr('onChange', 'this.selectedIndex = this.initialSelect');
+				} else{
+					isCertification = false;
+					$resultMsg.html('인증번호가 불일치 합니다. 다시 확인해주세요!.');
+					$resultMsg.css('color','red');
+				}
+				
+			}
+			,error : function() {
+				console.log("실패!")
+			}
+		}); // end ajax
 	});
 	
     //이메일 입력란 클릭시 밑에 메시지 없애기
