@@ -1,6 +1,7 @@
 package web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -72,9 +73,18 @@ public class FileUploadController {
 	public void sourceview(Model model) {
 		logger.info("/file/sourcelist GET");
 		
-		List<Source> list = fileUploadService.getSourceList();
-		
+		List<Map<String, Object>> list = fileUploadService.getSourceList();
 		model.addAttribute("list", list);
+		logger.info("list의 값 : {} ",list);
+	}
+	
+	@RequestMapping("/file/packlist")
+	public void packview(Model model) {
+		logger.info("/file/packlist GET");
+		
+		List<Map<String, Object>> list = fileUploadService.getPackList();
+		model.addAttribute("list", list);
+		logger.info("list의 값 : {} ",list);
 	}
 	
 	
@@ -122,8 +132,9 @@ public class FileUploadController {
 			jsonObject = (JSONArray) jsonParser.parse(scape);
 			scape = ((JSONObject) jsonObject.get(0)).get("value").toString();
 			
-			if((JSONArray) jsonParser.parse(fx) != null) {
-				
+			if(fx.isEmpty()) {
+				fx="no";
+			} else {
 				jsonObject = (JSONArray) jsonParser.parse(fx);
 				fx = ((JSONObject) jsonObject.get(0)).get("value").toString();
 			}
@@ -163,8 +174,8 @@ public class FileUploadController {
 		
 //		
 		
-//		return "redirect:/file/sourcelist";
-		return "test";
+		return "redirect:/file/sourcelist";
+//		return "test";
 		
 	}
 	
@@ -179,8 +190,8 @@ public class FileUploadController {
 	public String FileUpPackPost(
 			String genre,
 			String instrument,
-			String detail,
 			String scape,
+			String detail,
 			String fx,
 			Pack pack,
 			MultipartFile packImg,
@@ -203,15 +214,6 @@ public class FileUploadController {
 			jsonObject = (JSONArray) jsonParser.parse(instrument);
 			instrument = ((JSONObject) jsonObject.get(0)).get("value").toString();
 
-			jsonObject = (JSONArray) jsonParser.parse(detail);
-			detail = ((JSONObject) jsonObject.get(0)).get("value").toString();
-			
-			jsonObject = (JSONArray) jsonParser.parse(scape);
-			scape = ((JSONObject) jsonObject.get(0)).get("value").toString();
-			
-			jsonObject = (JSONArray) jsonParser.parse(fx);
-			fx = ((JSONObject) jsonObject.get(0)).get("value").toString();
-			
 			//tag에다가 위에 있는 값 집어넣기 
 			//int형은 뭘 넣든간에 insert가 되는 값으로 들어가는거같음(잘은모르겠지만 일단됨 )
 			tag = new Tag(0, instrument, genre, scape, detail, fx);
@@ -227,7 +229,7 @@ public class FileUploadController {
 		fileUploadService.uploadPack(tag,pack,packImg,source,packFileList);
 		
 		
-		return "redirect:/source/view";
+		return "redirect:/file/packlist";
 	}
 	
 

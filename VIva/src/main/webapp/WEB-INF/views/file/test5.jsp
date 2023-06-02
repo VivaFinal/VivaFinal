@@ -94,6 +94,10 @@ $(function(){
 
 
 <style type="text/css">
+	.guide{
+	font-size: 1.0em;
+	color: red;
+	}
 	.source{
 		color:grey;
 		font-size: 1.5em;
@@ -235,6 +239,9 @@ $(function(){
 <!-- container : div안에있는것들 다 가운데 -->
 <div id="containerid" class="container" >
 <h2> 자신만의 Source로 세상을 움직여주세요!</h2>
+<div class="guide">
+Pack을 올리기전에 <a href="/file/guide">가이드</a>를 확인해주세요!
+</div>
 <hr>
 <a class="source" href="/file/fileupsource">Source</a> 
 <a class="pack" href="/file/fileuppack"> Pack</a> 
@@ -258,17 +265,14 @@ $(function(){
 		<span id="sourceName_msg" class="msg"></span>
 		<br>
 		
-<!-- 		<label>Key</label> -->
-<!-- 		<input type="text" id="key" name="key" class="form-control" placeholder="Key를 입력해주세요!"><br> -->
-<!-- 		<span id="key_msg" class="msg"></span> -->
-<!-- 		<br> -->
+
 		
 		  <label>Key</label>
   	 <input name='key' class='some_class_name' placeholder='Key를 선택해주세요!'>
   	<script>	
 		  var input = document.querySelector('input[name="key"]');
 		
-		  var whitelist = ["C", "F", "Bb", "Eb", "Ab", "Db", "Gb", "B", "E", "A","D","G"];
+		  var whitelist = ["C", "F", "Bb", "Eb", "Ab", "Db", "Gb", "B", "E", "A","D","G","None"];
 		
 		  var tagify = new Tagify(input, {
 		        whitelist:whitelist,
@@ -302,27 +306,7 @@ $(function(){
 	
 	
 	<div class="tag">
-  <label>장르</label>
-  	 <input name='genre' class='some_class_name' placeholder='장르를 선택해주세요!' >
-  <script>
-  var input = document.querySelector('input[name="genre"]');
 
-  var whitelist = ["Trap", "R&B", "Soul", "Boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
- 
-  tagify = new Tagify (input, {
-      whitelist:whitelist,
-      maxTags: 1,
-      dropdown: {
-        maxItems: 20,          
-        classname: "tags-look", 
-        enabled: 0,            
-        closeOnSelect: true   
-      }
-    })
-
-
-  
-  </script>
  
   
   
@@ -331,7 +315,7 @@ $(function(){
   <script>
   var input = document.querySelector('input[name="instrument"]');
 
-  var whitelist = ["Drum", "Vocal", "Synth", "Brass", "Woodwinds", "Guitar", "Bass", "String" ,"Piano"];
+  var whitelist = ["None","Drum", "Vocal", "Synth", "Brass", "Woodwinds", "Guitar", "Bass", "String" ,"Piano"];
 
   var tagify = new Tagify(input, {
         whitelist:whitelist,
@@ -352,17 +336,17 @@ $(function(){
   	
   <script type="text/javascript">
 
-  	$(".tagify__input").eq(2).blur(function(){
+  	$(".tagify__input").eq(1).blur(function(){
 //   	$("input[name='instrument']").change(function(){
   		
   		console.log("blur 입니다!")
   		
-  		if($("tag").attr('title') == 'Drum' && $("#detail").attr("data-boolean") == 'false'){
+  		if($("tag").attr('title') == 'None' && $("#detail").attr("data-boolean") == 'false'){
   			
   			$("#detail").attr("data-boolean","true")
   			
   			  var input = document.querySelector('input[name="detail"]');
-  			  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","rimshot"];
+  			  var whitelist = ["None"];
   			  var tagify = new Tagify(input, {
   			        whitelist:whitelist,
   			        maxTags: 1,
@@ -374,7 +358,24 @@ $(function(){
   			        }
   			      })
   			
-  		} else if($("tag").attr('title')=="Vocal" && $("#detail").attr("data-boolean") == 'false'){
+  		} else if($("tag").attr('title')=="Drum" && $("#detail").attr("data-boolean") == 'false'){
+  			
+ 			 $("#detail").attr("data-boolean","true")
+ 			
+ 			  var input = document.querySelector('input[name="detail"]');
+ 			  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","rimshot"];
+ 			  var tagify = new Tagify(input, {
+ 			        whitelist:whitelist,
+ 			        maxTags: 1,
+ 			        dropdown: {
+ 			          maxItems: 20,          
+ 			          classname: "tags-look", 
+ 			          enabled: 0,            
+ 			          closeOnSelect: true   
+ 			        }
+ 			      })
+ 			
+ 		}else if($("tag").attr('title')=="Vocal" && $("#detail").attr("data-boolean") == 'false'){
   			
   			 $("#detail").attr("data-boolean","true")
   			
@@ -498,7 +499,28 @@ $(function(){
 
   	 
   	 </script>
-
+	  <label>장르</label>
+	  <input name='genre' class='some_class_name' placeholder='장르를 선택해주세요!' >
+	  
+	  <script>
+	  var input = document.querySelector('input[name="genre"]');
+	
+	  var whitelist = ["None","Trap", "R&B", "Soul", "Boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
+	 
+	  tagify = new Tagify (input, {
+	      whitelist:whitelist,
+	      maxTags: 1,
+	      dropdown: {
+	        maxItems: 20,          
+	        classname: "tags-look", 
+	        enabled: 0,            
+	        closeOnSelect: true   
+	      }
+	    })
+	
+	
+	  
+	  </script>
   
 
   
@@ -507,7 +529,7 @@ $(function(){
   <script>
   var input = document.querySelector('input[name="scape"]');
 
-  var whitelist = ["Wet", "Dry", "Powerful", "Soul", "Beautiful"];
+  var whitelist = ["None","Wet", "Dry", "Powerful", "Soul", "Beautiful"];
 
   var tagify = new Tagify(input, {
         whitelist:whitelist,
@@ -526,7 +548,7 @@ $(function(){
   <script>
   var input = document.querySelector('input[name="fx"]');
 
-  var whitelist = ["Ambience", "Transportation", "Science Fiction", "Animal"];
+  var whitelist = ["None","Ambience", "Transportation", "Science Fiction", "Animal"];
 
   var tagify = new Tagify(input, {
         whitelist:whitelist,

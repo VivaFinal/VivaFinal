@@ -25,7 +25,7 @@
 		INSERT INTO users( user_no, user_id, user_pw ,user_name, user_birth,
 		user_nick, user_email, user_mobile ,user_joindate, user_grade)
 		VALUES (users_seq.nextval, #{userId}, #{userPw}, #{userName},#{userBirth}
-		,#{userNick}, #{userEmail},#{userMobile} ,sysdate, 0)
+		,#{userNick}, #{userEmail},#{userMobile} ,current_date, 0)
 	</insert>
 
 	<select id="getUserNo" resultType="web.dto.Users" parameterType="web.dto.Users">
