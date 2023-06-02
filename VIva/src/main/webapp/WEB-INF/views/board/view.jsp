@@ -19,12 +19,46 @@ $(document).ready(function() {
 	$("#btnDelete").click(function() {
 		location.href="./delete?boardNo=${viewBoard.boardNo}";
 	}) 
+	
+	//댓글 불러오기
+	//댓글 작성
+	$("#btnComment").click(function() {
+		//var contextPath = '<%= request.getContextPath() %>';
+		//console.log(contextPath);
+		//return false;
+		var commContent=$("#commContent").val();		//댓글 내용
+		var boardNo = "${board.boardNo}"				//게시물 번호
+		//var param="commentContent" + commentContent + "&boardNo" + boardNo;
+		
+		console.log(commContent)
+		
+		$.ajax({
+			type: "post",
+			url: "/board/commentWrite",
+			data: {boardNo: boardNo, commContent: commContent},
+			success: function(result) {
+				
+				//댓글 작성 성공 시 처리할 동작
+				if (result == "success") {
+                alert("댓글이 작성되었습니다.");
+                location.reload(); // 페이지 새로고침
+				}
+				
+				$('#commentList').val('') //댓글 등록시 댓글 등록창 초기화
+				getcommentList(); 			//등록후 댓글 목록 불러오기 함수 실행
+				//DOM 조작 함수호츨 등 가능
+	            },
+	            
+	            error: function() {
+	                //Ajax 요청 실패 시 처리할 동작
+	                alert("댓글 작성에 실패했습니다.");
+	            }
+		})
+	})
 })
-
 </script>
 
 <div class="container">
-
 <h1>게시글 상세보기</h1>
 <hr>
 
@@ -38,7 +72,7 @@ $(document).ready(function() {
 </tr>
 <tr>
 	<td class="small">조회수</td><td>${viewBoard.boardHit }</td>
-	<td class="small">작성일</td><td><fmt:formatDate value="${viewBoard.boardDate }" pattern="yyyy-MM-dd" /></td>
+	<td class="small">작성일</td><td><fmt:formatDate value="${viewBoard.boardDate }" pattern="yyyy-MM-dd hh:mm" /></td>
 </tr>
 <tr>
 	<td class="small">제목</td><td>${viewBoard.boardTitle }</td>
@@ -52,10 +86,12 @@ $(document).ready(function() {
 </table>
 
 <!-- 첨부파일 -->
-<div class="file">
+<div class="file" >
 	<c:if test="${not empty boardFile }">
-		<a href="./download?fileNo=${boardFile.fileNo }">${boardFile.originname }</a>
-		<img src="/boardUpload/${boardFile.storedname }" alt="왜안돼!">
+		<c:forEach var="boardFile" items="${boardFile}">
+			<a href="./download?fileNo=${boardFile.fileNo }"></a>
+			<img src="/boardUpload/${boardFile.storedname }" alt="다잘될거야~">
+		</c:forEach>
 	</c:if>
 </div>
 
@@ -74,33 +110,33 @@ $(document).ready(function() {
 <%-- 	</c:if> --%>
 </div>
 
-</div><!-- .container end -->
-
-
-<!-- 댓글 시작 -->
-<!-- 댓글 작성 -->
-<div text-align:left;>
-     <c:if test="${sessionScope.userNo != null }">
-         <textarea rows="5" cols="80" id="replytext"
-             placeholder="댓글을 작성하세요"></textarea>
-         <br>
-         <button type="button" id="btnReply">댓글쓰기</button>
-     </c:if>
-</div>
+<!---------- 댓글 시작 ---------->
+<!----- 댓글 작성 ----->
 <div id="comment">
-	<ol class="commentList">
+	<form action="/commentWrite" method="post">
+<%--      <c:if test="${sessionScope.userNo != null }"> --%>
+	<input type="hidden" name="boardNo" value="${board.boardNo}">
+	<textarea id="commContent" name="commContent" placeholder="댓글을 작성하세요" rows="5" cols="50"></textarea><br>
+	<button type="button" id="btnComment">댓글 작성</button>
+<%--      </c:if> --%>
+	</form>
+</div>
+
+<div id="comments">
+	<div class="commentList">
 		<c:forEach items="${commentList}" var="commentList">
-		    <li>
-		      <p>
+		    <div>
+		      <div>
 		      작성자 : ${commentList.userNo}<br />
 		      작성일 :  <fmt:formatDate value="${commentList.commDate}" pattern="yyyy-MM-dd" />
-              </p>
-                  <p>${commentList.commContent}</p>
-		     </li>
-		 </c:forEach>   
-	</ol>
+              </div>
+              <p>${commentList.commContent}</p>
+		     </div>
+		</c:forEach>   
+	</div>
 </div>
+
 <!-- 댓글 끝 -->
 
-
-<c:import url="/WEB-INF/views/layout/footer.jsp" />
+</div><!-- .container end -->
+<c:import url="../layout/footer.jsp"/>

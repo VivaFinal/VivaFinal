@@ -15,9 +15,11 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Board;
@@ -88,16 +90,22 @@ public class BoardController {
 		//모델값 전달  - 게시글
 		model.addAttribute("viewBoard", viewBoard);
 		logger.info("viewBoard : {} ",viewBoard);
-		//첨부파일 정보 모델값 전달
-		Files boardFile = boardService.getAttachFile(viewBoard);
 		
-		logger.info("************************파일!{}", file);
-		logger.info("^^^^^컨트롤러 {}", boardFile);
+		//첨부파일 정보 모델값 전달
+		List<Files> boardFile = boardService.getAttachFile(viewBoard);
+		
+		logger.info("**************파일!{}", file);
+		logger.info("^^^^^^^^^^^^^^컨트롤러 {}", boardFile);
 		model.addAttribute("boardFile", boardFile);
 		
-		//댓글 목록 보기
-		List<Comments> commentList = boardService.viewComment(viewBoard.getBoardNo());
+		//댓글 조회
+		int boardNo = viewBoard.getBoardNo();
+		logger.info("boardNo {}", boardNo);
+		
+		List<Comments> commentList = boardService.viewComment(boardNo);
 		model.addAttribute("commentList", commentList);
+		
+		logger.info("+++ ++++ 확인 {} : ",commentList);
 	
 		return "board/view";
 	}		
@@ -107,16 +115,25 @@ public class BoardController {
 	public void write() {}
 	
 	@PostMapping("/write")
-	public String writeProc( Board board, @RequestParam(required=false) List<MultipartFile> file, Model model ){		
+	public String writeProc( Board board, @RequestParam(required=false) List<MultipartFile> file, Model model, HttpSession session ){		
 		logger.info("/board/write [POST]");	
 		logger.info("컨트롤러 보드 {}", board);
 		logger.info("컨트롤러 파일 {}", file);
 		
-		  //로그인 String id = null; if( session.getAttribute("id")!= null ) {
-//		  logger.info("로그인 실패"); return "redirect:./main"; } else {
-//		  logger.info("로그인 성공"); id = (String)session.getAttribute("id");
-//		  
-//		  } model.addAttribute("userId", id);
+		//로그인
+		//session에 저장된 userId를 id에 저장
+//		String id = null; 
+//		if( session.getAttribute("userid")!= null ) {
+//
+//			id = (String)session.getAttribute("userid");	  
+//			logger.info("로그인 성공"); 
+//		
+//		} else {
+//			logger.info("로그인 실패"); 
+//			return "redirect:./main"; 
+//		} 
+//
+//		model.addAttribute("userId", id);
 		
 //		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
 //		board.setBoardContent(boardContent);
@@ -125,6 +142,16 @@ public class BoardController {
 		boardService.write( board, file );
 		
 		return "redirect:./list";	//게시글 목록
+	}
+	
+	
+	@RequestMapping("/download")
+	public String download(Files boardFile, Model model) {
+		
+		boardFile = boardService.getFile(boardFile);
+		model.addAttribute("downFile", boardFile);
+		 
+		return "down";
 	}
 	
 	
@@ -141,37 +168,23 @@ public class BoardController {
 		model.addAttribute("updateBoard", board);
 		
 		//첨부파일 정보 모델값 전달
-		Files boardFile = boardService.getAttachFile(board);
+		List<Files> boardFile = boardService.getAttachFile(board);
 		
 		model.addAttribute("boardFile", boardFile);
 		
-		logger.info("BoardController {}", boardFile);
+		logger.info("BoardController - update [GET] {}", boardFile);
 			
 		return "board/update";
 	}
 	
 	@PostMapping("/update")
-	public String updateProc( 
-			
-			Board board, List<MultipartFile> file ,
-			@RequestParam(value="boardTitle", required=false) String boardTitle,
-			@RequestParam(value="boardContent", required=false) String boardContent,
-			@RequestParam(value="categoryType", required=false) String categoryType
-			
-			) {
-		
-		board.setBoardTitle(boardTitle);// 여기에 tilte담아야함
-		board.setBoardContent(boardContent);
-		board.setBoardContent(categoryType);
-		
-		System.out.println("===============================");
-		System.out.println(board);
-		System.out.println("===============================");
+	    public String updateProc(Board board, List<MultipartFile> file) {
+	        
 		//게시글+첨부파일 수정
-		boardService.update( board, file );
-		
-		return "redirect:./view?boardNo=" + board.getBoardNo();
-	}
+		boardService.update(board, file);
+	        
+	    return "redirect:./view?boardNo=" + board.getBoardNo();
+	    }
 	
 	@RequestMapping("/delete")
 	public String delete( Board board ) {
@@ -180,5 +193,39 @@ public class BoardController {
 		return "redirect:./list";
 	}
 	
+	
+	@RequestMapping("/commentWrite")
+//	public String commentWrite(Comments comments, @RequestBody Map<String, Object> param) {
+	public String commentWrite(Board viewBoard, @RequestBody Comments comments, @RequestParam("comments") int boardNo, Model model) {
+//	public String commentWrite(@ModelAttribute("commContent") Comments commContent, @RequestParam("commContent") int boardNo, Model model) {
+	
+		
+		boardService.writeComment(comments, boardNo);
+		
+		//댓글 조회
+		List<Comments> commentList = boardService.viewComment(boardNo);
+		model.addAttribute("commentList", commentList);
+		
+//		return "redirect:./view?boardNo=" + board.getBoardNo();
+		return "redirect:./view?boardNo=" + comments.getBoardNo();
+//		return null;
+	}
+	
+	
+	@RequestMapping("/commentUpdate")
+	public String commentUpdate(Board board) {
+		
+		boardService.updateComment(board);
+		
+		return "redirect:./view?boardNo=" + board.getBoardNo();
+	}
+	
+	@RequestMapping("/commentDelete")
+	public String commentDelete(Board board) {
+		
+		boardService.deleteComment(board);
+		
+		return "redirect:./view?boardNo=" + board.getBoardNo();
+	}
 
 }
