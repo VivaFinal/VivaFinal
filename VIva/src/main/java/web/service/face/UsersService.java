@@ -61,7 +61,6 @@ public interface UsersService {
 	 */
 	public int idCheck(Users users);
 
-
 	/**
 	 * 중복 닉네임 검사
 	 * 
