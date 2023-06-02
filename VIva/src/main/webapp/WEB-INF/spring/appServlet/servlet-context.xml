@@ -40,7 +40,7 @@
 		<beans:property name="maxUploadSize" value="20971520"/>
 		
 		<!-- 업로드 된 파일 하나 당 사이즈 제한 5MB -->
-		<beans:property name="maxUploadSizePerFile" value="20971520"/>
+		<beans:property name="maxUploadSizePerFile" value="31457280"/>
 		
 	</beans:bean>
 
