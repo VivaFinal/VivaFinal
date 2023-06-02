@@ -57,15 +57,15 @@
 	<c:if test="${grade eq '1'}">
 	
 		<!--  환전크레딧조건 충족 시 : 환전버튼 active -->
-		<c:if test="${creditAcc >= 1000}"><a href="./exchange">
+		<c:if test="${creditAcc >= 100}"><a href="./exchange">
 			<button id="exchangeCredit" class="exchange-button"><c:out value="환전하기" /></button></a>
 		</c:if>
 		<!--  환전크레딧조건 불충족 시 : 환전버튼 disabled -->
-		<c:if test="${creditAcc < 1000}">
+		<c:if test="${creditAcc < 100}">
 			<a href="./exchange"><button id="exchangeCredit" class="exchange-button" disabled><c:out value="환전하기" /></button></a>
 		</c:if>
 		
-	<!--  일단은 1000크레딧(10,000원) 이상일 때 환전 가능하다고 가상 제약조건 가정할거임 -->
+	<!--  일단은 100크레딧(1,000원) 이상일 때 환전 가능하다고 가상 제약조건 가정할거임 -->
 	</c:if>
 </div> <!--  CreditStatus 끝 -->
 
@@ -117,11 +117,11 @@
 				<tr class="cart-item"><!--  첫번째 열 시작-->
 					<td><!--  1. 체크박스 -->
 						<div class="checkBox">
-						  <input class="form-check-input" type="checkbox" name="chBox" data-deal-no="${i.dealNo}">
+						  <input class="form-check-input chBox" type="checkbox" name="chBox" data-deal-no="${i.dealNo}">
 						  
 						  <!--  항목선택 클릭에 대한 이벤트 -->
 					  		<script>
-							$(".form-check-input").click(function(){
+							$(".chBox").click(function(){
 								  $("#flexCheckDefault").prop("checked", false);
 							});
 							</script>

@@ -11,7 +11,7 @@
 		select 
 			deal_no, 
 			user_no, 
-			(SELECT to_char(deal_date,'yy.mm.dd') from dual) deal_date, 
+			(SELECT to_date(to_char(deal_date,'yy.mm.dd'),'yy.mm.dd') from dual) deal_date, 
 			deal_category, 
 			amount 
 		from credit

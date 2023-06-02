@@ -77,41 +77,41 @@ public class CartController {
 	    }
 	}
 
-	@ResponseBody
-	@PostMapping("/delete")
-	public void deleteChkBox(
-		     @RequestParam(value = "chbox[]") List<String> chArr, Cart cart, Cart userNo, Writer out) throws Exception {
-		 logger.info("delete cart");
-		 
-		//회원번호 임시로 지정(n번)
-		//(세션 기능 완료되면 주석처리하기!!)
-		userNo.setUserNo(44);
-		logger.info("userNo : {}", userNo.getUserNo());
-		 
-		 int cartNo = 0;
-		 boolean success = false;
-		 
-		 if(userNo != null) {
-			 cart.setUserNo(userNo.getUserNo());
-		 
-		 
-			 for(String i : chArr) {   
-				 cartNo = Integer.parseInt(i);
-				 logger.info("{}", cartNo);
-				 
-				 cart.setCartNo(cartNo);
-				 success = cartService.deleteCartItem(cart);
-				 logger.info("{}", success);
-			  }   
-		 }  
-		 
-		 // 삭제 성공 여부에 따라 응답 데이터 설정
-		 try {
-			 out.write("{\"result\": " + success + "}");
-		 } catch (IOException e) {
-			 e.printStackTrace();
-		 }
-	}
+//	@ResponseBody
+//	@PostMapping("/delete")
+//	public void deleteChkBox(
+//		     @RequestParam(value = "chbox[]") List<String> chArr, Cart cart, Cart userNo, Writer out) throws Exception {
+//		 logger.info("delete cart");
+//		 
+//		//회원번호 임시로 지정(n번)
+//		//(세션 기능 완료되면 주석처리하기!!)
+//		userNo.setUserNo(44);
+//		logger.info("userNo : {}", userNo.getUserNo());
+//		 
+//		 int cartNo = 0;
+//		 boolean success = false;
+//		 
+//		 if(userNo != null) {
+//			 cart.setUserNo(userNo.getUserNo());
+//		 
+//		 
+//			 for(String i : chArr) {   
+//				 cartNo = Integer.parseInt(i);
+//				 logger.info("{}", cartNo);
+//				 
+//				 cart.setCartNo(cartNo);
+//				 success = cartService.deleteCartItem(cart);
+//				 logger.info("{}", success);
+//			  }   
+//		 }  
+//		 
+//		 // 삭제 성공 여부에 따라 응답 데이터 설정
+//		 try {
+//			 out.write("{\"result\": " + success + "}");
+//		 } catch (IOException e) {
+//			 e.printStackTrace();
+//		 }
+//	}
 		 
 		 
 		 
@@ -145,7 +145,7 @@ public class CartController {
 	
 	//--------------------------------------------------------------------
 	//장바구니에서 항목 구매시 처리할 메소드
-	@RequestMapping("/cart/buy")
+	@RequestMapping("/buy")
 	public void cartBuy(Users userNo, Source sourceNo, Cart cartNo, Writer out) {
 		logger.info("cart buy()");
 		

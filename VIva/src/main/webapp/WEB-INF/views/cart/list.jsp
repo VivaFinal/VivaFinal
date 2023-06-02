@@ -287,7 +287,7 @@
 										 
 			$.ajax({
 				url: "/cart/buy",
-				type: "POST",
+				type: "GET",
 				data: {
 					"cartNo" : cartNo,
 					"sourceNo" : sourceNo
