@@ -1,12 +1,12 @@
 package web.service.face;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.web.multipart.MultipartFile;
 
 import web.dto.Pack;
 import web.dto.Source;
-import web.dto.SourceFileInfo;
 import web.dto.Tag;
 
 
@@ -16,7 +16,13 @@ public interface FileUploadService {
 	 * source테이블 전체 출력하기 
 	 * @return
 	 */
-	public List<Source> getSourceList();
+	public List<Map<String, Object>> getSourceList();
+	
+	/**
+	 * pack insert된거 list
+	 * @return
+	 */
+	public List<Map<String, Object>> getPackList();
 	
 	/**
 	 * Source 업로드 부분
@@ -37,6 +43,7 @@ public interface FileUploadService {
 	 * @param packFileList - 음원소스 파일 여러개(pack)  (SourceFileInfo 테이블사용) 
 	 */
 	public void uploadPack(Tag tag, Pack pack, MultipartFile packImg, Source source, List<MultipartFile> packFileList);
+
 
 
 

@@ -98,6 +98,12 @@ $(document).ready(function() {
 <div>
 	<button id="btnList">목록</button>
 	
+<!-- 	관리자 세션아이디로 접속되어있을때 삭제버튼 무조건 뜨게 만든거임 -->
+	<c:if test="${not empty adminlogin and adminlogin }">
+		<button id="btnDelete" class="btn btn-outline-danger">삭제</button>
+	</c:if>
+	
+	
 <%--  	<c:if test="${id eq viewBoard.userId }"> --%>
  		<button id="btnUpdate">수정</button>
  		<button id="btnDelete">삭제</button>

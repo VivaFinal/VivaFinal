@@ -7,9 +7,32 @@
   
 	<mapper namespace="web.dao.face.FileUploadDao">
 	
-	<select id="selectAllSourceList" resultType="web.dto.Source">
-	select * from source order by source_no desc
+	<select id="selectAllSourceList" resultType="hashMap">
+	SELECT s.source_no, s.source_name, s.bpm, s.key, t.tag_no,
+	    t.genre,t.instrument,t.detail,t.scape,t.fx,
+	    p.pack_no, si.source_img_storedname, si.source_img_originname,
+	    sf.file_originname, sf.file_storedname
+	FROM source S
+	INNER JOIN tag t on s.tag_no = t.tag_no
+	INNER JOIN pack p on s.pack_no = p.pack_no 
+	INNER JOIN sourceimginfo si on s.source_no = si.source_no
+	INNER JOIN sourcefileinfo sf on s.source_no = sf.source_no
+	order by #{sourceNo} desc
 	</select>
+	
+	<select id="selectAllPackList" resultType="hashMap">
+	SELECT s.source_no, s.source_name, s.bpm, s.key, t.tag_no,
+	    t.genre,t.instrument,t.detail,t.scape,t.fx,
+	    p.pack_content,p.pack_name,
+	    p.pack_no,pi.pack_img_originname,pack_img_storedname,
+	    sf.file_originname,sf.file_storedname
+	FROM source S
+	INNER JOIN tag t on s.tag_no = t.tag_no
+	INNER JOIN pack p on s.pack_no = p.pack_no 
+	INNER JOIN packimginfo pi on p.pack_no=pi.pack_no
+	INNER JOIN sourcefileinfo sf on s.source_no=sf.source_no
+	order by #{sourceNo} desc
+	</select>	
 	
 	<insert id="TagInsert" parameterType="web.dto.Tag">
 	<selectKey keyProperty="tagNo" order="BEFORE" resultType="int">

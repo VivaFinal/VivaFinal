@@ -270,6 +270,11 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	
+	@Override
+	public void deleteBoard(Board board) {
+		boardDao.delete(board);
+	}
+	
 	
 	@Override
 	public void writeComment(Comments comments, int boardNo) {

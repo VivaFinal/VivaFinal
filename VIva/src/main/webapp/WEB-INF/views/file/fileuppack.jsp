@@ -142,9 +142,20 @@ $(function(){
  	.inputfile{ 
  	display: grid; 
  	grid-template-columns: 22% 22%; 
- 	margin-left: 50px; 
  	width: 1140px;
  	} 
+ 	
+ 	.instrument{
+	display: grid;
+	grid-template-columns: 90px 100px;
+	margin-left: 0px;
+	}
+
+	.genre{
+	display: grid;
+	grid-template-columns: 90px 100px;
+	margin-left: 0px;
+	}
 	
 
 	
@@ -153,6 +164,7 @@ $(function(){
   width: 400px;
   border-radius: 10px;
   margin-right: 0px;
+    margin-bottom: 20px;
 }
 
 /* 드롭다운아래에 나오는 애들  */
@@ -199,7 +211,7 @@ Pack을 올리기전에 <a href="/file/guide">가이드</a>를 확인해주세�
 <a class="pack" href="/file/fileuppack"> Pack</a> 
 
 
-<br>
+<br><br>
 
 
 
@@ -218,132 +230,66 @@ Pack을 올리기전에 <a href="/file/guide">가이드</a>를 확인해주세�
 	<label>설명</label>
 	<textarea id="content" name="packContent" class="form-control" placeholder="음원에 대한 간략한 설명을 써주세요!" rows="7"></textarea><br>
 	<span id="content_msg" class="msg"></span>
-	<!-- mb 마진바텀 -->
-		<div class="inputfile">
-		<div >
-		이미지파일
-		<input type="file" id="imgfile" name="packImg" class="form-control" style="width: 237px;">
-		</div>
-		<div>
-		음원파일 
-		<input type="file" id="file" name="packFileList" class="form-control" multiple="multiple">
-		</div>
-
-</div>
-	
-	
 	</div>
 	
 	
 	<div class="tag">
-  <label>장르</label>
-  	 <input name='genre' class='some_class_name' placeholder='장르를 선택해주세요!' >
-  <script>
-  var input = document.querySelector('input[name="genre"]');
-
-  var whitelist = ["Trap", "R&B", "Soul", "Boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
- 
-  tagify = new Tagify (input, {
-      whitelist:whitelist,
-      maxTags: 1,
-      dropdown: {
-        maxItems: 20,          
-        classname: "tags-look", 
-        enabled: 0,            
-        closeOnSelect: true   
-      }
-    })
-
-
-  
-  </script>
- 
-  
-  
-  <label>악기</label>
+	<div class="instrument">
+  <label>Instrument</label>
   	 <input name='instrument' class='some_class_name' placeholder='악기를 선택해주세요!'>
-  <script>
-  var input = document.querySelector('input[name="instrument"]');
-
-  var whitelist = ["Drum", "Vocal", "Synth", "Brass", "Woodwinds", "Guitar", "Bass", "String", "ABSET", "Piano"];
-
-  var tagify = new Tagify(input, {
-        whitelist:whitelist,
-        maxTags: 1,
-        dropdown: {
-          maxItems: 20,          
-          classname: "tags-look", 
-          enabled: 0,            
-          closeOnSelect: true   
-        }
-      })
-  
-  </script>
-  
-    <label class="detail" style="width: 500px;">악기세부분류</label>
-  	 <input name='detail' class='some_class_name' placeholder='세부악기를 선택해주세요!'>
-  <script>
-//   if($('input[name="instrument"]').val()=="Drum"){
-	  
-  var input = document.querySelector('input[name="detail"]');
-  
-  var whitelist = ["Kick","Snare","Hihat","Clap","Tom","Cymbal","Acoustic","808","Fills","Percussion","Rimshot"];
-
-  var tagify = new Tagify(input, {
-        whitelist:whitelist,
-        maxTags: 1,
-        dropdown: {
-          maxItems: 20,          
-          classname: "tags-look", 
-          enabled: 0,            
-          closeOnSelect: true   
-        }
-      })
-  
-//   }
-
-  </script>
-  
-
-  
-    <label>분위기</label>
-  	 <input name='scape' class='some_class_name' placeholder='분위기를 선택해주세요!'>
-  <script>
-  var input = document.querySelector('input[name="scape"]');
-
-  var whitelist = ["Wet", "Dry", "Powerful", "Soul", "Beautiful"];
-
-  var tagify = new Tagify(input, {
-        whitelist:whitelist,
-        maxTags: 1,
-        dropdown: {
-          maxItems: 20,          
-          classname: "tags-look", 
-          enabled: 0,            
-          closeOnSelect: true   
-        }
-      })
-  </script>
-  
-      <label>Fx</label>
-  	 <input name='fx' class='some_class_name' placeholder='Fx를 선택해주세요!'>
-  <script>
-  var input = document.querySelector('input[name="fx"]');
-
-  var whitelist = ["Ambience", "Transportation", "Science Fiction", "Animal"];
-
-  var tagify = new Tagify(input, {
-        whitelist:whitelist,
-        maxTags: 1,
-        dropdown: {
-          maxItems: 20,          
-          classname: "tags-look", 
-          enabled: 0,            
-          closeOnSelect: true   
-        }
-      })
-  </script>
+	  <script>
+	  var input = document.querySelector('input[name="instrument"]');
 	
+	  var whitelist = ["none","Drum", "Vocal", "Synth", "Brass", "Woodwinds", "Guitar", "Bass", "String", "ABSET", "Piano" ];
+	
+	  var tagify = new Tagify(input, {
+	        whitelist:whitelist,
+	        maxTags: 1,
+	        dropdown: {
+	          maxItems: 20,          
+	          classname: "tags-look", 
+	          enabled: 0,            
+	          closeOnSelect: true   
+	        }
+	      })
+	  
+	  </script>
+  </div>
+  
+	<div class="genre">
+    <label>Genre</label>
+  	 <input name='genre' class='some_class_name' placeholder='장르를 선택해주세요!' >
+	  <script>
+	  var input = document.querySelector('input[name="genre"]');
+	
+	  var whitelist = ["none","Trap", "R&B", "Soul", "Boombap", "Rock", "Jazz", "House", "Heavy Metal", "Funk", "Reggae", "Folk", "Electro", "House", "Disco", "Pop", "EDM", "Tropical House", "Drum and Bass", "Jungle"];
+	 
+	  tagify = new Tagify (input, {
+	      whitelist:whitelist,
+	      maxTags: 1,
+	      dropdown: {
+	        maxItems: 20,          
+	        classname: "tags-look", 
+	        enabled: 0,            
+	        closeOnSelect: true   
+	      }
+	    })
+	  
+	  </script>
+	</div>  
+	<br>
+			<div class="inputfile">
+			<div >
+			이미지파일
+			<input type="file" id="imgfile" name="packImg" class="form-control" style="width: 237px;">
+			<span style="font-size: 0.8em; color: red; text-align: center;">Pack Img는 한장 올려주세요!</span>
+			</div>
+			<div>
+			음원파일 
+			<input type="file" id="file" name="packFileList" class="form-control" multiple="multiple">
+			<span style="font-size: 0.8em; color: red; text-align: center;">Pack Source는 여러개 올려주세요!</span>
+			</div>
+		</div>
 	
 	</div>
 	
