@@ -31,4 +31,11 @@ public class CreditServiceImpl implements CreditService {
 		logger.info("chkUserGrade()");
 		return creditDao.selectUserGrade(user);
 	}
+	
+	@Override
+	public int selectCreditAcc(Credit userNo) {
+		logger.info("selectCreditAcc()");
+		
+		return creditDao.selectCreditAcc(userNo);
+	}
 }
