@@ -36,7 +36,7 @@ public class BoardController {
 	
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
 	
-	@RequestMapping(value="/list", method=RequestMethod.GET)
+	@GetMapping("/list")
 	public void list( Paging paging, Model model, String userNick ) {
 		logger.info("/board/list [GET]");
 		
@@ -50,6 +50,26 @@ public class BoardController {
 		model.addAttribute("page", page);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("userNick", userNick);
+	}
+	
+	@PostMapping("/list")
+	public void listpost(Paging paging, Model model, String userNick,Board board) {
+		logger.info("/board/list [Post]");
+		
+		//페이징 계산
+		Paging page = boardService.getPaging(paging);
+		logger.info("{}", page);
+		
+		//게시글 목록 조회
+		List<Board> boardList = boardService.list(page);
+		
+		model.addAttribute("page", page);
+		model.addAttribute("boardList", boardList);
+		model.addAttribute("userNick", userNick);
+		
+		//관리자일때 리스트에서 선택한거 삭제가능하게 만드는거 - 보현
+		boardService.deleteBoard(board);
+		
 	}
 	
 	@RequestMapping("/view")

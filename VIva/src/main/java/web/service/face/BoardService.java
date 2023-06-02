@@ -81,6 +81,12 @@ public interface BoardService {
 	 */
 	public List<Comments> viewComment(int boardNo);
 
+	/**
+	 * 관리자가 /board/list에서 선택한애들 삭제하도록
+	 * @param board
+	 */
+	public void deleteBoard(Board board);
+
 
 
 
