@@ -38,7 +38,9 @@ public class UsersController {
 	@Autowired UsersService usersService;
 	@Autowired KakaoService kakaoService; 
 	@Autowired MailSendService mailService;
+
 //	@Autowired UserQuestion userQuestion;
+
 	
 	@GetMapping("/login")
 	public void login() {
@@ -416,6 +418,7 @@ public class UsersController {
 		logger.info("/users/question[GET]");
 	}
 	
+
 	//문의하기 페이지
 //	@PostMapping("/question")
 //	public void questionProc( 
@@ -434,23 +437,5 @@ public class UsersController {
 ////		
 ////		return "redirect:./mypage";	//게시글 목록
 //	}
+
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
