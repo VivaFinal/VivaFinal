@@ -252,6 +252,13 @@ th {
   					      var checkBox = $("<td>").html('<div class="checkBox"><input class="form-check-input chBox" type="checkbox" name="chBox" data-deal-no="' + item.dealNo + '"></div>');
   					    var dealDate = $("<td>").html('<span>' + item.dealDate + '</span>');
   					    console.log(item.dealDate)
+  					    
+//   					    ajax 를 출력하여 날짜를 출력할때는 jstl fmt 를 사용하여 날짜가 출력되지 않는다 . 
+//   						1. 오라클에서 해결
+// 							2. 제이쿼리에서 해결
+// 							3. ajax 에서 해결 
+							//하지만, 나는 그냥 DTO에서 해당 날짜 변수 위에 @JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd hh:mm:ss") 를 추가해주어서 해결했다!!
+
   					  var dealCategory = $("<td>")
 					console.log(item.dealCategory);
   					if (item.dealCategory === 1) {
@@ -274,32 +281,14 @@ th {
   					tableBody.append(row);   
   					
   					    })
-  					    
-  					    
-// 						let str = JSON.stringify(result); // <> parse()
-						/*  list는 for문에 넣어서 each 문으로 돌려줘야 한다!!! */
-// 						for(var i=0; i<result.length; i++) {
-// 							var map = result[i];
-// 							console.log(map)
-// 							console.log(map.dealCategory)
-// 							$('#order').load(map);
-// 						}
-						
-// 						$.each(result, function(index, item) { // 데이터 =item
-// 							$("#order").append(index + " "); // index가 끝날때까지 
-// 							$("#order").append(item.dealNo + " ");
-// 							$("#order").append(item.dealDate + " ");
-// 							$("#order").append(item.dealCategory + " ");
-// 							$("#order").append(item.amount + "<br>");
-// 						});
-						
-						
-						
+		
 				}	/*  success End*/
 				
 			}) /*  ajax End */
 
+			
 		});	/*  click function() End */
+
 
 	</script>
 	
@@ -413,7 +402,7 @@ th {
 				 	</td>
 	
 					<td><!--  2. 사용일자 -->
-						<span>${i.dealDate}</span>
+						<span><fmt:formatDate pattern="yyyy-MM-dd hh:mm:ss" value="${i.dealDate}" /></span>
 					</td>
 					
 					<td> <!--  3. 내용 --> 	  

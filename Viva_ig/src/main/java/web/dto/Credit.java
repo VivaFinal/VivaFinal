@@ -2,9 +2,14 @@ package web.dto;
 
 import java.sql.Timestamp;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.jsonFormatVisitors.JsonFormatTypes;
+
 public class Credit {
 	private int dealNo;
 	private int userNo;
+	
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern="yyyy-MM-dd hh:mm:ss")
 	private Timestamp dealDate;
 	private int dealCategory;
 	private int amount;

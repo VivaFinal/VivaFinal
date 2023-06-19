@@ -328,9 +328,18 @@ th {
 					
 					if(response == 2) {
 						console.log("아주 깨끗하게 산적 없는 소스들만 선택했군요!")
+						reloadCartList();
 						reloadHeaderCredit(); //헤더 크레딧 잔액 변경
 						
 						//다운로드 진행..ㅠㅠ
+						for(var i = 0 ; i<checkArr.length ; i++){		
+							console.log("하나씩씩하게~!")
+							console.log("checkArr[i]", checkArr[i])
+							var num = checkArr[i];
+							location.href = "/cart/filedown?sourceNo="+num
+							console.log("하나씩 보냈슈")
+						}
+// 						reloadCartList();	//리스트 부분 리로드 하기!
 					}
 					if(response == 3) {
 						console.log("잔액 부족..ㅠㅠ")
@@ -426,6 +435,7 @@ th {
 						
 						if(response == 2) {
 							console.log("아주 깨끗하게 산적 없는 소스들만 선택했군요!")
+							reloadCartList();	//list 내부 리로드
 							reloadHeaderCredit(); //헤더 크레딧 잔액 변경
 							
 							$cartItem.remove(); // $cartItem 변수를 사용하여 항목 제거
@@ -433,6 +443,7 @@ th {
 							//다운로드 진행..ㅠㅠ
 							
 							console.log("다시 ajax, 항목은? :", checkArr);
+							
 // 							$.ajax({
 // 								url: "/cart/filedown",
 // 								type: "GET",
@@ -447,7 +458,7 @@ th {
 								console.log("하나씩")
 								console.log("checkArr[i]", checkArr[i])
 								var num = checkArr[i];
-								ajaxToServer(num)
+								location.href = "/cart/filedown?sourceNo="+num
 							}
 							
 						}
@@ -490,55 +501,7 @@ th {
 				 
 			 }
 			
-var xmlHttp = null;
 
-			   function ajaxToServer(sourceNo) {
-			      
-
-			    xmlHttp = new XMLHttpRequest();
-			      console.log(xmlHttp);
-			   
-			      
-			      
-			      
-			      var url = "/cart/filedown";
-			      
-			      var method = "get";
-
-		    	  var params = "sourceNo=" + sourceNo 
-			      
-		    	  
-				  console.log("sourceNo", sourceNo)
-			      console.log("params", params)
-
-			      xmlHttp.responseType = "arraybuffer";
-				  
-			      xmlHttp.onreadystatechange = ajaxFormServer;
-			      
-			      //AJAX 요청 준비
-			      xmlHttp.open(method,url) 
-			      xmlHttp.setRequestHeader("Content-Type", "application/octetstream")
-
-			      
-			      //AJAX 요청 보내기
-			      xmlHttp.send(params);
-			}
-
-			function ajaxFormServer() {
-			   console.log("ajaxFormServer called")
-			   
-			   if(xmlHttp.readyState == 4){ // DONE, 응답 완료 상태
-			      console.log("DONE, 응답 받기 완료")
-			      
-			      if(xmlHttp.status == 200){ 
-					console.log("200이군요")
-					console.log(xmlHttp.responseText);
-			            
-			      }else{
-			         console.log("AJAX 요청/응답 실패")
-			      }
-			   } 
-			}
 </script>
 	
 		</div>

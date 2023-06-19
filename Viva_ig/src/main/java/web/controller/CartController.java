@@ -345,24 +345,14 @@ public class CartController {
 	
 	
 	@RequestMapping("/filedown")
-	public String filedown(HttpSession session,int sourceNo, Model model) {
+	public String filedown(HttpSession session, int sourceNo, Model model) {
 		logger.info("cart/filedown - list()");
 		logger.info("세션userNo : {}", session.getAttribute("userNo"));
-		logger.info("다운로드할 sourceNo 배열 : {}", sourceNo );
+		logger.info("다운로드할 sourceNo : {}", sourceNo );
 		
 		SourceFileInfo sourceFileInfo = new SourceFileInfo();
-
-//		for (int s : sourceNo) {
-		
-//		int num = Integer.getInteger(sourceNo);
-//		logger.info("숫자로 변환했습니다. sourceNo : {}", num);
-		logger.info("숫자로 변환했습니다. sourceNo : {}", sourceNo);
-		
-//		sourceFileInfo = cartService.selectSourceInfo(num);
-//		sourceFileInfo = cartService.selectSourceInfo(sourceNo);
-//			logger.info("#####다운로드할 파일 정보 : {} ", sourceFileInfo);
-//			
-//		}
+		sourceFileInfo = cartService.selectSourceInfo(sourceNo);
+		logger.info("#####다운로드할 파일 정보 : {} ", sourceFileInfo);
 		
 		model.addAttribute("down", sourceFileInfo);
 		return "down";
