@@ -250,4 +250,21 @@ public class CreditServiceImpl implements CreditService {
 		
 		return creditDao.selectUserInfo(userNo);
 	}
+	
+	
+//	========================================================================================
+	//관리자 페이지
+	@Override
+	public List<Map<String, Object>> getExchangeInfo() {
+		logger.info("getExchangeInfo()");
+		
+		return creditDao.selectExchangeInfoAll();
+	}
+	
+	@Override
+	public String selectAdminInfo(int adminNo) {
+		logger.info("selectAdminInfo()");
+		return creditDao.selectAdminInfo(adminNo);
+	}
+	
 }

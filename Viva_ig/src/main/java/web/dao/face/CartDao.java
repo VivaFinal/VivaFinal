@@ -137,19 +137,30 @@ public interface CartDao {
 
 	/**
 	 * 다운로드 시도 중......
-	 * sourceNo이 담긴 int []배열을 가지고 가서 sourceinfo 반환하기
+	 * sourceNo int값 가지고 가서 sourceinfo 반환하기
 	 * 
-	 * @param sourceNo
-	 * @return sourceinfo
+	 * @param int sourceNo
+	 * @return sourceinfo - uploadNo, fileOriginname, fileStoredname, fileSize, sourceDate, sourceNo
 	 */
-	public SourceFileInfo selectSourceFileBysourceNo(int[] sourceNo);
+	public SourceFileInfo selectSourceFileBysourceNo(int sourceNo);
 
+	
+	
 	/**
 	 * Cart DTO 에 해당 userNo과 sourceNo을 지정하고 cart TB에서 해당 항목 delete 하기
 	 * 
 	 * @param delete - userNo, sourceNo
 	 */
 	public void deleteCartByUserNoAndSourceNo(Cart delete);
+
+	
+	/**
+	 * 처음 리스트 조회할 때, tag_no 그대로 말고, source의 tag_no 을 통해 tag 정보 보여주기
+	 * 
+	 * @param sourceTag - tag_no
+	 * @return - Map <장르, 악기 등등 - 값>
+	 */
+	public Map<String, Object> selectTagInfo(int tagNo);
 
 	
 

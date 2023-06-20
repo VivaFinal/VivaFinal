@@ -1,6 +1,7 @@
 package web.controller;
 
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,6 +23,7 @@ import web.dto.UserQuestion;
 import web.dto.Users;
 import web.service.face.AdminService;
 import web.service.face.BoardService;
+import web.service.face.CreditService;
 import web.util.Paging;
 
 @Controller
@@ -31,6 +33,7 @@ public class AdminController {
 	
 	@Autowired AdminService adminService;
 	@Autowired BoardService boardService;
+	@Autowired CreditService creditService;
 	
 	@GetMapping("/admin/login")
 	public void adminloginget() {
@@ -226,7 +229,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/admin/boardlist")
-	public void adminboardlist(  Model model, Paging paramData, Board board,
+	public String adminboardlist(  Model model, Paging paramData, Board board,
 			@RequestParam(name = "categoryType", required = false, defaultValue = "all") String categoryType,
 			@RequestParam(name = "keyword", required = false) String keyword ) {
 
@@ -250,6 +253,8 @@ public class AdminController {
 		model.addAttribute("categoryType", categoryType);
 		model.addAttribute("keyword", keyword);
 		model.addAttribute("board", board);
+		
+		return "redirect:/admin/boardlist";
 		
 	}
 	
@@ -284,7 +289,7 @@ public class AdminController {
 //===========================================================
 	//환전 관리
 	@RequestMapping("/admin/credit")
-	public void exchange(HttpSession session, ExchangeInfo exchange) {
+	public void credit(HttpSession session, ExchangeInfo exchange) {
 		logger.info("/admin/credit - exchange()");
 		
 		
@@ -292,6 +297,22 @@ public class AdminController {
 		
 		
 	}
+	@RequestMapping("/admin/exchange")
+	public void exchange(HttpSession session, ExchangeInfo exchange, Model model) {
+		logger.info("/admin/exchange - exchange()");
+		logger.info("관리자 번호 : {} ", session.getAttribute("adminNo"));
+		
+		List<Map<String, Object>> exchangeList = creditService.getExchangeInfo();
+		logger.info("조회결과! : {} ", exchangeList);
+		
+		String adminId = creditService.selectAdminInfo((int)session.getAttribute("adminNo"));
+		logger.info("관리자 정보 :{}", adminId);
+		
+		model.addAttribute("adminId", adminId);
+		model.addAttribute("list", exchangeList);
+		
+	}
+		
 	
 
 	

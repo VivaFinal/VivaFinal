@@ -188,7 +188,7 @@ th {
 	    <c:choose>
 	        <c:when test="${not empty adminlogin and adminlogin}">
 	            <button id="btnDelete" name="btnDelete" class="btn btn-danger" style="width:120px;"">선택 삭제</button>
-	            <a href="/viva/login"><button type="button" name="btnWrite" class="btn btn-danger">게시글 작성하기</button></a>
+	            <a href="/boardnotice/write"><button type="button" name="btnWrite" class="btn btn-danger">게시글 작성하기</button></a>
 	        </c:when>
 	    </c:choose>
 	</div>

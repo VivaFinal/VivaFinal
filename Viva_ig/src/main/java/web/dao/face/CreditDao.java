@@ -118,5 +118,20 @@ public interface CreditDao {
 	 */
 	public Map<String, Object> selectUserInfo(int userNo);
 
+	/**
+	 * 관리자 페이지 중, 환전 정보 전체 select 해오기
+	 * 
+	 * @return List<map>
+	 */
+	public List<Map<String, Object>> selectExchangeInfoAll();
+
+	/**
+	 * 관리자 페이지 중, 관리자 정보 select 해오기
+	 * 
+	 * @param adminNo
+	 * @return admin DTO
+	 */
+	public String selectAdminInfo(int adminNo);
+
 
 }

@@ -319,10 +319,22 @@ public class CartServiceImpl implements CartService {
 		return true;
   }
   
+  
+  	//장바구니에서 구매즉시 다운로드를 위해서 SourceFileInfo 를 알아오기 (sourceNo)을 통해서
 	@Override
-	public SourceFileInfo getFile(int[] sourceNo) {
-		logger.info("getFile()");
+	public SourceFileInfo selectSourceInfo(int sourceNo) {
+		logger.info("selectSourceInfo()");
+		
+		
 		return cartDao.selectSourceFileBysourceNo(sourceNo);
+	}
+	
+	//================================================================================
+	//처음 리스트 출력할 때, tag 정보 보여주기
+	@Override
+	public Map<String, Object> getTagInfo(int sourceTag) {
+		logger.info("getTagInfo()");
+		return cartDao.selectTagInfo(sourceTag);
 	}
 
 }

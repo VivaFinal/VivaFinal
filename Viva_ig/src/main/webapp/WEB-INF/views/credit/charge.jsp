@@ -207,7 +207,7 @@
 
 
 <div class="FunctionTitle">
-   Credit ${grade }
+   Credit
 </div>
 <div class="FunctionTitleLine">
    <img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">

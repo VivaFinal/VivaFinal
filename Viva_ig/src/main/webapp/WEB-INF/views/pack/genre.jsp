@@ -159,7 +159,7 @@ a{
 		<li><a class="dropdown-item disabled">House</a></li>
 		<li><a class="dropdown-item" href="/pack/genre?genre=Electro">Electro</a></li>
 		<li><a class="dropdown-item" href="/pack/genre?genre=House">House</a></li>
-		<li><a class="dropdown-item" href="/pack/genre?genre=disco">Disco</a></li>
+		<li><a class="dropdown-item" href="/pack/genre?genre=Disco">Disco</a></li>
 		
 		
 		<li><a class="dropdown-item disabled">Pop</a></li>

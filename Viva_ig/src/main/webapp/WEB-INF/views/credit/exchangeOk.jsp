@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %> 
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %> 
 
 <c:import url="../layout/header.jsp"/>  
 <style type="text/css">
@@ -21,13 +22,14 @@
     margin: 0 auto;
 }
 
-#exchangeOk_ment h3 {
-	font-weight: 700;
+#exchangeOk_ment h2 {
+	font-weight: 900;
 }
 .exchangeOk_wrap div:nth-child(2) {
 	font-size: 23px;
-    font-weight: 900;
+    font-weight: 500;
     text-align: center; 
+    margin-top: 30px;
 }
 
 .exchangeOk_chargeInfo {	/*  환전 완료된  정보 */
@@ -36,11 +38,13 @@
     text-align: center;
 	width: 619px;
     height: 454px;
+    font-weight : 700;
 
 	background: rgba(251, 251, 251, 0.5);
 	mix-blend-mode: normal;
 	box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 	border-radius: 10px;
+	margin-top: 62px;
 }
 
 .exchangeOk_chargeInfo dl {
@@ -124,8 +128,7 @@
 			<img alt="exchangeOk" src="/resources/icon/charge_ok_chk.svg">
 		</div>
 		
-	<h3>환전 신청이<br>
-	완료되었습니다.</h3>
+	<h2>환전 신청이 완료되었습니다.</h2>
 	</div>
 	
 	
@@ -156,7 +159,35 @@
 		<dl>
 			<dt>환전 받을 계좌</dt>
 			<dd>
-				<span>${info.bank}</span><span>(${info.accNo})</span>
+			
+				<span><c:if test="${info.bank eq '35'}"><c:out value="경남은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '29'}"><c:out value="광주은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '7'}"><c:out value="국민은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '5'}"><c:out value="기업은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '15'}"><c:out value="농협중앙회" /></c:if></span>
+				<span><c:if test="${info.bank eq '17'}"><c:out value="농협회원조합" /></c:if></span>
+				<span><c:if test="${info.bank eq '25'}"><c:out value="대구은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '47'}"><c:out value="도이치은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '27'}"><c:out value="부산은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '3'}"><c:out value="산업은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '41'}"><c:out value="상호저축은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '37'}"><c:out value="새마을금고" /></c:if></span>
+				<span><c:if test="${info.bank eq '11'}"><c:out value="수협중앙회" /></c:if></span>
+				<span><c:if test="${info.bank eq '36'}"><c:out value="신한금융투자" /></c:if></span>
+				<span><c:if test="${info.bank eq '60'}"><c:out value="신한은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '39'}"><c:out value="신협중앙회" /></c:if></span>
+				<span><c:if test="${info.bank eq '9'}"><c:out value="외환은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '19'}"><c:out value="우리은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '56'}"><c:out value="우체국" /></c:if></span>
+				<span><c:if test="${info.bank eq '33'}"><c:out value="전북은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '31'}"><c:out value="제주은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '68'}"><c:out value="카카오뱅크" /></c:if></span>
+				<span><c:if test="${info.bank eq '67'}"><c:out value="케이뱅크" /></c:if></span>
+				<span><c:if test="${info.bank eq '59'}"><c:out value="하나은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '23'}"><c:out value="한국씨티은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '45'}"><c:out value="HSBC은행" /></c:if></span>
+				<span><c:if test="${info.bank eq '21'}"><c:out value="SC제일은행" /></c:if></span>
+				<span>  </span><span>(${info.accNo})</span>
 			</dd>
 		</dl>
 		<dl>
@@ -168,7 +199,7 @@
 		<dl>
 			<dt>환전 신청 일자</dt>
 			<dd>
-				<span>${info.exDate}</span>
+				<span><fmt:formatDate pattern="yyyy년 MM월 dd일 hh:mm:ss" value="${info.exDate}" /></span>
 			</dd>
 		</dl>
 	</div>

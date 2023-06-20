@@ -18,17 +18,13 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import web.dto.Cart;
 import web.dto.Credit;
-import web.dto.Source;
 import web.dto.SourceFileInfo;
-import web.dto.Users;
 import web.service.face.CartService;
 import web.service.face.CreditService;
 
@@ -71,6 +67,11 @@ public class CartController {
 		//userNo을 통해 리스트 확인하기
 		List<Map<String,Object>> cartList = cartService.getCartList(user);
 		logger.info("리스트출력 : {}", cartList);
+		
+		//++추가기능 ) tag_no 을 통해서 tag 정보 출력해주기
+		//sourcetag 라고 이름을 치환해주었음!!! (packtag도 따로있다)
+		//위의 cartList 를 Mapper에서 select 해줄 때 tag 정보도 같이 검색해주었다.
+		
 		
 		model.addAttribute("list", cartList);
 		
@@ -337,139 +338,27 @@ public class CartController {
 		
 		}
 		logger.info("jsp에게 보내질 최종 숫자 : {} ", result);
+		
+		
 		return result;
 	}
+	
+	
 	@RequestMapping("/filedown")
-	public String filedown(HttpSession session, Cart user, Model model) {
+	public String filedown(HttpSession session, int sourceNo, Model model) {
 		logger.info("cart/filedown - list()");
 		logger.info("세션userNo : {}", session.getAttribute("userNo"));
+		logger.info("다운로드할 sourceNo : {}", sourceNo );
 		
+		SourceFileInfo sourceFileInfo = new SourceFileInfo();
+		sourceFileInfo = cartService.selectSourceInfo(sourceNo);
+		logger.info("#####다운로드할 파일 정보 : {} ", sourceFileInfo);
 		
-		//세션에 있는 userNo을  cart DTO에 지정하여 진행
-		session.getAttribute("userNo");
-		user.setUserNo((int)session.getAttribute("userNo"));
-		logger.info("userNo : {}", user.getUserNo());
-		  
-		//userNo을 통해 리스트 확인하기
-		List<Map<String,Object>> cartList = cartService.getCartList(user);
-		logger.info("리스트출력 : {}", cartList);
-		
-		model.addAttribute("list", cartList);
-		
+		model.addAttribute("down", sourceFileInfo);
 		return "down";
-		
-	}
-	
-	
-	@Autowired ServletContext context;
-	
-	@ResponseBody
-	@RequestMapping("/fileDownloadProc")
-	public boolean fileDownloadProc(
-			HttpSession session , int[] sourceNo,
-			Map<String, Object> model, 
-			HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
-		logger.info("/cart/fileDownloadProc -  fileDownloadProc()");
-		logger.info("세션userNo : {}", session.getAttribute("userNo"));
-		logger.info("sourceNo : {}", sourceNo);
-		logger.info("응답 테스트..............");
-		
-		
-		SourceFileInfo down = cartService.getFile(sourceNo);
-		logger.info("소스의 정보?? : {}", down);
-		
-		
-		// 저장된 파일의 폴더 (upload) 
-		String path = context.getRealPath("upload");
-		logger.info("저장된 파일의 폴더 : {} ", path);
-		
-		// 실제 업로드된 파일 이름 ( Stored Name )
-		String sourceName = down.getFileStoredname();
-		logger.info("실제 업로드된 파일 이름 : {} ", sourceName);
-		
-		// 실제 파일 객체
-		File download = new File(path, sourceName);
-		logger.info("실제 파일 객체 : {} ", download);
-		logger.info("존재확인 :{}", download.exists());
-		
-		// 파일 전송 Content Type 지정
-		response.setContentType("application/octet-stream");
-		
-		// 응답 데이터 인코딩 설정
-		response.setCharacterEncoding("UTF-8");
-		
-		// 브라우저에서 다운로드할 파일이름
-		String downloadName = URLEncoder.encode(down.getFileOriginname(),"UTF-8");
-		logger.info("브라우저에서 다운로드할 파일이름 : {}", downloadName);
-		
-		downloadName = downloadName.replace("+","%20");
-		downloadName = downloadName+".wav";
-		logger.info("브라우저에서 다운로드할 파일이름 최종 : {}", downloadName);
-		
-		response.setHeader("Content-Disposition","attachment; filename=\"" + downloadName + "\"");
-		
-		logger.info("setHeader해줌 : {}", response);
-		// --- 응답 메시지의 BODY 영역 설정
-		// 서버 File -> FileInputStream 입력 -> HTTP Response OutputStream 출력
-		
-		// 서버 파일 입력 스트림
-//		FileInputStream in = new FileInputStream(download);
-//		logger.info("서버 파일 입력 스트림 : {}", in);
-//		
-//		// 클라이언트 응답 출력 스트림
-//		OutputStream out = response.getOutputStream();
-//		logger.info("클라이언트 응답 출력 스트림 : {}", out);
-//		
-//		// 서버 -> 클라이언트 파일 복사
-//		FileCopyUtils.copy(in, out);
-		
-		
-//		String fileName = request.getParameter("fileName");
-//		String saveFolder = "upload";
-//		
-		int user = (int) session.getAttribute("userNo");
-		//1. 회원의 잔고 확인 후 소스가격과 비교해서 구매가능한지 알려주기 
-		boolean purchase = cartService.chkCreditAcc(user, sourceNo);
-		logger.info("구매가능여부 : {}", purchase);
-		
-		//2. Mysource TB에 존재하는지 한번 더 확인. 
-		//구매이력이 있으면 -> Mysource 페이지로 리다이렉트 메시지 보여주기
-		
-		
-		
-		
-		//-----------------------------------------------
-		//3. 본격 구매 시작.
-		if(purchase) {
-			logger.info("선택사항 구매가능!");
-			//본격적인 구매 진행
-			//service 에서 트랜잭션 진행할 생각!
-			//필요한거? 회원번호, cart[] 이거면 된다. (원래는 cartNo 까지 같이 갈려고 했으나, 굳이 ? 라는 생각이 들어 뺐다.)
-			boolean success = cartService.purchaseCartItem(user, sourceNo);
-			
-			//만약 트랜잭션이 잘 됐다면...true 가 나오겠지.. 
-			logger.info("{}", success);
-//		
-			
-			//***************크레딧 잔액 리로드 하기******************** 
-			//CreditService 임포트 필수!
-			Credit creditAcc = new Credit();
-			creditAcc.setUserNo((int)session.getAttribute("userNo"));
-			session.setAttribute("headerCredit", creditService.selectCreditAcc(creditAcc));
-			
-			return true;
 
-			
-		} else {
-			logger.info("선택사항 구매 불가능!");
-			return false;
-			//크레딧이 부족해서 그런건지
-			//source가 이미 구매해서 그런건지
-			//source가 더이상 구매 불가능해서 그런건지 등등 
-			//그에 따른 반환값을 정해줘야할 듯 함... 
-			//아직은 모르겠음 ㅠ
-		}
+		
 	}
+
 	
 }

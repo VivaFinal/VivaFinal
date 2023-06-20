@@ -499,6 +499,7 @@ public class CreditController {
 //-----------------------------------------------------------------------------
 	//여기서부터 관리자 관리페이지로!
 //	@RequestMapping("/admin")
+//	public void toss(HttpSession session, int cash,  String method) {
 
 	
 }

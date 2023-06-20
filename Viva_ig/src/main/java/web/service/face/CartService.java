@@ -67,13 +67,6 @@ public interface CartService {
 	 */
 	public boolean purchaseCartItem(int user, int[] cart);
 
-	/**
-	 * 다운로드 구현 중....... int 배열로 받아온 sourceNo을 통해 fileinfo를 알아내어 반환하기
-	 * 
-	 * @param sourceNo
-	 * @return fileinfo
-	 */
-	public SourceFileInfo getFile(int[] sourceNo);
 
 	/**
 	 * sourceNo이 담긴 int[] 과 userno을 통해서 mysource TB에서 구매이력 확인하기
@@ -100,6 +93,22 @@ public interface CartService {
 	 * @param user - userNo
 	 */
 	public void duplicatedItemToTrash(int[] cart, int user);
+
+	/**
+	 * 장바구니에서 바로 다운로드하기위해서 sourceNo을 통해 파일 정보 확인하기
+	 * 
+	 * @param sourceNo - sourceNo int값
+	 * @return SourceFileInfo DTO
+	 */
+	public SourceFileInfo selectSourceInfo(int sourceNo);
+
+	/**
+	 * 처음 리스트 조회할 때, tag_no 그대로 말고, source의 tag_no 을 통해 tag 정보 보여주기
+	 * 
+	 * @param sourceTag - tag_no
+	 * @return - Map <장르, 악기 등등 - 값>
+	 */
+	public Map<String, Object> getTagInfo(int sourceTag);
 
 
 

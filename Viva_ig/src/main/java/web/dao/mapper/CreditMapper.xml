@@ -139,6 +139,19 @@
 		SELECT USER_EMAIL, USER_NAME FROM USERS 
 		WHERE USER_NO = #{userNo}
 	</select>	
+<!--  ================================================================= -->
+
+	<select id="selectExchangeInfoAll" resultType="Map">
+		select 
+		    ex_no, holder, bank, acc_no, ex_amount, ex_date, deal_no, adm_transfer
+		    , user_id 
+		from exchangeinfo E
+		    left join users U on E.user_no = U.user_no
+		ORDER BY ex_date desc
+	</select>
 	
+	<select id="selectAdminInfo" parameterType="int" resultType="String">
+		select admin_id from admin where admin_no=#{adminNo}
+	</select>
 	
 </mapper>

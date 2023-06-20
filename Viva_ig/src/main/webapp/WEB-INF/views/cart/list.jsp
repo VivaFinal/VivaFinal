@@ -91,6 +91,16 @@
 th {
 	font-size:22px;
 }
+
+.cart_tag_info {
+	color : black;
+	text-decoration-line: none;
+}
+.cart_tag_info:hover {
+	color: black;
+	font-weight: bold;
+
+}
 </style>
 <div class="FunctionTitle">
    Cart
@@ -98,7 +108,6 @@ th {
 <div class="FunctionTitleLine">
    <img class="FunctionTilteLine" src="../../../resources/icon/Line.svg">
 </div>
-
 
 <div class="cart_wrap"><!--  전체 구성물 -->
 	
@@ -189,17 +198,27 @@ th {
 						
 						<!--  조건. 태그는 소스 우선 -->
 							<c:choose>
-								<c:when test="${!empty i.SOSURCETAG }">
-									<span id="cart_tag">${i.SOURCETAG}</span>
+								<c:when test="${!empty i.SOURCETAG }">
+									
+									<a class="cart_tag_info" href="/source/genre?genre=${i.GENRE}"><span class="cart_tag_info">${i.GENRE}</span></a>
+									<a class="cart_tag_info" href="/sound/inst"><span class="cart_tag_info">${i.INSTRUMENT}</span></a>
+									<a class="cart_tag_info" href="/sound/genre"><span class="cart_tag_info">${i.SCAPE}</span></a>
+									<a class="cart_tag_info" href="/source/inst?detail=${i.DETAIL}"><span class="cart_tag_info">${i.DETAIL}</span></a>
+									<a class="cart_tag_info" href="/sound/inst"><span class="cart_tag_info">${i.FX}</span></a>
+									
 								</c:when>
-								<c:otherwise>
-									<span id="cart_tag">${i.PACKTAG}</span>
+								<c:otherwise> <!--  PACKNO 있을때 -->
+									<a href="/source/genre?genre=${i.GENRE}"><span>${i.GENRE}</span></a>
+									<a href="/sound/inst"><span>${i.INSTRUMENT}</span></a>
+									<a href="/sound/genre"><span>${i.SCAPE}</span></a>
+									<a href="/source/inst?detail=${i.DETAIL}"><span>${i.DETAIL}</span></a>
+									<a href="/sound/inst"><span>${i.FX}</span></a>
 								</c:otherwise>
 							</c:choose>
 						</td>
 						
 						<td><!--  5. Time -->
-							<span class="timespace"></span>
+							<span class="timespace">${i.SOURCE_TIME }</span>
 						</td>
 						
 						<td><!--  6. Key -->
@@ -309,9 +328,18 @@ th {
 					
 					if(response == 2) {
 						console.log("아주 깨끗하게 산적 없는 소스들만 선택했군요!")
+						reloadCartList();
 						reloadHeaderCredit(); //헤더 크레딧 잔액 변경
 						
 						//다운로드 진행..ㅠㅠ
+						for(var i = 0 ; i<checkArr.length ; i++){		
+							console.log("하나씩씩하게~!")
+							console.log("checkArr[i]", checkArr[i])
+							var num = checkArr[i];
+							location.href = "/cart/filedown?sourceNo="+num
+							console.log("하나씩 보냈슈")
+						}
+// 						reloadCartList();	//리스트 부분 리로드 하기!
 					}
 					if(response == 3) {
 						console.log("잔액 부족..ㅠㅠ")
@@ -364,7 +392,7 @@ th {
 			/*  ==========항목 구매에 대한 스크립트 ============= */
 			$(document).on('click', '.buy-button', function() {
 				console.log("항목 구매 clicked()")
-	// 			var sourceNo = $(this).data('source-no');
+				var sourceNo = $(this).data('source-no');
 	// 			var cartNo = $(this).data('cart-no');
 	// 			console.log(cartNo);
 	// 			console.log(sourceNo);
@@ -407,9 +435,32 @@ th {
 						
 						if(response == 2) {
 							console.log("아주 깨끗하게 산적 없는 소스들만 선택했군요!")
+							reloadCartList();	//list 내부 리로드
 							reloadHeaderCredit(); //헤더 크레딧 잔액 변경
-							//다운로드 진행..ㅠㅠ
+							
 							$cartItem.remove(); // $cartItem 변수를 사용하여 항목 제거
+							
+							//다운로드 진행..ㅠㅠ
+							
+							console.log("다시 ajax, 항목은? :", checkArr);
+							
+// 							$.ajax({
+// 								url: "/cart/filedown",
+// 								type: "GET",
+// 								data : { chbox : checkArr },
+// 								success: function(response) {
+// 									console.log("ajax 성공");
+// 									console.log("다운로드 성공~!")
+// 								}	
+// 							})
+
+							for(var i = 0 ; i<checkArr.length ; i++){		
+								console.log("하나씩")
+								console.log("checkArr[i]", checkArr[i])
+								var num = checkArr[i];
+								location.href = "/cart/filedown?sourceNo="+num
+							}
+							
 						}
 
 						if(response == 3) {
@@ -449,7 +500,9 @@ th {
 				 $('#headerCreditStatus').load(location.href +' #headerCreditStatus');
 				 
 			 }
-			</script>
+			
+
+</script>
 	
 		</div>
 	</form>

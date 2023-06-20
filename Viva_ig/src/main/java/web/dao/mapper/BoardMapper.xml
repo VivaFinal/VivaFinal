@@ -237,7 +237,6 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	  			, COMM_CONTENT = #{commContent}
 	  			, COMM_DATE = sysdate
 	  			, BOARD_NO = #{boardNo}
-	  			, USER_NO = 1
 	  		WHERE comm_no = #{commNo} AND board_no = #{boardNo}
   	</update>
  

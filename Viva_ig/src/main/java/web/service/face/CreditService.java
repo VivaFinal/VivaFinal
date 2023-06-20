@@ -89,6 +89,22 @@ public interface CreditService {
 	 */
 	public Map<String, Object> getUserInfo(int userNo);
 
+	/** 
+	 * 관리자페이지 중, 환전 리스트 다 뽑아올때
+	 * 
+	 * @return - List 로 된 Map 타입 
+	 * 
+	 */
+	public List<Map<String, Object>> getExchangeInfo();
+
+	/**
+	 * 관리자페이지 중, 관리자 정보 뽑아오기 
+	 * 
+	 * @param adminNo
+	 * @return 관리자 id
+	 */
+	public String selectAdminInfo(int adminNo);
+
 
 
 }
